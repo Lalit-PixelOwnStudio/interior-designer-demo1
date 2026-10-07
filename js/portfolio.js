@@ -80,7 +80,6 @@
       '<div class="portfolio-card-image">' +
         '<img src="' + cover.small + '" srcset="' + cover.small + ' 640w, ' + cover.large + ' 1280w" ' +
           'sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 420px" alt="' + project.title + '" loading="lazy" decoding="async">' +
-        '<span class="portfolio-card-count">' + project.images.length + " photos</span>" +
         '<span class="portfolio-card-overlay">' +
           '<span class="portfolio-card-arrow">' +
             '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="8 5 19 5 19 16"/></svg>' +
