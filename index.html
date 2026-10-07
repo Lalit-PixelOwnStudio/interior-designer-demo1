@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interior Core — Interiors That Reflect Your Style</title>
+<meta name="description" content="Interior Core designs and builds interiors that reflect your style — bespoke residential and commercial interior design.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Pinyon+Script&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="icon" href="Assets/logo-icon.png" type="image/png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header id="site-nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
+      <img src="Assets/logo-icon.png" alt="Interior Core" width="36" height="36">
+      <span>Interior Core</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact" class="nav-contact-btn">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section id="hero">
+  <video
+    class="hero-bg"
+    src="Assets/hero.mp4"
+    poster="Assets/hero-poster.jpg"
+    autoplay
+    muted
+    loop
+    playsinline>
+  </video>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <p class="hero-item hero-headline" style="--d:0">Every Space Tells a Story — Let's Write Yours</p>
+    <p class="hero-item hero-value" style="--d:1">From first sketch to final reveal, Interior Core turns houses into homes that feel entirely, effortlessly yours.</p>
+    <a href="#contact" class="hero-item hero-cta" style="--d:2">Book Consultation</a>
+    <div class="hero-item hero-scroll" style="--d:3" aria-hidden="true">
+      <span class="scroll-line"></span>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat" style="--d:0">
+      <span class="stat-number" data-target="200" data-suffix="+">0</span>
+      <span class="stat-label">Projects Completed</span>
+    </div>
+    <div class="stat" style="--d:1">
+      <span class="stat-number" data-target="12" data-suffix="+">0</span>
+      <span class="stat-label">Years in Industry</span>
+    </div>
+    <div class="stat" style="--d:2">
+      <span class="stat-number" data-target="150" data-suffix="+">0</span>
+      <span class="stat-label">Happy Clients</span>
+    </div>
+    <div class="stat" style="--d:3">
+      <span class="stat-number" data-target="8" data-suffix="+">0</span>
+      <span class="stat-label">Design Awards Won</span>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="about-story reveal-group">
+    <div class="about-story-text">
+      <span class="eyebrow reveal-item" style="--d:0">About Interior Core</span>
+      <h2 class="about-heading reveal-item" style="--d:1">Designing Spaces With Purpose</h2>
+      <p class="about-body reveal-item" style="--d:2">
+        Interior Core was founded on the belief that a home should feel as good as it looks.
+        We blend timeless aesthetics with everyday livability, shaping every project around
+        how you actually live — not just how a room photographs. Every detail, from material
+        to finish, is chosen with a craftsmanship-first approach and a process built around you.
+      </p>
+    </div>
+    <div class="about-story-image reveal-item" style="--d:3">
+      <!-- placeholder studio/interior shot — swap for a dedicated studio photo if available -->
+      <img src="Assets/project 1/1.jpeg" alt="Interior Core designed living space" loading="lazy">
+    </div>
+  </div>
+
+  <div class="founders reveal-group">
+    <div class="founders-inner">
+      <div class="founders-text">
+        <span class="eyebrow reveal-item" style="--d:0">Our Team</span>
+        <h3 class="founders-heading reveal-item" style="--d:1">Meet the Minds Behind Interior Core</h3>
+        <div class="founders-divider reveal-item" style="--d:2" aria-hidden="true"></div>
+        <p class="founders-desc reveal-item" style="--d:3">The people behind every design decision — combining creative vision with hands-on execution to turn ideas into finished, livable spaces.</p>
+        <a href="#contact" class="founders-cta reveal-item" style="--d:4">Book Consultation</a>
+      </div>
+
+      <div class="founders-profiles">
+        <div class="founder-profile reveal-item" style="--d:2">
+          <div class="founder-photo-ring">
+            <!-- placeholder initials avatar — replace this whole div with an <img src="..." alt="..."> once the real founder photo is ready -->
+            <div class="founder-initials" aria-hidden="true">FN</div>
+          </div>
+          <h4 class="founder-name">Founder Name</h4>
+          <span class="founder-role">Principal Designer</span>
+          <div class="founder-social">
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="10" x2="7" y2="17"/><circle cx="7" cy="7" r="0.8" fill="currentColor" stroke="none"/><path d="M11 17v-4a2 2 0 0 1 4 0v4"/><line x1="11" y1="10" x2="11" y2="17"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="founder-profile reveal-item" style="--d:3">
+          <div class="founder-photo-ring">
+            <!-- placeholder initials avatar — replace this whole div with an <img src="..." alt="..."> once the real co-founder photo is ready -->
+            <div class="founder-initials" aria-hidden="true">CN</div>
+          </div>
+          <h4 class="founder-name">Co-Founder Name</h4>
+          <span class="founder-role">Head of Execution</span>
+          <div class="founder-social">
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="10" x2="7" y2="17"/><circle cx="7" cy="7" r="0.8" fill="currentColor" stroke="none"/><path d="M11 17v-4a2 2 0 0 1 4 0v4"/><line x1="11" y1="10" x2="11" y2="17"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="before-after" class="before-after">
+  <div class="ba-header reveal-group">
+    <span class="eyebrow reveal-item" style="--d:0">Before / After</span>
+    <h2 class="about-heading reveal-item" style="--d:1">See the Transformation</h2>
+    <p class="section-subline reveal-item" style="--d:2">Drag the slider to compare before and after.</p>
+  </div>
+
+  <div class="ba-content">
+    <div class="ba-slider-wrap">
+      <button class="ba-nav-arrow ba-prev" id="baPrev" aria-label="Previous room">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="15 5 8 12 15 19"/></svg>
+      </button>
+
+      <div class="ba-frame" id="baFrame">
+        <img class="ba-img-before" id="baBefore" src="" alt="Before">
+        <img class="ba-img-after" id="baAfter" src="" alt="After">
+        <div class="ba-frame-error" id="baFrameError"></div>
+
+        <span class="ba-label ba-label-before">Before</span>
+        <span class="ba-label ba-label-after">After</span>
+
+        <div class="ba-handle" id="baHandle">
+          <div class="ba-handle-line"></div>
+          <div class="ba-handle-grip">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 8 4 12 8 16"/><polyline points="16 8 20 12 16 16"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <button class="ba-nav-arrow ba-next" id="baNext" aria-label="Next room">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 5 16 12 9 19"/></svg>
+      </button>
+
+      <div class="ba-dots" id="baDots"></div>
+    </div>
+
+    <div class="ba-caption" id="baCaption">
+      <h3 class="ba-room-name" id="baRoomName"></h3>
+      <p class="ba-room-desc" id="baRoomDesc"></p>
+      <div class="ba-room-tags" id="baRoomTags"></div>
+    </div>
+  </div>
+</section>
+<section id="gallery" class="gallery">
+  <svg class="gallery-drip-top" viewBox="0 0 1600 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,0 L1600,0 L1600,12
+      Q1560,50 1520,12 Q1480,32 1440,12 Q1400,58 1360,12 Q1320,28 1280,12
+      Q1240,52 1200,12 Q1160,34 1120,12 Q1080,60 1040,12 Q1000,30 960,12
+      Q920,54 880,12 Q840,32 800,12 Q760,58 720,12 Q680,28 640,12
+      Q600,52 560,12 Q520,34 480,12 Q440,60 400,12 Q360,30 320,12
+      Q280,54 240,12 Q200,32 160,12 Q120,58 80,12 Q40,30 0,12 Z" />
+  </svg>
+
+  <div class="gallery-header reveal-group">
+    <span class="eyebrow reveal-item" style="--d:0">Gallery</span>
+    <h2 class="about-heading reveal-item" style="--d:1">A Glimpse Into Our World</h2>
+    <p class="section-subline reveal-item" style="--d:2">A curated mix from projects across our portfolio.</p>
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid"></div>
+
+  <svg class="gallery-drip-bottom" viewBox="0 0 1600 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,0 L1600,0 L1600,12
+      Q1560,50 1520,12 Q1480,32 1440,12 Q1400,58 1360,12 Q1320,28 1280,12
+      Q1240,52 1200,12 Q1160,34 1120,12 Q1080,60 1040,12 Q1000,30 960,12
+      Q920,54 880,12 Q840,32 800,12 Q760,58 720,12 Q680,28 640,12
+      Q600,52 560,12 Q520,34 480,12 Q440,60 400,12 Q360,30 320,12
+      Q280,54 240,12 Q200,32 160,12 Q120,58 80,12 Q40,30 0,12 Z" />
+  </svg>
+</section>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+  </button>
+  <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Previous image">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="15 5 8 12 15 19"/></svg>
+  </button>
+  <div class="lightbox-stage" id="lightboxStage">
+    <img id="lightboxImage" src="" alt="">
+  </div>
+  <button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Next image">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 5 16 12 9 19"/></svg>
+  </button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<section id="portfolio" class="portfolio">
+  <div class="portfolio-header reveal-group">
+    <span class="eyebrow reveal-item" style="--d:0">Portfolio</span>
+    <h2 class="about-heading reveal-item" style="--d:1">Projects We're Proud Of</h2>
+  </div>
+
+  <div class="portfolio-filters" id="portfolioFilters"></div>
+
+  <div class="portfolio-grid reveal-group" id="portfolioGrid"></div>
+
+  <div class="portfolio-reveal-wrap" id="portfolioRevealWrap">
+    <button class="portfolio-cta" id="portfolioViewAll">View All Portfolio</button>
+  </div>
+</section>
+<section id="services"></section>
+<section id="process"></section>
+<section id="testimonials"></section>
+<section id="pricing"></section>
+<section id="contact"></section>
+
+<footer>
+</footer>
+
+<script src="js/before-after.js"></script>
+<script src="js/gallery.js"></script>
+<script src="js/portfolio.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
