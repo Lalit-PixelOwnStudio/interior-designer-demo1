@@ -1,43 +1,8 @@
 (function () {
   "use strict";
 
-  var PAIRS = [
-    {
-      room: "Bedroom",
-      before: "Assets/Before-After Section/before 1.png",
-      after: "Assets/Before-After Section/after 1.jpeg",
-      desc: "From a bare, functional room to a warm, layered retreat with mirrored accents and ambient lighting.",
-      tags: ["Custom Lighting", "Mirror Panelling", "Upholstered Headboard"]
-    },
-    {
-      room: "Kitchen",
-      before: "Assets/Before-After Section/before 2.png",
-      after: "Assets/Before-After Section/After 2.jpeg",
-      desc: "A dated, closed-off kitchen reimagined as a bright, marble-clad space built for both cooking and entertaining.",
-      tags: ["Marble Countertops", "Open Layout", "Ambient Task Lighting"]
-    },
-    {
-      room: "Living Room",
-      before: "Assets/Before-After Section/before 3.png",
-      after: "Assets/Before-After Section/after 3.jpeg",
-      desc: "Tired shelving gives way to a considered media wall with sculptural lighting and natural wood tones.",
-      tags: ["Media Wall", "Sculptural Lighting", "Natural Wood Tones"]
-    },
-    {
-      room: "Dining Room",
-      before: "Assets/Before-After Section/before 4.png",
-      after: "Assets/Before-After Section/after 4.jpeg",
-      desc: "An ordinary dining corner becomes a sculpted, mirror-panelled space that feels like a private restaurant.",
-      tags: ["Mirror Panelling", "Statement Seating", "Ambient Lighting"]
-    },
-    {
-      room: "Bathroom",
-      before: "Assets/Before-After Section/before 5.png",
-      after: "Assets/Before-After Section/after 5.jpeg",
-      desc: "A worn, dim bathroom transformed into a spa-like retreat with warm brass fixtures and backlit mirror.",
-      tags: ["Brass Fixtures", "Backlit Mirror", "Spa-Inspired Finishes"]
-    }
-  ];
+  var PAIRS = (window.IC_DATA && window.IC_DATA.BA_ROOMS) || [];
+  if (!PAIRS.length) return;
 
   var frame = document.getElementById("baFrame");
   if (!frame) return;
@@ -83,6 +48,12 @@
     dotsWrap.appendChild(dot);
   });
 
+  // Phones get the 720px image, wider frames / retina screens the 1280px one.
+  function pick(img) {
+    var needed = (frame.clientWidth || window.innerWidth) * (window.devicePixelRatio || 1);
+    return needed > 760 ? img.large : img.small;
+  }
+
   function setPosition(pct) {
     pct = Math.max(0, Math.min(100, pct));
     frame.style.setProperty("--pos", pct + "%");
@@ -99,9 +70,9 @@
 
     function applyContent() {
       resetLoadErrors();
-      beforeImg.src = pair.before;
+      beforeImg.src = pick(pair.before);
       beforeImg.alt = pair.room + " before";
-      afterImg.src = pair.after;
+      afterImg.src = pick(pair.after);
       afterImg.alt = pair.room + " after";
       setPosition(50);
       roomNameEl.textContent = pair.room;

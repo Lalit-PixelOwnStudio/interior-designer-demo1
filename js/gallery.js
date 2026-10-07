@@ -1,20 +1,16 @@
 (function () {
   "use strict";
 
-  var PROJECT_FOLDERS = [
-    { name: "project 1", count: 10 },
-    { name: "Project 2", count: 10 },
-    { name: "Project 3", count: 9 },
-    { name: "Project 4", count: 10 },
-    { name: "Project 5", count: 10 },
-    { name: "Project 6", count: 10 }
-  ];
+  var grid = document.getElementById("galleryGrid");
+  var moreWrap = document.getElementById("galleryMoreWrap");
+  var moreBtn = document.getElementById("galleryMore");
+  if (!grid || !window.IC_DATA) return;
 
   var ALL_IMAGES = [];
-  PROJECT_FOLDERS.forEach(function (folder) {
-    for (var i = 1; i <= folder.count; i++) {
-      ALL_IMAGES.push("Assets/" + folder.name + "/" + i + ".jpeg");
-    }
+  window.IC_DATA.PROJECTS.forEach(function (project) {
+    project.images.forEach(function (img) {
+      ALL_IMAGES.push(img);
+    });
   });
 
   function shuffle(arr) {
@@ -42,18 +38,21 @@
     return "";
   }
 
-  var grid = document.getElementById("galleryGrid");
-  if (!grid) return;
-
+  // Phones: 12 photos first, then "Show more". Desktop: the full scattered wall.
+  var isPhone = window.innerWidth < 768;
   var images = shuffle(ALL_IMAGES).slice(0, 30);
-  var scattered = window.innerWidth >= 768;
+  var initialCount = isPhone ? 12 : images.length;
+  var shown = 0;
+
+  var scattered = !isPhone;
   if (scattered) grid.classList.add("scattered");
 
-  images.forEach(function (src, index) {
-    var tile = document.createElement("div");
+  function addTile(item, index) {
+    var tile = document.createElement("button");
+    tile.type = "button";
     var spanClass = pickSpanClass();
     tile.className = "gallery-tile" + (spanClass ? " " + spanClass : "");
-    tile.setAttribute("data-index", String(index));
+    tile.setAttribute("aria-label", "Open photo " + (index + 1));
 
     if (scattered) {
       var rotate = (Math.random() * 12 - 6).toFixed(1);
@@ -62,104 +61,38 @@
     }
 
     var img = document.createElement("img");
-    img.src = src;
-    img.alt = "Interior Core project photo " + (index + 1);
+    img.src = item.small;
+    img.alt = "";
     img.loading = "lazy";
+    img.decoding = "async";
     tile.appendChild(img);
 
     var overlay = document.createElement("div");
     overlay.className = "gallery-tile-overlay";
     overlay.innerHTML =
-      '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6">' +
+      '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">' +
       '<path d="M9 3H4v5M15 3h5v5M9 21H4v-5M15 21h5v-5"/></svg>';
     tile.appendChild(overlay);
 
     tile.addEventListener("click", function () {
-      openLightbox(index);
+      if (window.ICLightbox) window.ICLightbox.open(images, index);
     });
 
     grid.appendChild(tile);
-  });
-
-  var lightbox = document.getElementById("lightbox");
-  var lightboxStage = document.getElementById("lightboxStage");
-  var lightboxImage = document.getElementById("lightboxImage");
-  var lightboxCounter = document.getElementById("lightboxCounter");
-  var lightboxClose = document.getElementById("lightboxClose");
-  var lightboxPrev = document.getElementById("lightboxPrev");
-  var lightboxNext = document.getElementById("lightboxNext");
-
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var currentIndex = 0;
-  var isOpen = false;
-  var previousOverflow = "";
-
-  function preload(src) {
-    var im = new Image();
-    im.src = src;
   }
 
-  function setImage(index) {
-    var src = images[index];
-    lightboxImage.src = src;
-    lightboxImage.alt = "Interior Core project photo " + (index + 1);
-    lightboxCounter.textContent = (index + 1) + " / " + images.length;
-    preload(images[(index + 1) % images.length]);
-    preload(images[(index - 1 + images.length) % images.length]);
-  }
-
-  function goTo(index, animate) {
-    currentIndex = index;
-    if (animate && !reduceMotion) {
-      lightboxImage.classList.add("switching");
-      setTimeout(function () {
-        setImage(currentIndex);
-        lightboxImage.classList.remove("switching");
-      }, 180);
-    } else {
-      setImage(currentIndex);
+  function showUpTo(count) {
+    for (; shown < Math.min(count, images.length); shown++) {
+      addTile(images[shown], shown);
     }
+    if (moreWrap) moreWrap.hidden = shown >= images.length;
   }
 
-  function openLightbox(index) {
-    isOpen = true;
-    currentIndex = index;
-    setImage(currentIndex);
-    lightbox.classList.add("open");
-    lightbox.setAttribute("aria-hidden", "false");
-    previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+  if (moreBtn) {
+    moreBtn.addEventListener("click", function () {
+      showUpTo(shown + 12);
+    });
   }
 
-  function closeLightbox() {
-    isOpen = false;
-    lightbox.classList.remove("open");
-    lightbox.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = previousOverflow;
-  }
-
-  function showNext() {
-    goTo((currentIndex + 1) % images.length, true);
-  }
-
-  function showPrev() {
-    goTo((currentIndex - 1 + images.length) % images.length, true);
-  }
-
-  lightboxClose.addEventListener("click", closeLightbox);
-  lightboxNext.addEventListener("click", showNext);
-  lightboxPrev.addEventListener("click", showPrev);
-
-  lightbox.addEventListener("click", function (e) {
-    if (e.target === lightbox) {
-      closeLightbox();
-    }
-  });
-
-  document.addEventListener("keydown", function (e) {
-    if (!isOpen) return;
-    if (e.key === "Escape") closeLightbox();
-    if (e.key === "ArrowRight") showNext();
-    if (e.key === "ArrowLeft") showPrev();
-  });
+  showUpTo(initialCount);
 })();

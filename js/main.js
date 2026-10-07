@@ -5,12 +5,14 @@
   var navToggle = document.getElementById("navToggle");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  var hero = document.getElementById("hero");
+
   function updateNav() {
-    if (window.scrollY > 40) {
-      nav.classList.add("scrolled");
-    } else {
-      nav.classList.remove("scrolled");
-    }
+    nav.classList.toggle("scrolled", window.scrollY > 40);
+    // Sticky Call / WhatsApp bar (phones) and floating WhatsApp button
+    // (desktop) appear once the visitor scrolls past most of the hero.
+    var pastHero = hero ? window.scrollY > hero.offsetHeight * 0.6 : true;
+    document.body.classList.toggle("show-quick-actions", pastHero);
   }
 
   var ticking = false;
@@ -27,11 +29,31 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   updateNav();
 
-  if (navToggle) {
+  var navLinks = document.querySelector(".nav-links");
+
+  function setMenu(open) {
+    navToggle.setAttribute("aria-expanded", String(open));
+    navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    navLinks.classList.toggle("open", open);
+    nav.classList.toggle("menu-open", open);
+    document.body.classList.toggle("menu-open", open);
+  }
+
+  if (navToggle && navLinks) {
     navToggle.addEventListener("click", function () {
-      var expanded = navToggle.getAttribute("aria-expanded") === "true";
-      navToggle.setAttribute("aria-expanded", String(!expanded));
-      document.querySelector(".nav-links").classList.toggle("open");
+      setMenu(navToggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    navLinks.addEventListener("click", function (e) {
+      if (e.target.closest("a")) setMenu(false);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navLinks.classList.contains("open")) setMenu(false);
+    });
+
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", function (e) {
+      if (e.matches) setMenu(false);
     });
   }
 
@@ -130,6 +152,115 @@
     statNumbers.forEach(function (el) {
       var target = parseInt(el.getAttribute("data-target"), 10) || 0;
       el.textContent = target + (el.getAttribute("data-suffix") || "");
+    });
+  }
+  /* ===== About collage: light scroll parallax (sets --py from -1 to 1) ===== */
+  var collage = document.querySelector(".about-collage");
+  if (collage && !reduceMotion) {
+    var collageTicking = false;
+    var updateCollage = function () {
+      collageTicking = false;
+      var rect = collage.getBoundingClientRect();
+      var vh = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > vh) return;
+      var progress = (rect.top + rect.height / 2 - vh / 2) / (vh / 2 + rect.height / 2);
+      collage.style.setProperty("--py", Math.max(-1, Math.min(1, progress)).toFixed(3));
+    };
+    window.addEventListener("scroll", function () {
+      if (!collageTicking) {
+        collageTicking = true;
+        window.requestAnimationFrame(updateCollage);
+      }
+    }, { passive: true });
+    updateCollage();
+  }
+
+  /* ===== Contact details from js/config.js ===== */
+  var cfg = window.IC_CONFIG || {};
+  var waBase = "https://wa.me/" + (cfg.whatsapp || "");
+
+  function fill(selector, fn) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), fn);
+  }
+
+  fill("[data-ic-tel]", function (el) { el.href = "tel:" + cfg.phone; });
+  fill("[data-ic-wa]", function (el) {
+    el.href = waBase + "?text=" + encodeURIComponent(cfg.whatsappGreeting || "");
+    el.target = "_blank";
+    el.rel = "noopener";
+  });
+  fill("[data-ic-mail]", function (el) { el.href = "mailto:" + cfg.email; });
+  fill("[data-ic-text]", function (el) {
+    var key = el.getAttribute("data-ic-text");
+    if (cfg[key]) el.textContent = cfg[key];
+  });
+  fill("[data-ic-social]", function (el) {
+    var url = cfg[el.getAttribute("data-ic-social")];
+    if (url && url !== "#") {
+      el.href = url;
+      el.target = "_blank";
+      el.rel = "noopener";
+    }
+  });
+
+  var map = document.getElementById("contactMap");
+  if (map && cfg.mapQuery) {
+    map.setAttribute("data-src", "https://www.google.com/maps?q=" + encodeURIComponent(cfg.mapQuery) + "&output=embed");
+    var loadMap = function () {
+      if (!map.src) map.src = map.getAttribute("data-src");
+    };
+    if ("IntersectionObserver" in window) {
+      var mapObserver = new IntersectionObserver(function (entries, obs) {
+        if (entries[0].isIntersecting) {
+          loadMap();
+          obs.disconnect();
+        }
+      }, { rootMargin: "300px" });
+      mapObserver.observe(map);
+    } else {
+      loadMap();
+    }
+  }
+
+  var year = document.getElementById("footerYear");
+  if (year) year.textContent = String(new Date().getFullYear());
+
+  /* ===== Hero video: smaller file on phones, none on data-saver ===== */
+  var video = document.querySelector(".hero-bg");
+  if (video) {
+    var saveData = navigator.connection && navigator.connection.saveData;
+    var wide = window.matchMedia("(min-width: 768px)").matches;
+    if (wide) video.poster = "img/hero/poster-1920.webp";
+    if (!reduceMotion && !saveData) {
+      video.src = wide ? "img/hero/hero-1080.mp4" : "img/hero/hero-720.mp4";
+      var playPromise = video.play();
+      if (playPromise && playPromise.catch) playPromise.catch(function () {});
+    }
+  }
+
+  /* ===== Contact form → WhatsApp message ===== */
+  var form = document.getElementById("contactForm");
+  if (form) {
+    var status = document.getElementById("formStatus");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+
+      var data = new FormData(form);
+      var lines = [
+        "Hi Interior Core, I'd like a consultation.",
+        "",
+        "Name: " + data.get("name"),
+        "Phone: " + data.get("phone")
+      ];
+      if (data.get("location")) lines.push("Location: " + data.get("location"));
+      if (data.get("property")) lines.push("Property: " + data.get("property"));
+      if (data.get("budget")) lines.push("Budget: " + data.get("budget"));
+      if (data.get("message")) lines.push("", String(data.get("message")));
+
+      window.open(waBase + "?text=" + encodeURIComponent(lines.join("\n")), "_blank", "noopener");
+      if (status) status.textContent = "Opening WhatsApp — just press send and we'll reply shortly.";
     });
   }
 })();

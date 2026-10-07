@@ -1,64 +1,19 @@
 (function () {
   "use strict";
 
-  // Data pulled directly from each project folder's details.md.
-  // cover: no file named cover/hero/best exists in any folder, so the fallback
-  // (first image alphabetically) is used — "1.jpeg" in every case.
-  var PROJECTS = [
-    {
-      folder: "project 1",
-      cover: "1.jpeg",
-      title: "Turnkey Home Renovation — ₹25 Lakh Transformation",
-      description: "A complete turnkey interior makeover — from space planning and 3D design to modular furniture, false ceiling, electrical, plumbing, and civil work — delivered end-to-end under one roof by Interior Core Studio, Malviya Nagar.",
-      tags: ["Space Planning", "2D & 3D Design", "Modular Furniture", "False Ceiling & Lighting"]
-    },
-    {
-      folder: "Project 2",
-      cover: "1.jpeg",
-      title: "Theme & Concept-Based Interior Design — ₹20 Lakh Makeover",
-      description: "A bedroom-and-living renovation built around a clear design theme — colour palette, materials, and furniture chosen to reflect the homeowner's personality, executed with precision craftsmanship and on-time delivery.",
-      tags: ["Theme-Based Design", "Colour & Material Selection", "Custom Furniture", "Renovation"]
-    },
-    {
-      folder: "Project 3",
-      cover: "1.jpeg",
-      title: "Project Faridabad — Turnkey End-to-End Interior Design",
-      description: "A complete turnkey living room transformation — textured feature wall, custom seating, and warm accent lighting — designed and executed end-to-end for a Faridabad home.",
-      tags: ["Turnkey Project", "End-to-End Execution", "Living Room Design", "Custom Furniture"]
-    },
-    {
-      folder: "Project 4",
-      cover: "1.jpeg",
-      title: "Vasant Kunj Project — Turnkey Interior Design",
-      description: "A warm, textured bedroom turnkey execution in Vasant Kunj — from design to on-site installation, delivered end-to-end by Interior Core.",
-      tags: ["Turnkey Project", "Bedroom Design", "End-to-End Execution", "Ambient Lighting"]
-    },
-    {
-      folder: "Project 5",
-      cover: "1.jpeg",
-      title: "Renovation Project — ₹35 Lakh Complete Home Interior",
-      description: "A full home interior — including a custom pooja unit with backlit deity niches and marble detailing — designed and executed end-to-end, complete with all interior furniture.",
-      tags: ["Complete Home Interior", "Pooja Unit Design", "Custom Furniture", "Turnkey Execution"]
-    },
-    {
-      folder: "Project 6",
-      cover: "1.jpeg",
-      title: "Turnkey Project — ₹20 Lakh Interior Design",
-      description: "A complete turnkey interior design project spanning contemporary and modern homes, apartments, hotels, bars, restaurants, offices and stores, executed with precision craftsmanship and on-time delivery.",
-      tags: ["Turnkey Project", "Interior Design", "Contemporary & Modern", "Full-Service Execution"]
-    }
-  ];
-
   var grid = document.getElementById("portfolioGrid");
   var filtersEl = document.getElementById("portfolioFilters");
   var revealWrap = document.getElementById("portfolioRevealWrap");
   var viewAllBtn = document.getElementById("portfolioViewAll");
-  if (!grid) return;
+  if (!grid || !window.IC_DATA) return;
+
+  var PROJECTS = window.IC_DATA.PROJECTS.filter(function (p) {
+    return p.portfolio !== false;
+  });
 
   var categories = [];
   PROJECTS.forEach(function (p) {
-    var cat = p.tags[0];
-    if (categories.indexOf(cat) === -1) categories.push(cat);
+    if (categories.indexOf(p.category) === -1) categories.push(p.category);
   });
 
   var activeFilter = "all";
@@ -69,17 +24,13 @@
   }
 
   function buildFilters() {
-    var allBtn = document.createElement("button");
-    allBtn.className = "filter-btn active";
-    allBtn.setAttribute("data-filter", "all");
-    allBtn.textContent = "All";
-    filtersEl.appendChild(allBtn);
-
-    categories.forEach(function (cat) {
+    ["all"].concat(categories).forEach(function (cat, i) {
       var btn = document.createElement("button");
-      btn.className = "filter-btn";
+      btn.type = "button";
+      btn.className = "filter-btn" + (i === 0 ? " active" : "");
       btn.setAttribute("data-filter", cat);
-      btn.textContent = cat;
+      btn.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+      btn.textContent = cat === "all" ? "All" : cat;
       filtersEl.appendChild(btn);
     });
 
@@ -89,49 +40,61 @@
       activeFilter = btn.getAttribute("data-filter");
       expanded = false;
       Array.prototype.forEach.call(filtersEl.querySelectorAll(".filter-btn"), function (b) {
-        b.classList.toggle("active", b === btn);
+        var on = b === btn;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-pressed", String(on));
       });
       render();
     });
   }
 
-  function cardMarkup(project, index) {
-    var card = document.createElement("div");
-    card.className = "portfolio-card reveal-item";
-    card.style.setProperty("--d", String(index % 6));
+  function openProject(project) {
+    if (window.ICLightbox) {
+      window.ICLightbox.open(project.images, 0, { title: project.title, meta: project.meta });
+    }
+  }
 
+  function card(project, index) {
+    var el = document.createElement("article");
+    el.className = "portfolio-card";
+    el.style.setProperty("--d", String(index % 6));
+
+    var cover = project.images[0];
     var tagsMarkup = project.tags.map(function (tag) {
-      return '<span class="portfolio-tag">' + tag + '</span>';
+      return '<span class="portfolio-tag">' + tag + "</span>";
     }).join("");
 
-    card.innerHTML =
-      '<div class="portfolio-card-image">' +
-        '<img src="Assets/' + project.folder + '/' + project.cover + '" alt="' + project.title + '" loading="lazy">' +
-        '<div class="portfolio-card-overlay">' +
+    el.innerHTML =
+      '<button type="button" class="portfolio-card-image" aria-label="View ' + project.title + ' photos">' +
+        '<img src="' + cover.small + '" srcset="' + cover.small + ' 640w, ' + cover.large + ' 1280w" ' +
+          'sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 420px" alt="' + project.title + '" loading="lazy" decoding="async">' +
+        '<span class="portfolio-card-count">' + project.images.length + ' photos</span>' +
+        '<span class="portfolio-card-overlay">' +
           '<span class="portfolio-card-arrow">' +
-            '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="8 5 19 5 19 16"/></svg>' +
-          '</span>' +
-        '</div>' +
-      '</div>' +
+            '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="8 5 19 5 19 16"/></svg>' +
+          "</span>" +
+        "</span>" +
+      "</button>" +
       '<div class="portfolio-card-body">' +
-        '<span class="portfolio-card-category">' + project.tags[0] + '</span>' +
-        '<h3 class="portfolio-card-title">' + project.title + '</h3>' +
-        '<p class="portfolio-card-desc">' + project.description + '</p>' +
-        '<div class="portfolio-card-tags">' + tagsMarkup + '</div>' +
-        '<a href="#" class="portfolio-card-btn">View Project' +
-          '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>' +
-        '</a>' +
-      '</div>';
+        '<span class="portfolio-card-category">' + project.category + "</span>" +
+        '<h3 class="portfolio-card-title">' + project.title + "</h3>" +
+        '<p class="portfolio-card-meta">' + project.meta + "</p>" +
+        '<p class="portfolio-card-desc">' + project.description + "</p>" +
+        '<div class="portfolio-card-tags">' + tagsMarkup + "</div>" +
+        '<button type="button" class="portfolio-card-btn">View Project' +
+          '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>' +
+        "</button>" +
+      "</div>";
 
-    return card;
+    el.querySelector(".portfolio-card-image").addEventListener("click", function () { openProject(project); });
+    el.querySelector(".portfolio-card-btn").addEventListener("click", function () { openProject(project); });
+    return el;
   }
 
   function render() {
     var filtered = activeFilter === "all"
       ? PROJECTS
-      : PROJECTS.filter(function (p) { return p.tags[0] === activeFilter; });
-
-    grid.innerHTML = "";
+      : PROJECTS.filter(function (p) { return p.category === activeFilter; });
 
     var visible = filtered;
     var showButton = false;
@@ -140,8 +103,9 @@
       showButton = true;
     }
 
+    grid.innerHTML = "";
     visible.forEach(function (project, index) {
-      grid.appendChild(cardMarkup(project, index));
+      grid.appendChild(card(project, index));
     });
 
     revealWrap.style.display = showButton ? "flex" : "none";
@@ -152,10 +116,14 @@
     render();
   });
 
-  var resizeTimer = null;
+  // Re-render only when crossing the phone breakpoint, not on every resize
+  // (mobile browsers fire resize when the address bar hides).
+  var wasMobile = isMobile();
   window.addEventListener("resize", function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(render, 150);
+    if (isMobile() !== wasMobile) {
+      wasMobile = isMobile();
+      render();
+    }
   });
 
   buildFilters();
