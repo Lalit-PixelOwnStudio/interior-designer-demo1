@@ -357,7 +357,7 @@ a { color: inherit; text-decoration: none; }
 .hero-scroll {
   position: absolute;
   z-index: 2;
-  bottom: clamp(24px, 5vh, 48px);
+  bottom: clamp(70px, 9vh, 96px);
   left: 50%;
   transform: translateX(-50%);
   transition: opacity 0.4s ease;
@@ -382,7 +382,7 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   z-index: 2;
   left: clamp(20px, 5vw, 64px);
-  bottom: clamp(20px, 4vh, 40px);
+  bottom: clamp(64px, 8vh, 88px);
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -1585,6 +1585,51 @@ a { color: inherit; text-decoration: none; }
   border-color: transparent;
 }
 
+/* ===== Wavy section edges =====
+   A section with .wave-top draws a cloud-like wave in its own colour over
+   the bottom of the section above it, so every colour change is wavy
+   (same feel as the gallery edges). */
+.wave-top { position: relative; }
+
+.wave-top::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  z-index: 2;
+  height: 56px;
+  margin-bottom: -1px;
+  background: var(--wave-color, var(--ic-bg));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 60' preserveAspectRatio='none'%3E%3Cpath d='M0 60V40Q40 0 80 38Q120 14 160 40Q200 4 240 36Q280 18 320 40V60Z'/%3E%3C/svg%3E") repeat-x left bottom / 320px 100%;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 60' preserveAspectRatio='none'%3E%3Cpath d='M0 60V40Q40 0 80 38Q120 14 160 40Q200 4 240 36Q280 18 320 40V60Z'/%3E%3C/svg%3E") repeat-x left bottom / 320px 100%;
+  pointer-events: none;
+}
+
+.about        { --wave-color: var(--ic-bg); }
+.services     { --wave-color: var(--ic-bg-soft); }
+.before-after { --wave-color: var(--ic-bg); }
+.testimonials { --wave-color: var(--ic-black-soft); }
+.pricing      { --wave-color: var(--ic-bg); }
+.faq          { --wave-color: var(--ic-bg-soft); }
+.contact      { --wave-color: var(--ic-bg); }
+.site-footer  { --wave-color: var(--ic-black-soft); }
+
+/* Shift each wave so neighbouring edges don't look identical */
+.services::before     { -webkit-mask-position: 90px bottom; mask-position: 90px bottom; }
+.before-after::before { -webkit-mask-position: 200px bottom; mask-position: 200px bottom; }
+.testimonials::before { -webkit-mask-position: 140px bottom; mask-position: 140px bottom; }
+.faq::before          { -webkit-mask-position: 250px bottom; mask-position: 250px bottom; }
+.site-footer::before  { -webkit-mask-position: 60px bottom; mask-position: 60px bottom; }
+
+@media (max-width: 768px) {
+  .wave-top::before {
+    height: 34px;
+    -webkit-mask-size: 200px 100%;
+    mask-size: 200px 100%;
+  }
+}
+
 /* ===== Shared section pieces ===== */
 body.menu-open,
 body.lightbox-open { overflow: hidden; }
@@ -2511,7 +2556,7 @@ body.show-quick-actions .wa-float {
   #hero {
     flex-direction: column;
     justify-content: center;
-    padding: 96px 0 24px;
+    padding: 96px 0 56px;
   }
 
   .hero-content { flex: 1; }
