@@ -14,7 +14,7 @@
 <link rel="icon" href="img/brand/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/brand/apple-touch-icon.png">
 <link rel="preload" as="image" href="img/hero/poster-960.webp" media="(max-width: 767px)">
-<link rel="stylesheet" href="css/style.css?v=20261007w">
+<link rel="stylesheet" href="css/style.css?v=20261007x">
 </head>
 <body>
 
@@ -528,42 +528,40 @@
     <p class="section-subline reveal-item" style="--d:2">Starting prices based on our recent projects. Your final quote comes after a site visit and design discussion.</p>
   </div>
 
-  <div class="pricing-track reveal-group" role="list">
-    <article class="price-card reveal-item" style="--d:0" role="listitem">
+  <div class="price-picker" role="radiogroup" aria-label="Which home do you have?">
+    <span class="price-picker-label">I have a</span>
+    <button type="button" role="radio" aria-checked="false" data-pick="0">1 BHK</button>
+    <button type="button" role="radio" aria-checked="true" data-pick="1">2–3 BHK</button>
+    <button type="button" role="radio" aria-checked="false" data-pick="2">Full Renovation</button>
+  </div>
+
+  <div class="pricing-track" id="pricingTrack" role="list">
+    <article class="price-card" style="--d:0" role="listitem" data-pkg="0" data-property="1 BHK" data-budget="₹5 – 10 Lakh" data-name="1 BHK Interior">
+      <span class="price-glow" aria-hidden="true"></span>
+      
       <h3>1 BHK Interior</h3>
-      <p class="price-amount"><span>from</span> ₹8 Lakh</p>
-      <ul>
-        <li>Space planning &amp; 2D layout</li>
-        <li>Modular kitchen &amp; wardrobes</li>
-        <li>False ceiling &amp; lighting</li>
-        <li>Painting &amp; finishing</li>
-      </ul>
+      <p class="price-amount"><span>from</span> ₹<b class="price-num" data-to="8">8</b> Lakh</p>
+      <ul><li style="--k:0">Space planning &amp; 2D layout</li><li style="--k:1">Modular kitchen &amp; wardrobes</li><li style="--k:2">False ceiling &amp; lighting</li><li style="--k:3">Painting &amp; finishing</li></ul>
       <a href="#contact" class="price-btn">Get a Quote</a>
     </article>
-    <article class="price-card price-card-featured reveal-item" style="--d:1" role="listitem">
+    <article class="price-card price-card-featured" style="--d:1" role="listitem" data-pkg="1" data-property="2 BHK" data-budget="₹20 – 35 Lakh" data-name="2–3 BHK Interior">
+      <span class="price-glow" aria-hidden="true"></span>
       <span class="price-badge">Most Popular</span>
       <h3>2–3 BHK Interior</h3>
-      <p class="price-amount"><span>from</span> ₹20 Lakh</p>
-      <ul>
-        <li>Everything in 1 BHK</li>
-        <li>Theme-based 3D design</li>
-        <li>Custom furniture &amp; feature walls</li>
-        <li>Dedicated project manager</li>
-      </ul>
+      <p class="price-amount"><span>from</span> ₹<b class="price-num" data-to="20">20</b> Lakh</p>
+      <ul><li style="--k:0">Everything in 1 BHK</li><li style="--k:1">Theme-based 3D design</li><li style="--k:2">Custom furniture &amp; feature walls</li><li style="--k:3">Dedicated project manager</li></ul>
       <a href="#contact" class="price-btn">Get a Quote</a>
     </article>
-    <article class="price-card reveal-item" style="--d:2" role="listitem">
+    <article class="price-card" style="--d:2" role="listitem" data-pkg="2" data-property="Villa / Independent House" data-budget="₹20 – 35 Lakh" data-name="Complete Renovation">
+      <span class="price-glow" aria-hidden="true"></span>
+      
       <h3>Complete Renovation</h3>
-      <p class="price-amount"><span>from</span> ₹25 Lakh</p>
-      <ul>
-        <li>Turnkey, end-to-end execution</li>
-        <li>Civil, electrical &amp; plumbing</li>
-        <li>Pooja unit &amp; premium finishes</li>
-        <li>Styling &amp; handover</li>
-      </ul>
+      <p class="price-amount"><span>from</span> ₹<b class="price-num" data-to="25">25</b> Lakh</p>
+      <ul><li style="--k:0">Turnkey, end-to-end execution</li><li style="--k:1">Civil, electrical &amp; plumbing</li><li style="--k:2">Pooja unit &amp; premium finishes</li><li style="--k:3">Styling &amp; handover</li></ul>
       <a href="#contact" class="price-btn">Get a Quote</a>
     </article>
   </div>
+  <div class="price-dots" id="priceDots" aria-hidden="true"></div>
 </section>
 
 <section id="faq" class="faq wave-top">
@@ -723,14 +721,15 @@
 </div>
 <a href="#contact" class="wa-float" data-ic-wa aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.22-8.24 8.22Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.13-.56-1.35-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></svg></a>
 
-<script src="js/config.js?v=20261007w"></script>
-<script src="js/data.js?v=20261007w"></script>
-<script src="js/lightbox.js?v=20261007w"></script>
-<script src="js/before-after.js?v=20261007w"></script>
-<script src="js/gallery.js?v=20261007w"></script>
-<script src="js/portfolio.js?v=20261007w"></script>
-<script src="js/reviews.js?v=20261007w"></script>
-<script src="js/process.js?v=20261007w"></script>
-<script src="js/main.js?v=20261007w"></script>
+<script src="js/config.js?v=20261007x"></script>
+<script src="js/data.js?v=20261007x"></script>
+<script src="js/lightbox.js?v=20261007x"></script>
+<script src="js/before-after.js?v=20261007x"></script>
+<script src="js/gallery.js?v=20261007x"></script>
+<script src="js/portfolio.js?v=20261007x"></script>
+<script src="js/reviews.js?v=20261007x"></script>
+<script src="js/pricing.js?v=20261007x"></script>
+<script src="js/process.js?v=20261007x"></script>
+<script src="js/main.js?v=20261007x"></script>
 </body>
 </html>
