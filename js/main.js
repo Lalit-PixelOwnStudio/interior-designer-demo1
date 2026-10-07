@@ -211,17 +211,10 @@
     var loadMap = function () {
       if (!map.src) map.src = map.getAttribute("data-src");
     };
-    if ("IntersectionObserver" in window) {
-      var mapObserver = new IntersectionObserver(function (entries, obs) {
-        if (entries[0].isIntersecting) {
-          loadMap();
-          obs.disconnect();
-        }
-      }, { rootMargin: "300px" });
-      mapObserver.observe(map);
-    } else {
-      loadMap();
-    }
+    // Load the map as soon as the rest of the page has loaded, so it's
+    // ready by the time anyone scrolls down to it.
+    if (document.readyState === "complete") loadMap();
+    else window.addEventListener("load", loadMap);
   }
 
   var year = document.getElementById("footerYear");

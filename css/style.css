@@ -3189,7 +3189,8 @@ a.portfolio-cta {
 /* ===== Contact ===== */
 .contact {
   background: var(--ic-bg);
-  padding: clamp(72px, 10vw, 140px) clamp(20px, 5vw, 64px) 0;
+  /* bottom space keeps the map clear of the footer's wave */
+  padding: clamp(72px, 10vw, 140px) clamp(20px, 5vw, 64px) clamp(96px, 11vw, 150px);
 }
 
 .contact-inner {
@@ -3578,15 +3579,16 @@ fieldset.field legend {
   position: relative;
   max-width: 1200px;
   margin: clamp(48px, 7vw, 80px) auto 0;
-  border-radius: 20px 20px 0 0;
+  border-radius: 20px;
   overflow: hidden;
   background: var(--ic-bg-soft);
+  box-shadow: 0 20px 50px rgba(43, 35, 24, 0.12);
 }
 
 /* Address card floating on the map */
 .map-card {
   position: absolute;
-  left: 24px;
+  right: 24px;
   top: 24px;
   display: flex;
   flex-direction: column;
@@ -3937,8 +3939,9 @@ body.show-quick-actions .wa-float {
   .founder-name { font-size: 1.02rem; }
   .founder-role { letter-spacing: 0.04em; }
 
-  .contact-map { margin-left: -20px; margin-right: -20px; border-radius: 0; }
-  .map-card { left: 16px; right: 16px; top: auto; bottom: 16px; max-width: none; flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; padding: 14px 16px; }
+  .contact-map { border-radius: 16px; }
+  .contact-map iframe { height: 360px; }
+  .map-card { left: 12px; right: 12px; top: auto; bottom: 12px; max-width: none; flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; padding: 14px 16px; }
   .map-card strong { width: 100%; font-size: 1.05rem; }
   .map-card-btn { margin: 4px 0 0 auto; }
   .contact-tiles { gap: 10px; }
