@@ -2668,21 +2668,62 @@ a.portfolio-cta {
   padding: 10px 22px 30px;
 }
 
-.reviews-marquee.looping .reviews-track {
-  animation: reviewsGlide var(--marquee-time, 40s) linear infinite;
+/* Desktop: moved by js/reviews.js (auto-glide + drag + arrows) */
+.reviews-marquee.looping {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.reviews-marquee.looping:hover .reviews-track,
-.reviews-marquee.held .reviews-track { animation-play-state: paused; }
+.reviews-marquee.looping .reviews-track { will-change: transform; }
+.reviews-marquee.dragging { cursor: grabbing; }
+.reviews-marquee.dragging .g-review { pointer-events: none; }
 
-@keyframes reviewsGlide {
-  to { transform: translateX(calc(-50% - 11px)); }
+.reviews-arrows {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.reviews-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  color: var(--ic-gold);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.reviews-arrow:hover {
+  color: var(--ic-ink);
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  border-color: transparent;
+}
+
+.reviews-arrow:active { transform: scale(0.94); }
+
+.reviews-hint {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(245, 239, 224, 0.55);
+}
+
+@media (min-width: 769px) {
+  .reviews-arrows { display: flex; }
 }
 
 /* Card styled after a Google review */
 .g-review {
   flex: 0 0 360px;
-  height: 300px;
+  height: 380px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -2784,7 +2825,6 @@ a.portfolio-cta {
 
 .g-more {
   align-self: flex-start;
-  margin-top: auto;
   padding: 0;
   font: inherit;
   font-size: 14px;
@@ -2796,6 +2836,38 @@ a.portfolio-cta {
 }
 
 .g-more[hidden] { display: none; }
+
+/* Photos attached to a review, like on Google */
+.g-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.g-more:not([hidden]) + .g-photos { margin-top: 2px; }
+.g-more[hidden] + .g-photos { margin-top: auto; }
+
+.g-photo {
+  padding: 0;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: zoom-in;
+  background: #f1f3f4;
+}
+
+.g-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+@media (hover: hover) {
+  .g-photo:hover img { transform: scale(1.08); }
+}
 
 /* ===== Pricing ===== */
 .pricing {
@@ -3422,7 +3494,7 @@ body.show-quick-actions .wa-float {
     scrollbar-width: none;
   }
   .reviews-track::-webkit-scrollbar { display: none; }
-  .g-review { flex: 0 0 84%; height: 290px; scroll-snap-align: start; }
+  .g-review { flex: 0 0 84%; height: 370px; scroll-snap-align: start; }
 
   .about-story { gap: 56px; }
   .about-collage { padding-bottom: 40px; }
