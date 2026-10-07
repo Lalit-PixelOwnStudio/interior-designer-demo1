@@ -1,6 +1,7 @@
 /* Contact: studio hours with a live "Open now / Closed" badge (India
-   time), Get-directions links, and the form's success state. Values come
-   from js/config.js. */
+   time), Get-directions links, the form's success state, and a package
+   picked on the Pricing page pre-filled into the form. Values come from
+   js/config.js. */
 (function () {
   "use strict";
 
@@ -89,8 +90,21 @@
   updateBadge();
   setInterval(updateBadge, 60000);
 
-  /* ----- Form success state ----- */
+  /* ----- Package from pricing.html (?package=…&property=…&budget=…) ----- */
   var form = document.getElementById("contactForm");
+  var params = new URLSearchParams(window.location.search);
+  if (form && params.get("package")) {
+    ["property", "budget"].forEach(function (field) {
+      var value = params.get(field);
+      Array.prototype.forEach.call(form.querySelectorAll('input[name="' + field + '"]'), function (r) {
+        if (r.value === value) r.checked = true;
+      });
+    });
+    var msg = document.getElementById("cfMessage");
+    if (msg && !msg.value) msg.value = "I'm interested in the " + params.get("package") + " package.";
+  }
+
+  /* ----- Form success state ----- */
   var again = document.getElementById("formAgain");
   if (form && again) {
     again.addEventListener("click", function () {

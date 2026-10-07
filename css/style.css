@@ -121,6 +121,30 @@ a { color: inherit; text-decoration: none; }
   color: var(--ic-gold);
 }
 
+/* The page you're on: gold with a short underline */
+.nav-links a[aria-current="page"]:not(.nav-contact-btn) {
+  position: relative;
+  opacity: 1;
+  color: var(--ic-gold-deep);
+  font-weight: 500;
+}
+
+.nav-links a[aria-current="page"]:not(.nav-contact-btn)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--ic-gold);
+}
+
+.nav-links .nav-contact-btn[aria-current="page"] {
+  color: var(--ic-ink);
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+}
+
 .nav-contact-btn {
   justify-content: center;
   padding: 0 24px;
@@ -203,6 +227,12 @@ a { color: inherit; text-decoration: none; }
     min-height: 52px;
     padding: 0 24px;
     opacity: 1;
+  }
+
+  .nav-links a[aria-current="page"]:not(.nav-contact-btn)::after {
+    left: 24px;
+    right: 24px;
+    bottom: 8px;
   }
 
   .nav-links .nav-contact-btn {
@@ -3728,53 +3758,13 @@ fieldset.field legend {
   text-align: center;
 }
 
-/* ===== Quick actions ===== */
-.quick-bar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 90;
-  display: none;
-  grid-template-columns: 1fr 1fr 1.2fr;
-  gap: 8px;
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-  background: rgba(250, 245, 236, 0.94);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(43, 35, 24, 0.08);
-  box-shadow: 0 -8px 24px rgba(43, 35, 24, 0.08);
-  transform: translateY(110%);
-  transition: transform 0.35s ease;
-}
-
-.quick-bar a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 48px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ic-ink);
-  border: 1px solid rgba(43, 35, 24, 0.14);
-  border-radius: 999px;
-  background: #fffdf8;
-}
-
-.quick-bar .quick-bar-wa { color: #128c4b; }
-
-.quick-bar .quick-bar-quote {
-  border-color: transparent;
-  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
-}
-
+/* ===== Floating WhatsApp button (all screen sizes) ===== */
 .wa-float {
   position: fixed;
   right: 24px;
   bottom: 24px;
   z-index: 90;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 58px;
@@ -3797,8 +3787,10 @@ body.show-quick-actions .wa-float {
   pointer-events: auto;
 }
 
-@media (min-width: 769px) {
-  .wa-float { display: flex; }
+body.menu-open .wa-float,
+body.lightbox-open .wa-float {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* ===== Tablet ===== */
@@ -3954,12 +3946,15 @@ body.show-quick-actions .wa-float {
 
   .footer-bottom { margin-top: 32px; }
 
-  /* Bottom bar on phones; leave room for it at the end of the page */
-  .quick-bar { display: grid; }
-  body.show-quick-actions .quick-bar { transform: none; }
-  body.menu-open .quick-bar,
-  body.lightbox-open .quick-bar { transform: translateY(110%); }
-  .site-footer { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+  /* Phones: only the round WhatsApp button, no full CTA buttons */
+  .wa-float {
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    width: 54px;
+    height: 54px;
+  }
+  .wa-float svg { width: 26px; height: 26px; }
+  .hero-cta-secondary { display: none; }
 
   .lightbox-close { top: 14px; right: 14px; }
 }
@@ -4088,32 +4083,30 @@ body.show-quick-actions .wa-float {
   .stat-label { font-size: 12px; }
 }
 
-/* ===== Projects page (projects.html) ===== */
-.projects-hero {
-  padding: clamp(130px, 16vw, 190px) clamp(20px, 5vw, 64px) clamp(56px, 7vw, 90px);
-  text-align: center;
-  background: var(--ic-bg-soft);
-}
+/* ===== Inner pages (services, projects, pricing, contact) ===== */
+/* First section sits under the fixed nav: extra top space, no wave */
+.page-top { padding-top: clamp(124px, 14vw, 176px); }
 
-.projects-hero .about-heading { margin-bottom: 14px; }
-
-.projects-hero .section-subline {
-  max-width: 560px;
-  margin: 0 auto;
-}
-
-.projects-list { padding-top: clamp(64px, 8vw, 100px); }
+#contactForm { scroll-margin-top: 96px; }
 
 .projects-list .portfolio-filters { margin-bottom: clamp(32px, 5vw, 48px); }
 
 .projects-cta {
+  --wave-color: var(--ic-black-soft);
+  --wave-x: 250px;
   text-align: center;
   background: var(--ic-black-soft);
   color: var(--ic-cream);
   padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 64px);
 }
 
-.projects-cta .about-heading { color: var(--ic-cream); margin-bottom: 26px; }
+.projects-cta .about-heading { color: var(--ic-cream); margin-bottom: 14px; }
+
+.projects-cta .section-subline {
+  max-width: 520px;
+  margin: 0 auto 28px;
+  color: rgba(245, 239, 224, 0.72);
+}
 
 .projects-cta .lb-cta {
   display: inline-flex;

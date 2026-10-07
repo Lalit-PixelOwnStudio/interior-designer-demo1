@@ -3,7 +3,8 @@
    - Prices count up when the section comes into view
    - Desktop: cards tilt toward the cursor with a soft gold glow
    - Phones: swipeable cards with dots, starting on the featured one
-   - "Get a Quote" fills the contact form with that package */
+   - "Get a Quote" fills the contact form with that package (on the home
+     page), or opens the Contact page with it pre-filled (pricing.html) */
 (function () {
   "use strict";
 
@@ -138,11 +139,19 @@
   }, { passive: true });
 
   /* ----- Get a Quote fills the contact form ----- */
+  var samePageForm = document.getElementById("contactForm");
   cards.forEach(function (card) {
     var btn = card.querySelector(".price-btn");
     if (!btn) return;
+    if (!samePageForm) {
+      // no form on this page: hand the package to contact.html in the URL
+      btn.href = "contact.html?" + ["package", "property", "budget"].map(function (k) {
+        return k + "=" + encodeURIComponent(card.dataset[k === "package" ? "name" : k] || "");
+      }).join("&") + "#contactForm";
+      return;
+    }
     btn.addEventListener("click", function () {
-      var form = document.getElementById("contactForm");
+      var form = samePageForm;
       var msg = document.getElementById("cfMessage");
       if (form) form.classList.remove("sent");
       // property and budget are chip (radio) groups in the contact form

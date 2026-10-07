@@ -1,6 +1,6 @@
 /* ===== Interior Core — contact details =====
    Change these values in ONE place and every Call / WhatsApp / Email link
-   on the site updates (header, hero, sticky mobile bar, contact, footer).
+   on the site updates (header, hero, WhatsApp button, contact, footer).
    TODO: replace the placeholder numbers below with the real ones before launch. */
 window.IC_CONFIG = {
   phoneDisplay: "+91 00000 00000",

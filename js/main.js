@@ -9,10 +9,10 @@
   var solidNav = document.body.hasAttribute("data-solid-nav");
 
   function updateNav() {
-    // Pages without a dark hero (projects.html) keep the solid nav.
+    // Pages without a dark hero (all inner pages) keep the solid nav.
     nav.classList.toggle("scrolled", solidNav || window.scrollY > 40);
-    // Sticky Call / WhatsApp bar (phones) and floating WhatsApp button
-    // (desktop) appear once the visitor scrolls past most of the hero.
+    // The floating WhatsApp button appears once the visitor scrolls past
+    // most of the hero (straight away on pages without one).
     var pastHero = hero ? window.scrollY > hero.offsetHeight * 0.6 : true;
     document.body.classList.toggle("show-quick-actions", pastHero);
   }
