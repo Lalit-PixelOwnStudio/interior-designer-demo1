@@ -25,6 +25,16 @@
   carousel.className = "lb-carousel";
   media.insertBefore(carousel, media.firstChild);
 
+  // "Swipe to see all photos" note; fades away after the first swipe.
+  var hint = document.createElement("div");
+  hint.className = "lb-swipe-hint";
+  hint.setAttribute("aria-hidden", "true");
+  hint.innerHTML =
+    '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 3 12 9 18"/></svg>' +
+    "<span>Swipe to see all photos</span>" +
+    '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 21 12 15 18"/></svg>';
+  media.appendChild(hint);
+
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var contactHref = document.body.getAttribute("data-contact-href") || "#contact";
   var items = [];
@@ -104,6 +114,7 @@
       if (i !== current && i >= 0 && i < items.length) {
         current = i;
         markActive();
+        hint.classList.add("seen");
       }
     });
   }, { passive: true });
@@ -172,6 +183,9 @@
 
     renderDetails(project);
     renderCarousel(project);
+    hint.classList.toggle("seen", !project || items.length < 2);
+    media.style.opacity = "";
+    media.style.transform = "";
     lightbox.classList.add("open");
     lightbox.scrollTop = 0;
     carousel.scrollLeft = 0;
@@ -225,6 +239,21 @@
     } else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) {
       close();
     }
+  }, { passive: true });
+
+  // Phones: as the listing scrolls up, the photo fades and eases back
+  // behind the details card.
+  var fadeTick = false;
+  lightbox.addEventListener("scroll", function () {
+    if (fadeTick || !usingCarousel()) return;
+    fadeTick = true;
+    requestAnimationFrame(function () {
+      fadeTick = false;
+      var h = media.offsetHeight || 1;
+      var t = Math.min(lightbox.scrollTop / (h * 0.85), 1);
+      media.style.opacity = String(1 - t * 0.85);
+      media.style.transform = reduceMotion ? "" : "scale(" + (1 + t * 0.06) + ")";
+    });
   }, { passive: true });
 
   window.ICLightbox = { open: open, close: close };
