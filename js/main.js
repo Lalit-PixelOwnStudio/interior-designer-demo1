@@ -263,6 +263,7 @@
 
       window.open(waBase + "?text=" + encodeURIComponent(lines.join("\n")), "_blank", "noopener");
       if (status) status.textContent = "Opening WhatsApp — just press send and we'll reply shortly.";
+      form.classList.add("sent");
     });
   }
 })();

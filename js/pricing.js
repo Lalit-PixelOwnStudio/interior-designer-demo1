@@ -142,11 +142,18 @@
     var btn = card.querySelector(".price-btn");
     if (!btn) return;
     btn.addEventListener("click", function () {
-      var prop = document.getElementById("cfProperty");
-      var budget = document.getElementById("cfBudget");
+      var form = document.getElementById("contactForm");
       var msg = document.getElementById("cfMessage");
-      if (prop && card.dataset.property) prop.value = card.dataset.property;
-      if (budget && card.dataset.budget) budget.value = card.dataset.budget;
+      if (form) form.classList.remove("sent");
+      // property and budget are chip (radio) groups in the contact form
+      ["property", "budget"].forEach(function (field) {
+        var value = card.dataset[field];
+        if (!form || !value) return;
+        var radio = Array.prototype.filter.call(form.querySelectorAll('input[name="' + field + '"]'), function (r) {
+          return r.value === value;
+        })[0];
+        if (radio) radio.checked = true;
+      });
       if (msg && !msg.value) msg.value = "I'm interested in the " + card.dataset.name + " package.";
       var name = document.getElementById("cfName");
       if (name) setTimeout(function () { name.focus({ preventScroll: true }); }, 700);
