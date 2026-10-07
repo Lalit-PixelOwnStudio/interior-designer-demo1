@@ -2662,7 +2662,7 @@ a.portfolio-cta {
 
 .reviews-track {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 22px;
   width: max-content;
   padding: 10px 22px 30px;
@@ -2682,6 +2682,7 @@ a.portfolio-cta {
 /* Card styled after a Google review */
 .g-review {
   flex: 0 0 360px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -2714,10 +2715,21 @@ a.portfolio-cta {
   width: 42px;
   height: 42px;
   border-radius: 50%;
+  position: relative;
+  overflow: hidden;
   font-size: 18px;
   font-weight: 500;
   color: #fff;
   background: var(--av, #5c6bc0);
+}
+
+/* Profile photo sits over the initial; if it fails the initial shows */
+.g-avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .g-who {
@@ -2758,10 +2770,21 @@ a.portfolio-cta {
   overflow: hidden;
 }
 
-.g-review.expanded .g-text { -webkit-line-clamp: unset; display: block; }
+.g-text { flex: 0 1 auto; min-height: 0; }
+
+/* Read more keeps the card the same size: the text scrolls inside it */
+.g-review.expanded .g-text {
+  -webkit-line-clamp: unset;
+  display: block;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+}
 
 .g-more {
   align-self: flex-start;
+  margin-top: auto;
   padding: 0;
   font: inherit;
   font-size: 14px;
@@ -3399,7 +3422,7 @@ body.show-quick-actions .wa-float {
     scrollbar-width: none;
   }
   .reviews-track::-webkit-scrollbar { display: none; }
-  .g-review { flex: 0 0 84%; scroll-snap-align: start; }
+  .g-review { flex: 0 0 84%; height: 290px; scroll-snap-align: start; }
 
   .about-story { gap: 56px; }
   .about-collage { padding-bottom: 40px; }
