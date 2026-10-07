@@ -2311,28 +2311,90 @@ a.portfolio-cta {
   box-shadow: 0 24px 60px rgba(43, 35, 24, 0.12);
 }
 
+/* Left side of each step: an animated line icon for that step (drawn in
+   when the step opens), soft pulsing rings and a big step number */
 .process-detail-media {
   position: relative;
   min-height: 340px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ic-gold-deep);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(244, 217, 139, 0.55), transparent 62%),
+    linear-gradient(135deg, #f7ecd2, #efe2c5);
 }
 
-.process-detail-media img {
+.process-art {
+  position: relative;
+  z-index: 1;
+  width: 148px;
+  height: 148px;
+  filter: drop-shadow(0 8px 18px rgba(139, 105, 20, 0.25));
+}
+
+.process-art > * {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.process-item.active .process-art > * {
+  animation: processDraw 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.process-item.active .process-art > *:nth-child(2) { animation-delay: 0.35s; }
+.process-item.active .process-art > *:nth-child(3) { animation-delay: 0.55s; }
+.process-item.active .process-art > *:nth-child(4) { animation-delay: 0.75s; }
+.process-item.active .process-art > *:nth-child(5) { animation-delay: 0.95s; }
+
+.process-item.active .process-art { animation: processFloat 5s ease-in-out 1.4s infinite; }
+
+@keyframes processDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes processFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+.process-art-rings {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.process-item.active .process-detail-media img {
-  animation: processZoom 7s ease-out forwards;
+.process-art-rings i {
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  border: 1px solid rgba(139, 105, 20, 0.28);
+  border-radius: 50%;
+  opacity: 0;
 }
 
-@keyframes processZoom {
-  from { transform: scale(1.12); }
-  to   { transform: scale(1); }
+.process-item.active .process-art-rings i { animation: processPulse 3.6s ease-out infinite; }
+.process-item.active .process-art-rings i:nth-child(2) { animation-delay: 1.2s; }
+.process-item.active .process-art-rings i:nth-child(3) { animation-delay: 2.4s; }
+
+@keyframes processPulse {
+  0%   { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+.process-art-num {
+  position: absolute;
+  right: 18px;
+  bottom: -18px;
+  font-family: var(--font-display);
+  font-size: 9rem;
+  line-height: 1;
+  font-weight: 600;
+  color: rgba(139, 105, 20, 0.1);
+  letter-spacing: -0.04em;
 }
 
 .process-detail-step {
@@ -2489,8 +2551,7 @@ a.portfolio-cta {
   }
   .process-detail-inner { transition: box-shadow 0.4s ease, border-color 0.4s ease; }
 
-  /* Phones: each panel's photo zooms and checklist animates once shown */
-  .process-item.shown .process-detail-media img { animation: processZoom 7s ease-out forwards; }
+  /* Phones: checklist animates once the card is shown */
   .process-item.shown .process-detail-text li { animation: processItemIn 0.5s ease forwards; }
   .process-item.shown .process-detail-text li:nth-child(2) { animation-delay: 0.12s; }
   .process-item.shown .process-detail-text li:nth-child(3) { animation-delay: 0.24s; }
@@ -2502,7 +2563,17 @@ a.portfolio-cta {
     box-shadow: 0 14px 34px rgba(43, 35, 24, 0.1);
   }
 
-  .process-detail-media { min-height: 0; aspect-ratio: 16 / 10; }
+  .process-detail-media { min-height: 0; aspect-ratio: 16 / 9; }
+  .process-art { width: 96px; height: 96px; }
+  .process-art-rings i { width: 130px; height: 130px; }
+  .process-art-num { font-size: 6rem; bottom: -12px; }
+  .process-item.shown .process-art > * {
+    animation: processDraw 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+  .process-item.shown .process-art > *:nth-child(2) { animation-delay: 0.35s; }
+  .process-item.shown .process-art > *:nth-child(3) { animation-delay: 0.55s; }
+  .process-item.shown .process-art > *:nth-child(4) { animation-delay: 0.75s; }
+  .process-item.shown .process-art > *:nth-child(5) { animation-delay: 0.95s; }
   .process-detail-text { padding: 18px 18px 20px; }
   .process-detail-text h3 { display: none; }
   .process-item { position: relative; }
@@ -2514,7 +2585,9 @@ a.portfolio-cta {
 @media (prefers-reduced-motion: reduce) {
   .process-line,
   .process-tab { transform: none !important; opacity: 1 !important; transition: none !important; }
-  .process-detail-media img,
+  .process-art,
+  .process-art > * { animation: none !important; stroke-dashoffset: 0; }
+  .process-art-rings { display: none; }
   .process-detail-text li { animation: none !important; opacity: 1; transform: none; }
 }
 
