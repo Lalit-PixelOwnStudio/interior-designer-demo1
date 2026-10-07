@@ -1,7 +1,7 @@
 /* Full-screen photo viewer shared by the gallery and the portfolio.
    With a project passed in, a details panel shows its name, price,
-   location, description, tags and photo thumbnails beside the photo
-   (below it on phones). Swipe on phones, arrow keys / buttons on desktop. */
+   location, description, tags, photo thumbnails and a link to its
+   case-study page beside the photo (below it on phones). Swipe on phones, arrow keys / buttons on desktop. */
 (function () {
   "use strict";
 
@@ -145,6 +145,10 @@
       (tags ? '<div class="lb-tags">' + tags + "</div>" : "") +
       '<div class="lb-thumbs-label">All photos</div>' +
       '<div class="lb-thumbs" id="lbThumbs"></div>' +
+      (project.caseStudy
+        ? '<a class="lb-case" href="project.html?id=' + project.id + '">View Full Case Study' +
+          '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>'
+        : "") +
       '<a class="lb-cta" href="' + contactHref + '">Get a Quote for a Similar Space</a>';
 
     var thumbsEl = details.querySelector("#lbThumbs");

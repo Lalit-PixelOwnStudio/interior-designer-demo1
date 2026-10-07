@@ -13,7 +13,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008f"
+VERSION = "20261008g"
 
 NAV = [
     ("about.html", "About"),
@@ -139,14 +139,15 @@ HEAD = """<!doctype html>
 <link rel="apple-touch-icon" href="img/brand/apple-touch-icon.png">{extra_head}
 <link rel="stylesheet" href="css/style.css?v={version}">
 </head>
-<body data-solid-nav data-contact-href="contact.html">
+<body{body_attrs} data-contact-href="contact.html">
 """
 
 
-def page(name, title, description, body, scripts, extra_head=""):
+def page(name, title, description, body, scripts, extra_head="", nav=None, solid_nav=True):
     parts = [
-        HEAD.format(title=title, description=description, extra_head=extra_head, version=VERSION),
-        header(name),
+        HEAD.format(title=title, description=description, extra_head=extra_head, version=VERSION,
+                    body_attrs=" data-solid-nav" if solid_nav else ""),
+        header(nav or name),
         "",
         body,
         "",
@@ -228,6 +229,23 @@ page(
     page_top(CONTACT),
     ["config", "contact", "main"],
     extra_head='\n<link rel="preconnect" href="https://www.google.com">\n<link rel="preconnect" href="https://maps.gstatic.com" crossorigin>',
+)
+
+
+# ----- project.html: one case-study page, filled in by js/case-study.js -----
+page(
+    "project.html", "Project",
+    "A project by Interior Core: the brief, our approach, photos, materials, timeline and the client's review.",
+    "\n\n".join([
+        '<main id="caseStudy" class="case-study">\n'
+        '  <noscript><section class="cs-section page-top"><h1 class="about-heading">Project</h1>'
+        '<p>Please turn on JavaScript to view this project, or <a href="projects.html">see all projects</a>.</p></section></noscript>\n'
+        "</main>",
+        LIGHTBOX,
+    ]),
+    ["config", "data", "lightbox", "case-study", "main"],
+    nav="projects.html",
+    solid_nav=False,
 )
 
 
