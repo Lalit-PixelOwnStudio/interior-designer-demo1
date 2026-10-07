@@ -1600,7 +1600,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 .about        { --wave-color: var(--ic-bg); }
-.about::after { display: none; } /* single clean wave over the hero video */
+.about::before,
+.about::after { display: none; } /* flat edge under the hero video */
 .services     { --wave-color: var(--ic-bg-soft);    --wave-x: 150px; }
 .before-after { --wave-color: var(--ic-bg);         --wave-x: 300px; }
 .gallery      { --wave-color: var(--ic-bg-soft);    --wave-x: 450px; }
