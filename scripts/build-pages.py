@@ -13,7 +13,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008e"
+VERSION = "20261008f"
 
 NAV = [
     ("about.html", "About"),
@@ -44,6 +44,11 @@ def block(pattern, text=INDEX):
     if not match:
         raise SystemExit("not found in index.html: " + pattern)
     return match.group(0)
+
+
+def partial(name):
+    """Sections that only live on inner pages are kept in partials/."""
+    return read("partials/%s.html" % name).rstrip("\n")
 
 
 def section(sid):
@@ -209,10 +214,11 @@ page(
     "Interior Core packages for 1 BHK, 2–3 BHK homes and full renovations, with clear starting prices.",
     "\n\n".join([
         link_out(page_top(PRICING)),
+        partial("estimator"),
         FAQ,
         cta("Not sure which package fits?", "Tell us about your home and we'll send a quote after a quick chat.", "Get a Free Quote"),
     ]),
-    ["config", "pricing", "faq", "main"],
+    ["config", "pricing", "estimator", "faq", "main"],
 )
 
 # ----- contact.html: the contact section on its own -----

@@ -1,0 +1,56 @@
+<section id="estimator" class="estimator wave-top">
+  <div class="section-header reveal-group">
+    <span class="eyebrow eyebrow-light reveal-item" style="--d:0">Cost Estimator</span>
+    <h2 class="about-heading reveal-item" style="--d:1">What Will My Interior Cost?</h2>
+    <p class="section-subline reveal-item" style="--d:2">Pick your home, the spaces you want done and a finish level — the estimate updates instantly.</p>
+  </div>
+
+  <div class="est-wrap">
+    <form class="est-form" id="estForm" novalidate>
+      <a href="#estResult" class="est-live" id="estLive"><span>Estimate</span><strong>₹<span data-est="low">0</span> – <span data-est="high">0</span> Lakh</strong></a>
+
+      <fieldset class="est-step">
+        <legend><span class="est-num">1</span>Your home</legend>
+        <div class="est-options est-home">
+          <label class="est-opt"><input type="radio" name="home" value="1bhk"><span><strong>1 BHK</strong><small>~550 sq ft</small></span></label>
+          <label class="est-opt"><input type="radio" name="home" value="2bhk" checked><span><strong>2 BHK</strong><small>~900 sq ft</small></span></label>
+          <label class="est-opt"><input type="radio" name="home" value="3bhk"><span><strong>3 BHK</strong><small>~1,300 sq ft</small></span></label>
+          <label class="est-opt"><input type="radio" name="home" value="villa"><span><strong>4 BHK / Villa</strong><small>1,800+ sq ft</small></span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="est-step">
+        <legend><span class="est-num">2</span>Spaces to design</legend>
+        <div class="est-options est-spaces">
+          <label class="est-opt"><input type="checkbox" name="space" value="living" checked><span><i class="est-tick" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/><path d="M2 13a2 2 0 0 1 4 0v2h12v-2a2 2 0 0 1 4 0v5H2z"/><path d="M5 18v2M19 18v2"/></svg><strong>Living &amp; Dining</strong></span></label>
+          <label class="est-opt"><input type="checkbox" name="space" value="kitchen" checked><span><i class="est-tick" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 10h16M8 6.5h.01M12 6.5h.01M9 13.5v3"/></svg><strong>Modular Kitchen</strong></span></label>
+          <label class="est-opt"><input type="checkbox" name="space" value="bedrooms" checked><span><i class="est-tick" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 19V6"/><path d="M2 15h20v4"/><path d="M22 15v-3a3 3 0 0 0-3-3h-8v6"/><circle cx="6.5" cy="11.5" r="2"/></svg><strong>Bedrooms</strong><small data-est-beds>× 2 rooms</small></span></label>
+          <label class="est-opt"><input type="checkbox" name="space" value="wardrobes" checked><span><i class="est-tick" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="1.5"/><path d="M12 2v20M10 11v2M14 11v2"/></svg><strong>Wardrobes</strong><small data-est-beds>× 2 rooms</small></span></label>
+          <label class="est-opt"><input type="checkbox" name="space" value="ceiling" checked><span><i class="est-tick" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg><strong>False Ceiling &amp; Lighting</strong></span></label>
+          <label class="est-opt"><input type="checkbox" name="space" value="pooja"><span><i class="est-tick" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11"/><path d="M3 21h18"/><path d="M12 10c-1 1.4-1.5 2.4-1.5 3.3a1.5 1.5 0 0 0 3 0c0-.9-.5-1.9-1.5-3.3z"/></svg><strong>Pooja Unit</strong></span></label>
+          <label class="est-opt"><input type="checkbox" name="space" value="painting" checked><span><i class="est-tick" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="15" height="6" rx="1.5"/><path d="M18 6h3v5h-9v3"/><rect x="10" y="14" width="4" height="7" rx="1"/></svg><strong>Painting &amp; Finishing</strong></span></label>
+          <label class="est-opt"><input type="checkbox" name="space" value="civil"><span><i class="est-tick" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9.3h18M3 14.7h18M9 4v5.3M15 9.3v5.4M9 14.7V20"/></svg><strong>Civil &amp; Renovation</strong></span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="est-step">
+        <legend><span class="est-num">3</span>Finish level</legend>
+        <div class="est-options est-finish">
+          <label class="est-opt"><input type="radio" name="finish" value="essential"><span><strong>Essential</strong><small>Laminates, standard hardware, clean modern look</small></span></label>
+          <label class="est-opt"><input type="radio" name="finish" value="premium" checked><span><b class="est-badge">Most chosen</b><strong>Premium</strong><small>Acrylic &amp; veneer, soft-close fittings, layered lighting</small></span></label>
+          <label class="est-opt"><input type="radio" name="finish" value="luxury"><span><strong>Luxury</strong><small>Imported finishes, marble, designer lighting &amp; decor</small></span></label>
+        </div>
+      </fieldset>
+    </form>
+
+    <aside class="est-result" id="estResult" aria-live="polite">
+      <small class="est-label">Estimated cost</small>
+      <p class="est-total">₹<span data-est="low">0</span> – <span data-est="high">0</span> <em>Lakh</em></p>
+      <p class="est-meta"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="estDays">Ready in about 45–60 days</span></p>
+      <ul class="est-breakdown" id="estBreakdown"></ul>
+      <a href="contact.html" class="lb-cta est-wa" id="estWhatsApp"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.22-8.24 8.22Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.13-.56-1.35-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></svg><span>Send Estimate on WhatsApp</span></a>
+      <a href="contact.html#visit" class="est-visit">or book a studio visit →</a>
+      <p class="est-note">An approximate range for planning. Your exact quote comes after a site visit and design discussion.</p>
+    </aside>
+  </div>
+</section>
