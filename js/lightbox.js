@@ -16,6 +16,15 @@
   var prevBtn = document.getElementById("lightboxPrev");
   var nextBtn = document.getElementById("lightboxNext");
 
+  var media = lightbox.querySelector(".lightbox-media");
+  var phoneLayout = window.matchMedia("(max-width: 900px)");
+
+  // Phones, project mode: a swipeable photo strip on top of a scrolling
+  // listing (photos, then details), like a property listing page.
+  var carousel = document.createElement("div");
+  carousel.className = "lb-carousel";
+  media.insertBefore(carousel, media.firstChild);
+
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var contactHref = document.body.getAttribute("data-contact-href") || "#contact";
   var items = [];
@@ -34,17 +43,28 @@
     im.src = item.large;
   }
 
-  function show(index) {
-    current = (index + items.length) % items.length;
-    var item = items[current];
-    image.src = item.large;
-    image.alt = (label || "Interior Core project") + " — photo " + (current + 1);
+  function usingCarousel() {
+    return lightbox.classList.contains("has-details") && phoneLayout.matches;
+  }
+
+  function markActive() {
     counter.textContent = (current + 1) + " / " + items.length;
     thumbs.forEach(function (t, i) {
       t.classList.toggle("active", i === current);
       if (i === current) t.setAttribute("aria-current", "true");
       else t.removeAttribute("aria-current");
     });
+  }
+
+  function show(index, smooth) {
+    current = (index + items.length) % items.length;
+    var item = items[current];
+    image.src = item.large;
+    image.alt = (label || "Interior Core project") + " — photo " + (current + 1);
+    markActive();
+    if (usingCarousel()) {
+      carousel.scrollTo({ left: current * carousel.clientWidth, behavior: smooth && !reduceMotion ? "smooth" : "auto" });
+    }
     preload(items[(current + 1) % items.length]);
     preload(items[(current - 1 + items.length) % items.length]);
   }
@@ -58,6 +78,35 @@
       image.classList.remove("switching");
     }, 160);
   }
+
+  function renderCarousel(project) {
+    carousel.innerHTML = "";
+    if (!project) return;
+    items.forEach(function (item, i) {
+      var img = document.createElement("img");
+      img.src = item.small;
+      img.srcset = item.small + " 640w, " + item.large + " 1280w";
+      img.sizes = "100vw";
+      img.alt = project.title + " — photo " + (i + 1);
+      img.loading = i < 2 ? "eager" : "lazy";
+      img.decoding = "async";
+      carousel.appendChild(img);
+    });
+  }
+
+  var scrollTick = false;
+  carousel.addEventListener("scroll", function () {
+    if (scrollTick) return;
+    scrollTick = true;
+    requestAnimationFrame(function () {
+      scrollTick = false;
+      var i = Math.round(carousel.scrollLeft / Math.max(carousel.clientWidth, 1));
+      if (i !== current && i >= 0 && i < items.length) {
+        current = i;
+        markActive();
+      }
+    });
+  }, { passive: true });
 
   function renderDetails(project) {
     thumbs = [];
@@ -94,7 +143,10 @@
       b.className = "lb-thumb";
       b.setAttribute("aria-label", "Show photo " + (i + 1));
       b.innerHTML = '<img src="' + item.small + '" alt="" loading="lazy">';
-      b.addEventListener("click", function () { show(i); });
+      b.addEventListener("click", function () {
+        if (usingCarousel()) lightbox.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+        show(i, true);
+      });
       thumbsEl.appendChild(b);
       thumbs.push(b);
     });
@@ -119,8 +171,11 @@
     nextBtn.hidden = single;
 
     renderDetails(project);
-    show(index || 0);
+    renderCarousel(project);
     lightbox.classList.add("open");
+    lightbox.scrollTop = 0;
+    carousel.scrollLeft = 0;
+    show(index || 0);
     lightbox.setAttribute("aria-hidden", "false");
     document.body.classList.add("lightbox-open");
     closeBtn.focus({ preventScroll: true });
