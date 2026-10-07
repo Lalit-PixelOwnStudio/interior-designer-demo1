@@ -2,6 +2,7 @@
   "use strict";
 
   var grid = document.getElementById("galleryGrid");
+  var clip = document.getElementById("galleryClip") || grid;
   var moreWrap = document.getElementById("galleryMoreWrap");
   var moreBtn = document.getElementById("galleryMore");
   if (!grid || !window.IC_DATA) return;
@@ -24,13 +25,12 @@
     return a;
   }
 
+  // Some tiles span two rows or two columns so the pile looks hand-made.
   function pickSpanClass() {
-    var w = window.innerWidth;
-    if (w < 768) return "";
     var r = Math.random();
-    if (w < 1024) {
-      if (r < 0.12) return "tile-tall";
-      if (r < 0.3) return "tile-wide";
+    if (window.innerWidth < 768) {
+      if (r < 0.18) return "tile-tall";
+      if (r < 0.32) return "tile-wide";
       return "";
     }
     if (r < 0.25) return "tile-tall";
@@ -38,27 +38,18 @@
     return "";
   }
 
-  // Phones: 12 photos first, then "Show more". Desktop: the full scattered wall.
-  var isPhone = window.innerWidth < 768;
+  // Same overlapping, tilted "card pile" on every screen.
   var images = shuffle(ALL_IMAGES).slice(0, 30);
-  var initialCount = isPhone ? 12 : images.length;
-  var shown = 0;
+  var maxTilt = window.innerWidth < 768 ? 5 : 6;
 
-  var scattered = !isPhone;
-  if (scattered) grid.classList.add("scattered");
-
-  function addTile(item, index) {
+  images.forEach(function (item, index) {
     var tile = document.createElement("button");
     tile.type = "button";
     var spanClass = pickSpanClass();
     tile.className = "gallery-tile" + (spanClass ? " " + spanClass : "");
     tile.setAttribute("aria-label", "Open photo " + (index + 1));
-
-    if (scattered) {
-      var rotate = (Math.random() * 12 - 6).toFixed(1);
-      tile.style.setProperty("--r", rotate + "deg");
-      tile.style.zIndex = String(Math.floor(Math.random() * 20) + 1);
-    }
+    tile.style.setProperty("--r", (Math.random() * maxTilt * 2 - maxTilt).toFixed(1) + "deg");
+    tile.style.zIndex = String(Math.floor(Math.random() * 20) + 1);
 
     var img = document.createElement("img");
     img.src = item.small;
@@ -79,20 +70,21 @@
     });
 
     grid.appendChild(tile);
-  }
+  });
 
-  function showUpTo(count) {
-    for (; shown < Math.min(count, images.length); shown++) {
-      addTile(images[shown], shown);
-    }
-    if (moreWrap) moreWrap.hidden = shown >= images.length;
+  // The pile is cropped with a soft fade; "Show more" opens all of it.
+  function updateMore() {
+    if (!moreWrap || clip.classList.contains("expanded")) return;
+    moreWrap.hidden = grid.scrollHeight <= clip.clientHeight;
   }
 
   if (moreBtn) {
     moreBtn.addEventListener("click", function () {
-      showUpTo(shown + 12);
+      clip.classList.add("expanded");
+      moreWrap.hidden = true;
     });
   }
 
-  showUpTo(initialCount);
+  updateMore();
+  window.addEventListener("resize", updateMore);
 })();

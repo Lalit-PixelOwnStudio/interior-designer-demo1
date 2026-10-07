@@ -897,24 +897,47 @@ a { color: inherit; text-decoration: none; }
   margin-top: 10px;
 }
 
+/* Scattered "card pile": overlapping, tilted photos in a dense grid (same
+   look on every screen). The clip box adds room around the pile so tilted
+   edges aren't cut flat, and fades out the ragged bottom. */
+.gallery-clip {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 26px 30px 0;
+  max-height: 780px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 120px), transparent);
+  mask-image: linear-gradient(180deg, #000 calc(100% - 120px), transparent);
+}
+
+.gallery-clip.expanded {
+  max-height: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   grid-auto-rows: 110px;
   grid-auto-flow: dense;
-  gap: 9px;
-  max-width: 1400px;
-  margin: 0 auto;
-  max-height: 100vh;
-  overflow: hidden;
-  border-radius: 4px;
+  gap: 4px;
 }
 
 .gallery-tile {
   position: relative;
+  display: block;
+  margin: -13px;
+  padding: 0;
+  font: inherit;
   overflow: hidden;
   cursor: pointer;
-  background: var(--ic-bg-soft);
+  background: #fffdf8;
+  border: 5px solid #fffdf8;
+  border-radius: 6px;
+  box-shadow: 0 8px 22px rgba(43, 35, 24, 0.22);
+  transform: rotate(var(--r, 0deg));
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .gallery-tile.tile-tall { grid-row: span 2; }
@@ -928,23 +951,8 @@ a { color: inherit; text-decoration: none; }
   transition: transform 0.4s ease;
 }
 
-/* scattered "card pile" look — desktop/tablet only, assigned once at render */
-.gallery-grid.scattered {
-  gap: 4px;
-}
-
-.gallery-grid.scattered .gallery-tile {
-  margin: -13px;
-  border: 5px solid #fffdf8;
-  border-radius: 6px;
-  background: #fffdf8;
-  box-shadow: 0 8px 22px rgba(43, 35, 24, 0.22);
-  transform: rotate(var(--r, 0deg));
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-
 @media (hover: hover) {
-  .gallery-grid.scattered .gallery-tile:hover {
+  .gallery-tile:hover {
     transform: rotate(0deg) scale(1.08);
     box-shadow: 0 16px 36px rgba(43, 35, 24, 0.3);
     z-index: 999 !important;
@@ -1747,14 +1755,6 @@ section[id] { scroll-margin-top: 72px; }
 }
 
 .gallery-more-wrap[hidden] { display: none; }
-
-button.gallery-tile {
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  font: inherit;
-}
 
 /* ===== Portfolio additions ===== */
 button.portfolio-card-image {
@@ -2673,6 +2673,7 @@ footer {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     grid-auto-rows: 90px;
   }
+  .gallery-clip { max-height: 700px; }
 
   .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
 }
@@ -2689,18 +2690,21 @@ footer {
 
   .founders-desc { max-width: none; }
 
+  .gallery-clip {
+    padding: 16px 16px 0;
+    margin: 0 -10px;
+    max-height: 640px;
+  }
   .gallery-grid {
-    max-height: none;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: unset;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 78px;
+    gap: 3px;
   }
   .gallery-tile {
-    aspect-ratio: 1 / 1;
-  }
-  .gallery-tile.tile-tall,
-  .gallery-tile.tile-wide {
-    grid-row: auto;
-    grid-column: auto;
+    margin: -7px;
+    border-width: 3px;
+    border-radius: 4px;
+    box-shadow: 0 5px 14px rgba(43, 35, 24, 0.25);
   }
 
   .lightbox-stage { max-height: 68vh; }
