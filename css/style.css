@@ -2464,7 +2464,7 @@ a.portfolio-cta {
 .process-detail-text li {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   font-size: 0.97rem;
   opacity: 0;
   transform: translateX(-10px);
@@ -2481,16 +2481,26 @@ a.portfolio-cta {
   to { opacity: 1; transform: none; }
 }
 
-.pd-check {
+.pd-icon {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  color: var(--ic-ink);
-  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  color: var(--ic-gold-deep);
+  background: linear-gradient(135deg, rgba(244, 217, 139, 0.55), rgba(212, 175, 55, 0.2));
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+@media (hover: hover) {
+  .process-detail-text li:hover .pd-icon {
+    transform: scale(1.08) rotate(-6deg);
+    color: var(--ic-ink);
+    background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  }
 }
 
 .process-get {
