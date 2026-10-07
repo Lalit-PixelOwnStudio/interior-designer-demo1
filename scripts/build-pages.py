@@ -13,7 +13,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008g"
+VERSION = "20261008h"
 
 NAV = [
     ("about.html", "About"),
@@ -117,7 +117,10 @@ def cta(heading, text, button="Book a Consultation"):
         '<section class="projects-cta wave-top">',
         '  <h2 class="about-heading">%s</h2>' % heading,
         '  <p class="section-subline">%s</p>' % text,
-        '  <a href="contact.html" class="lb-cta">%s</a>' % button,
+        '  <div class="cs-cta-btns">',
+        '    <a href="contact.html" class="lb-cta">%s</a>' % button,
+        '    <a href="contact.html#visit" class="cs-ghost">Visit Our Studio</a>',
+        "  </div>",
         "</section>",
     ])
 
@@ -226,8 +229,8 @@ page(
 page(
     "contact.html", "Contact",
     "Call, WhatsApp or visit the Interior Core studio in Malviya Nagar, New Delhi.",
-    page_top(CONTACT),
-    ["config", "contact", "main"],
+    "\n\n".join([page_top(CONTACT), partial("visit")]),
+    ["config", "contact", "visit", "main"],
     extra_head='\n<link rel="preconnect" href="https://www.google.com">\n<link rel="preconnect" href="https://maps.gstatic.com" crossorigin>',
 )
 
