@@ -357,7 +357,7 @@ a { color: inherit; text-decoration: none; }
 .hero-scroll {
   position: absolute;
   z-index: 2;
-  bottom: clamp(70px, 9vh, 96px);
+  bottom: clamp(90px, 11vh, 112px);
   left: 50%;
   transform: translateX(-50%);
   transition: opacity 0.4s ease;
@@ -382,7 +382,7 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   z-index: 2;
   left: clamp(20px, 5vw, 64px);
-  bottom: clamp(64px, 8vh, 88px);
+  bottom: clamp(84px, 10vh, 104px);
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -852,35 +852,6 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   background: var(--ic-bg-soft);
   padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 64px) clamp(60px, 8vw, 100px);
-}
-
-.gallery-drip-top {
-  position: absolute;
-  left: 0;
-  bottom: 100%;
-  z-index: 5;
-  width: 100%;
-  height: 70px;
-  pointer-events: none;
-  transform: scaleY(-1);
-}
-
-.gallery-drip-top path {
-  fill: var(--ic-bg-soft);
-}
-
-.gallery-drip-bottom {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  z-index: 5;
-  width: 100%;
-  height: 70px;
-  pointer-events: none;
-}
-
-.gallery-drip-bottom path {
-  fill: var(--ic-bg-soft);
 }
 
 .gallery-header {
@@ -1586,47 +1557,56 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ===== Wavy section edges =====
-   A section with .wave-top draws a cloud-like wave in its own colour over
-   the bottom of the section above it, so every colour change is wavy
-   (same feel as the gallery edges). */
+   A section with .wave-top draws a smooth wave in its own colour over the
+   bottom of the section above it, so every colour change is wavy. Two
+   layers: a soft offset wave behind (::after) and the solid wave (::before). */
 .wave-top { position: relative; }
 
-.wave-top::before {
+.wave-top::before,
+.wave-top::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
   bottom: 100%;
-  z-index: 2;
-  height: 56px;
   margin-bottom: -1px;
   background: var(--wave-color, var(--ic-bg));
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 60' preserveAspectRatio='none'%3E%3Cpath d='M0 60V40Q40 0 80 38Q120 14 160 40Q200 4 240 36Q280 18 320 40V60Z'/%3E%3C/svg%3E") repeat-x left bottom / 320px 100%;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 60' preserveAspectRatio='none'%3E%3Cpath d='M0 60V40Q40 0 80 38Q120 14 160 40Q200 4 240 36Q280 18 320 40V60Z'/%3E%3C/svg%3E") repeat-x left bottom / 320px 100%;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30C100 0 200 0 300 30S500 60 600 30V60H0Z'/%3E%3C/svg%3E") repeat-x var(--wave-x, 0px) bottom / 600px 100%;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30C100 0 200 0 300 30S500 60 600 30V60H0Z'/%3E%3C/svg%3E") repeat-x var(--wave-x, 0px) bottom / 600px 100%;
   pointer-events: none;
 }
 
-.about        { --wave-color: var(--ic-bg); }
-.services     { --wave-color: var(--ic-bg-soft); }
-.before-after { --wave-color: var(--ic-bg); }
-.testimonials { --wave-color: var(--ic-black-soft); }
-.pricing      { --wave-color: var(--ic-bg); }
-.faq          { --wave-color: var(--ic-bg-soft); }
-.contact      { --wave-color: var(--ic-bg); }
-.site-footer  { --wave-color: var(--ic-black-soft); }
+.wave-top::before {
+  z-index: 3;
+  height: 48px;
+}
 
-/* Shift each wave so neighbouring edges don't look identical */
-.services::before     { -webkit-mask-position: 90px bottom; mask-position: 90px bottom; }
-.before-after::before { -webkit-mask-position: 200px bottom; mask-position: 200px bottom; }
-.testimonials::before { -webkit-mask-position: 140px bottom; mask-position: 140px bottom; }
-.faq::before          { -webkit-mask-position: 250px bottom; mask-position: 250px bottom; }
-.site-footer::before  { -webkit-mask-position: 60px bottom; mask-position: 60px bottom; }
+.wave-top::after {
+  z-index: 2;
+  height: 64px;
+  opacity: 0.45;
+  -webkit-mask-position: calc(var(--wave-x, 0px) + 220px) bottom;
+  mask-position: calc(var(--wave-x, 0px) + 220px) bottom;
+}
+
+.about        { --wave-color: var(--ic-bg); }
+.services     { --wave-color: var(--ic-bg-soft);    --wave-x: 150px; }
+.before-after { --wave-color: var(--ic-bg);         --wave-x: 300px; }
+.gallery      { --wave-color: var(--ic-bg-soft);    --wave-x: 450px; }
+.portfolio    { --wave-color: var(--ic-bg);         --wave-x: 100px; }
+.testimonials { --wave-color: var(--ic-black-soft); --wave-x: 250px; }
+.pricing      { --wave-color: var(--ic-bg);         --wave-x: 400px; }
+.faq          { --wave-color: var(--ic-bg-soft);    --wave-x: 50px; }
+.contact      { --wave-color: var(--ic-bg);         --wave-x: 350px; }
+.site-footer  { --wave-color: var(--ic-black-soft); --wave-x: 200px; }
 
 @media (max-width: 768px) {
-  .wave-top::before {
-    height: 34px;
-    -webkit-mask-size: 200px 100%;
-    mask-size: 200px 100%;
+  .wave-top::before { height: 30px; }
+  .wave-top::after { height: 40px; }
+  .wave-top::before,
+  .wave-top::after {
+    -webkit-mask-size: 360px 100%;
+    mask-size: 360px 100%;
   }
 }
 
