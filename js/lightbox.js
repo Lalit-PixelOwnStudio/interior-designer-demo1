@@ -1,5 +1,7 @@
-/* Full-screen photo viewer shared by the gallery and the portfolio
-   ("View Project"). Swipe on phones, arrow keys / buttons on desktop. */
+/* Full-screen photo viewer shared by the gallery and the portfolio.
+   With a project passed in, a details panel shows its name, price,
+   location, description, tags and photo thumbnails beside the photo
+   (below it on phones). Swipe on phones, arrow keys / buttons on desktop. */
 (function () {
   "use strict";
 
@@ -9,16 +11,22 @@
   var stage = document.getElementById("lightboxStage");
   var image = document.getElementById("lightboxImage");
   var counter = document.getElementById("lightboxCounter");
-  var info = document.getElementById("lightboxInfo");
+  var details = document.getElementById("lightboxDetails");
   var closeBtn = document.getElementById("lightboxClose");
   var prevBtn = document.getElementById("lightboxPrev");
   var nextBtn = document.getElementById("lightboxNext");
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var contactHref = document.body.getAttribute("data-contact-href") || "#contact";
   var items = [];
   var current = 0;
   var label = "";
   var lastFocus = null;
+  var thumbs = [];
+
+  var PIN =
+    '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>';
 
   function preload(item) {
     if (!item) return;
@@ -32,6 +40,11 @@
     image.src = item.large;
     image.alt = (label || "Interior Core project") + " — photo " + (current + 1);
     counter.textContent = (current + 1) + " / " + items.length;
+    thumbs.forEach(function (t, i) {
+      t.classList.toggle("active", i === current);
+      if (i === current) t.setAttribute("aria-current", "true");
+      else t.removeAttribute("aria-current");
+    });
     preload(items[(current + 1) % items.length]);
     preload(items[(current - 1 + items.length) % items.length]);
   }
@@ -46,25 +59,66 @@
     }, 160);
   }
 
-  function open(list, index, details) {
-    items = list;
-    label = (details && details.title) || "";
-    lastFocus = document.activeElement;
-
-    if (details && details.title) {
-      info.innerHTML =
-        "<h3>" + details.title + "</h3>" +
-        (details.meta ? "<p>" + details.meta + "</p>" : "");
-      info.hidden = false;
-    } else {
-      info.innerHTML = "";
-      info.hidden = true;
+  function renderDetails(project) {
+    thumbs = [];
+    if (!project) {
+      details.hidden = true;
+      details.innerHTML = "";
+      lightbox.classList.remove("has-details");
+      return;
     }
+
+    var tags = (project.tags || []).map(function (t) {
+      return '<span class="lb-tag">' + t + "</span>";
+    }).join("");
+
+    details.innerHTML =
+      (project.category ? '<span class="lb-eyebrow">' + project.category + "</span>" : "") +
+      '<h3 class="lb-title">' + project.title + "</h3>" +
+      '<div class="lb-meta">' +
+        (project.price
+          ? '<span class="lb-price"><small>Project value</small>' + project.price + "</span>"
+          : '<span class="lb-price lb-price-na"><small>Project value</small>On request</span>') +
+        (project.location ? '<span class="lb-location">' + PIN + project.location + "</span>" : "") +
+      "</div>" +
+      (project.description ? '<p class="lb-desc">' + project.description + "</p>" : "") +
+      (tags ? '<div class="lb-tags">' + tags + "</div>" : "") +
+      '<div class="lb-thumbs-label">All photos</div>' +
+      '<div class="lb-thumbs" id="lbThumbs"></div>' +
+      '<a class="lb-cta" href="' + contactHref + '">Get a Quote for a Similar Space</a>';
+
+    var thumbsEl = details.querySelector("#lbThumbs");
+    items.forEach(function (item, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "lb-thumb";
+      b.setAttribute("aria-label", "Show photo " + (i + 1));
+      b.innerHTML = '<img src="' + item.small + '" alt="" loading="lazy">';
+      b.addEventListener("click", function () { show(i); });
+      thumbsEl.appendChild(b);
+      thumbs.push(b);
+    });
+
+    details.querySelector(".lb-cta").addEventListener("click", function () {
+      close();
+    });
+
+    details.hidden = false;
+    details.scrollTop = 0;
+    lightbox.classList.add("has-details");
+  }
+
+  // open(photos, startIndex, project?) — project adds the details panel.
+  function open(list, index, project) {
+    items = list;
+    label = (project && project.title) || "";
+    lastFocus = document.activeElement;
 
     var single = items.length < 2;
     prevBtn.hidden = single;
     nextBtn.hidden = single;
 
+    renderDetails(project);
     show(index || 0);
     lightbox.classList.add("open");
     lightbox.setAttribute("aria-hidden", "false");
@@ -84,7 +138,7 @@
   prevBtn.addEventListener("click", function () { go(-1); });
 
   lightbox.addEventListener("click", function (e) {
-    if (e.target === lightbox || e.target === stage) close();
+    if (e.target === stage || e.target.classList.contains("lightbox-media")) close();
   });
 
   document.addEventListener("keydown", function (e) {

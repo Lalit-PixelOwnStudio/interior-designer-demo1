@@ -6,9 +6,11 @@
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var hero = document.getElementById("hero");
+  var solidNav = document.body.hasAttribute("data-solid-nav");
 
   function updateNav() {
-    nav.classList.toggle("scrolled", window.scrollY > 40);
+    // Pages without a dark hero (projects.html) keep the solid nav.
+    nav.classList.toggle("scrolled", solidNav || window.scrollY > 40);
     // Sticky Call / WhatsApp bar (phones) and floating WhatsApp button
     // (desktop) appear once the visitor scrolls past most of the hero.
     var pastHero = hero ? window.scrollY > hero.offsetHeight * 0.6 : true;
