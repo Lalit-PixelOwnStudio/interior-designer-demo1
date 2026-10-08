@@ -13,7 +13,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008l"
+VERSION = "20261008m"
 
 NAV = [
     ("about.html", "About"),
@@ -148,7 +148,7 @@ INTRO = (
 HEAD = """<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8">{head_first}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title} — Interior Core</title>
 <meta name="description" content="{description}">
@@ -168,10 +168,11 @@ HEAD = """<!doctype html>
 """
 
 
-def page(name, title, description, body, scripts, extra_head="", nav=None, solid_nav=True):
+def page(name, title, description, body, scripts, extra_head="", nav=None, solid_nav=True, head_first=""):
     parts = [
         HEAD.format(title=title, description=description, extra_head=extra_head, version=VERSION,
-                    body_attrs=" data-solid-nav" if solid_nav else "", head_script=HEAD_SCRIPT, intro=INTRO),
+                    body_attrs=" data-solid-nav" if solid_nav else "", head_script=HEAD_SCRIPT, intro=INTRO,
+                    head_first=head_first),
         header(nav or name),
         "",
         body,
@@ -273,6 +274,23 @@ page(
     ]),
     ["config", "data", "materials", "main"],
     nav="services.html",
+)
+
+
+# ----- 404.html: GitHub Pages / Vercel serve it for any missing address -----
+# It can be served from any depth (/site/a/b/c), so a <base> pointing at the
+# site root keeps the relative css/js/img paths working.
+NOT_FOUND_BASE = (
+    '\n<script>(function(){var p=location.pathname,m=p.match(/^\\/interior-designer-demo1\\//);'
+    'var b=document.createElement("base");b.href=m?m[0]:"/";document.head.appendChild(b)})()</script>'
+)
+page(
+    "404.html", "Page Not Found",
+    "This page doesn't exist — head back to the Interior Core home page.",
+    partial("404"),
+    ["config", "not-found", "main"],
+    head_first=NOT_FOUND_BASE,
+    nav="",
 )
 
 

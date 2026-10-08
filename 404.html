@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>(function(){var p=location.pathname,m=p.match(/^\/interior-designer-demo1\//);var b=document.createElement("base");b.href=m?m[0]:"/";document.head.appendChild(b)})()</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Project — Interior Core</title>
-<meta name="description" content="A project by Interior Core: the brief, our approach, photos, materials, timeline and the client's review.">
+<title>Page Not Found — Interior Core</title>
+<meta name="description" content="This page doesn't exist — head back to the Interior Core home page.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +17,7 @@
 <link rel="stylesheet" href="css/style.css?v=20261008m">
 <script>(function(d){try{if(!("onpagereveal" in window))d.classList.add("no-vt");if(!sessionStorage.getItem("icIntro")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){d.classList.add("ic-intro");sessionStorage.setItem("icIntro","1")}}catch(e){}})(document.documentElement)</script>
 </head>
-<body data-contact-href="contact.html">
+<body data-solid-nav data-contact-href="contact.html">
 <div class="intro" id="intro" aria-hidden="true"><div class="intro-inner"><img class="intro-logo" src="img/brand/logo-192.png" alt="" width="96" height="96"><span class="intro-word"><i style="--i:0">I</i><i style="--i:1">N</i><i style="--i:2">T</i><i style="--i:3">E</i><i style="--i:4">R</i><i style="--i:5">I</i><i style="--i:6">O</i><i style="--i:7">R</i><i style="--i:8">&nbsp;</i><i style="--i:9">C</i><i style="--i:10">O</i><i style="--i:11">R</i><i style="--i:12">E</i></span><span class="intro-line"></span><small>Interiors that reflect your style</small></div></div>
 
 <header id="site-nav">
@@ -28,7 +29,7 @@
     <nav class="nav-links">
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
-      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="projects.html">Projects</a>
       <a href="pricing.html">Pricing</a>
       <a href="contact.html" class="nav-contact-btn">Contact</a>
     </nav>
@@ -38,28 +39,24 @@
   </div>
 </header>
 
-<main id="caseStudy" class="case-study">
-  <noscript><section class="cs-section page-top"><h1 class="about-heading">Project</h1><p>Please turn on JavaScript to view this project, or <a href="projects.html">see all projects</a>.</p></section></noscript>
-</main>
-
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
-  <button class="lightbox-close" id="lightboxClose" aria-label="Close">
-    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
-  </button>
-  <div class="lightbox-media">
-    <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Previous image">
-      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polyline points="15 5 8 12 15 19"/></svg>
-    </button>
-    <div class="lightbox-stage" id="lightboxStage">
-      <img id="lightboxImage" src="" alt="">
+<section class="nf page-top">
+  <div class="nf-inner">
+    <p class="nf-code" id="nfCode" aria-hidden="true">404</p>
+    <span class="eyebrow">Page not found</span>
+    <h1 class="about-heading">This room hasn't been designed yet</h1>
+    <p class="section-subline">The page you're looking for has moved or doesn't exist. Let's get you back somewhere beautiful.</p>
+    <div class="cs-cta-btns nf-btns">
+      <a href="index.html" class="lb-cta">Back to Home</a>
+      <a href="projects.html" class="cs-ghost cs-ghost-light">View Projects</a>
     </div>
-    <button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Next image">
-      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polyline points="9 5 16 12 9 19"/></svg>
-    </button>
-    <div class="lightbox-counter" id="lightboxCounter"></div>
+    <nav class="nf-links" aria-label="Popular pages">
+      <a href="services.html">Services</a>
+      <a href="materials.html">Material Library</a>
+      <a href="pricing.html#estimator">Cost Estimator</a>
+      <a href="contact.html#visit">Book a Studio Visit</a>
+    </nav>
   </div>
-  <aside class="lightbox-details" id="lightboxDetails" hidden></aside>
-</div>
+</section>
 
 <footer class="site-footer wave-top">
   <div class="footer-inner">
@@ -114,9 +111,7 @@
 
 <script src="js/transitions.js?v=20261008m"></script>
 <script src="js/config.js?v=20261008m"></script>
-<script src="js/data.js?v=20261008m"></script>
-<script src="js/lightbox.js?v=20261008m"></script>
-<script src="js/case-study.js?v=20261008m"></script>
+<script src="js/not-found.js?v=20261008m"></script>
 <script src="js/main.js?v=20261008m"></script>
 </body>
 </html>
