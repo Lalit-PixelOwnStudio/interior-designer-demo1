@@ -136,7 +136,7 @@
           '<div class="cs-materials reveal-group">' + cs.materials.map(function (m, i) {
             return '<div class="cs-mat reveal-item" style="--d:' + i + '"><span class="cs-swatch" style="background:' + m.swatch + '"></span>' +
               "<span><strong>" + esc(m.name) + "</strong><small>" + esc(m.detail) + "</small></span></div>";
-          }).join("") + "</div></div>" : "") +
+          }).join("") + '</div><a class="cs-lib" href="materials.html">Explore the material library ' + ARROW + "</a></div>" : "") +
         (cs.timeline ? '<div class="cs-block">' + head("Timeline", "From first sketch to handover") +
           '<div class="cs-timeline">' + cs.timeline.map(function (t, i) {
             var row = '<div class="cs-phase"><div class="cs-phase-name"><strong>' + esc(t.phase) + "</strong><small>" + t.days + ' days</small></div>' +

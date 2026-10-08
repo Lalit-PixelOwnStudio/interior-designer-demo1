@@ -1,0 +1,27 @@
+<section id="materials" class="materials page-top">
+  <div class="section-header reveal-group">
+    <span class="eyebrow reveal-item" style="--d:0">Material Library</span>
+    <h1 class="about-heading reveal-item" style="--d:1">Finishes We Love Working With</h1>
+    <p class="section-subline reveal-item" style="--d:2">Browse laminates, veneers, marble, fabrics and metals. Tap a swatch for details, save the ones you like, and send us your moodboard.</p>
+  </div>
+
+  <div class="mat-filters" id="matFilters" role="toolbar" aria-label="Filter materials"></div>
+  <div class="mat-grid" id="matGrid"></div>
+  <p class="mat-note">Swatches are shown for reference — colours vary slightly from screen to screen. <a href="contact.html#visit">See the real samples at our studio →</a></p>
+</section>
+
+<dialog class="mat-dialog" id="matDialog" aria-labelledby="matDialogTitle">
+  <button type="button" class="mat-dialog-close" id="matDialogClose" aria-label="Close">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+  </button>
+  <div class="mat-dialog-body" id="matDialogBody"></div>
+</dialog>
+
+<div class="moodboard" id="moodboard" aria-live="polite" hidden>
+  <div class="moodboard-thumbs" id="moodboardThumbs"></div>
+  <div class="moodboard-text"><strong id="moodboardCount">0 saved</strong><small>Your moodboard</small></div>
+  <a href="#" class="moodboard-send" id="moodboardSend">Send on WhatsApp</a>
+  <button type="button" class="moodboard-clear" id="moodboardClear" aria-label="Clear moodboard">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+</div>

@@ -13,7 +13,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008j"
+VERSION = "20261008k"
 
 NAV = [
     ("about.html", "About"),
@@ -22,7 +22,7 @@ NAV = [
     ("pricing.html", "Pricing"),
 ]
 
-EXPLORE = NAV + [("contact.html", "Contact"), ("pricing.html#faq", "FAQ")]
+EXPLORE = NAV + [("materials.html", "Materials"), ("contact.html", "Contact"), ("pricing.html#faq", "FAQ")]
 
 WA_ICON = re.compile(r'<a href="[^"]*" class="wa-float".*?</a>', re.S)
 
@@ -112,14 +112,15 @@ def link_out(html):
     return html.replace('href="#contact"', 'href="contact.html"')
 
 
-def cta(heading, text, button="Book a Consultation"):
+def cta(heading, text, button="Book a Consultation", href="contact.html",
+        ghost=("contact.html#visit", "Visit Our Studio")):
     return "\n".join([
         '<section class="projects-cta wave-top">',
         '  <h2 class="about-heading">%s</h2>' % heading,
         '  <p class="section-subline">%s</p>' % text,
         '  <div class="cs-cta-btns">',
-        '    <a href="contact.html" class="lb-cta">%s</a>' % button,
-        '    <a href="contact.html#visit" class="cs-ghost">Visit Our Studio</a>',
+        '    <a href="%s" class="lb-cta">%s</a>' % (href, button),
+        '    <a href="%s" class="cs-ghost">%s</a>' % ghost,
         "  </div>",
         "</section>",
     ])
@@ -237,6 +238,20 @@ page(
     "\n\n".join([page_top(CONTACT), partial("visit")]),
     ["config", "contact", "visit", "main"],
     extra_head='\n<link rel="preconnect" href="https://www.google.com">\n<link rel="preconnect" href="https://maps.gstatic.com" crossorigin>',
+)
+
+
+# ----- materials.html: swatch library with a moodboard -----
+page(
+    "materials.html", "Material Library",
+    "Laminates, veneers, marble, fabrics and metals used by Interior Core — save the ones you like to a moodboard.",
+    "\n\n".join([
+        partial("materials"),
+        cta("Want to touch these in person?", "Our studio has the real samples — book a visit and bring your moodboard along.",
+            "Book a Studio Visit", "contact.html#visit", ("pricing.html#estimator", "Estimate My Cost")),
+    ]),
+    ["config", "data", "materials", "main"],
+    nav="services.html",
 )
 
 
