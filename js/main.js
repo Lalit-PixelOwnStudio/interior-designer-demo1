@@ -54,6 +54,11 @@
       if (e.key === "Escape" && navLinks.classList.contains("open")) setMenu(false);
     });
 
+    // tapping the dimmed page below the menu closes it
+    document.addEventListener("click", function (e) {
+      if (navLinks.classList.contains("open") && !nav.contains(e.target)) setMenu(false);
+    });
+
     window.matchMedia("(min-width: 1024px)").addEventListener("change", function (e) {
       if (e.matches) setMenu(false);
     });

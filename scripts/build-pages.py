@@ -13,7 +13,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008r"
+VERSION = "20261008s"
 
 NAV = [
     ("about.html", "About"),
