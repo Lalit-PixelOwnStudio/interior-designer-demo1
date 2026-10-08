@@ -6458,7 +6458,8 @@ body.has-moodboard .site-footer { padding-bottom: 110px; }
 
 @media (max-width: 768px) {
   /* phones: filters sit in one row that scrolls sideways */
-  .mat-filters {
+  .mat-filters,
+  .portfolio-filters {
     flex-wrap: nowrap;
     justify-content: flex-start;
     gap: 8px;
@@ -6472,8 +6473,11 @@ body.has-moodboard .site-footer { padding-bottom: 110px; }
     -webkit-mask: linear-gradient(90deg, transparent, #000 20px, #000 calc(100% - 28px), transparent);
     mask: linear-gradient(90deg, transparent, #000 20px, #000 calc(100% - 28px), transparent);
   }
-  .mat-filters::-webkit-scrollbar { display: none; }
-  .mat-filters .filter-btn { flex: none; white-space: nowrap; scroll-snap-align: start; }
+  .mat-filters::-webkit-scrollbar,
+  .portfolio-filters::-webkit-scrollbar { display: none; }
+  .mat-filters .filter-btn,
+  .portfolio-filters .filter-btn { flex: none; white-space: nowrap; scroll-snap-align: start; }
+  .projects-list .portfolio-filters { margin-bottom: 26px; }
   .mat-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .mat-info { padding: 10px 12px 12px; }
   .mat-info strong { font-size: 1rem; }

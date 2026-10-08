@@ -51,6 +51,10 @@
         b.classList.toggle("active", on);
         b.setAttribute("aria-pressed", String(on));
       });
+      // on phones the row scrolls sideways: bring the picked filter into view
+      if (filtersEl.scrollWidth > filtersEl.clientWidth) {
+        filtersEl.scrollTo({ left: btn.offsetLeft - (filtersEl.clientWidth - btn.offsetWidth) / 2, behavior: "smooth" });
+      }
       render();
     });
   }
