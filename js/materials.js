@@ -73,6 +73,10 @@
         x.classList.toggle("active", x === b);
         x.setAttribute("aria-pressed", String(x === b));
       });
+      // on phones the row scrolls sideways: bring the picked chip into view
+      if (filtersEl.scrollWidth > filtersEl.clientWidth) {
+        filtersEl.scrollTo({ left: b.offsetLeft - (filtersEl.clientWidth - b.offsetWidth) / 2, behavior: "smooth" });
+      }
       render();
     });
     filtersEl.appendChild(b);
