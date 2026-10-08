@@ -8,7 +8,7 @@
   if (!quiz) return;
 
   function photo(p, n) { return "img/projects/project-" + p + "/" + n + "-640.webp"; }
-  function swatch(id) { return "img/materials/" + id + ".webp"; }
+  function swatch(id) { return "img/materials/" + id + "-sm.webp"; }
 
   var QUESTIONS = [
     {

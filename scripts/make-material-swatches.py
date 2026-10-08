@@ -1,4 +1,5 @@
-"""Generate the material-library swatch images (img/materials/*.webp).
+"""Generate the material-library swatch images (img/materials/*.webp and
+a 360px *-sm.webp copy of each).
 
     python scripts/make-material-swatches.py
 
@@ -58,6 +59,8 @@ def save(name, arr, blur=0):
         img = img.filter(ImageFilter.GaussianBlur(blur))
     OUT.mkdir(parents=True, exist_ok=True)
     img.save(OUT / (name + ".webp"), "WEBP", quality=82, method=6)
+    # small copy for the grid, the quiz and the moodboard (the dialog uses the full one)
+    img.resize((360, 360), Image.LANCZOS).save(OUT / (name + "-sm.webp"), "WEBP", quality=80, method=6)
     print("wrote", name)
 
 

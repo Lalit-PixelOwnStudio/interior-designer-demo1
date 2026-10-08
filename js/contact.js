@@ -87,8 +87,10 @@
     }
   }
 
-  updateBadge();
-  setInterval(updateBadge, 60000);
+  if (document.getElementById("openBadge")) {
+    updateBadge();
+    setInterval(updateBadge, 60000);
+  }
 
   /* ----- Package from pricing.html (?package=…&property=…&budget=…) ----- */
   var form = document.getElementById("contactForm");

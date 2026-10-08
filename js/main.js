@@ -216,10 +216,17 @@
     var loadMap = function () {
       if (!map.src) map.src = map.getAttribute("data-src");
     };
-    // Load the map as soon as the rest of the page has loaded, so it's
-    // ready by the time anyone scrolls down to it.
-    if (document.readyState === "complete") loadMap();
-    else window.addEventListener("load", loadMap);
+    // Start loading the map about two screens before it comes into view,
+    // so it's ready when the visitor gets there without slowing the page.
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries, obs) {
+        if (entries[0].isIntersecting) { loadMap(); obs.disconnect(); }
+      }, { rootMargin: "1500px 0px" }).observe(map);
+    } else if (document.readyState === "complete") {
+      loadMap();
+    } else {
+      window.addEventListener("load", loadMap);
+    }
   }
 
   var year = document.getElementById("footerYear");
@@ -232,10 +239,34 @@
     var wide = window.matchMedia("(min-width: 768px)").matches;
     if (wide) video.poster = "img/hero/poster-1920.webp";
     if (!reduceMotion && !saveData) {
-      video.src = wide ? "img/hero/hero-1080.mp4" : "img/hero/hero-720.mp4";
-      var playPromise = video.play();
-      if (playPromise && playPromise.catch) playPromise.catch(function () {});
+      var play = function () {
+        var p = video.play();
+        if (p && p.catch) p.catch(function () {});
+      };
+      // the poster shows first; the video starts once the page itself has
+      // loaded, so text and images aren't waiting behind it
+      var startVideo = function () {
+        var webm = wide && video.canPlayType('video/webm; codecs="vp9"');
+        video.src = wide ? (webm ? "img/hero/hero-1080.webm" : "img/hero/hero-1080.mp4") : "img/hero/hero-720.mp4";
+        play();
+        // no point decoding video nobody can see: pause it once the hero scrolls away
+        if ("IntersectionObserver" in window) {
+          new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) play(); else video.pause();
+          }).observe(video);
+        }
+      };
+      if (document.readyState === "complete") startVideo();
+      else window.addEventListener("load", startVideo);
     }
+  }
+
+  /* ===== Pause looping CSS animations (brand rows, seals) while off screen ===== */
+  if ("IntersectionObserver" in window) {
+    var loopObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.target.classList.toggle("is-off", !e.isIntersecting); });
+    }, { rootMargin: "100px 0px" });
+    document.querySelectorAll(".brand-rows, .guarantee-grid").forEach(function (el) { loopObserver.observe(el); });
   }
 
   /* ===== Contact form → WhatsApp message ===== */

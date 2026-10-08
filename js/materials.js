@@ -53,6 +53,7 @@
   }
 
   function img(m) { return "img/materials/" + m.id + ".webp"; }
+  function thumb(m) { return "img/materials/" + m.id + "-sm.webp"; }
   function rupees(n) { return "₹₹₹".slice(0, n); }
 
   var HEART = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.3 1.1 5 3 1.7-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2Z"/></svg>';
@@ -94,7 +95,7 @@
       var isSaved = saved.indexOf(m.id) !== -1;
       card.innerHTML =
         '<button type="button" class="mat-open" aria-label="' + m.name + ': details">' +
-          '<span class="mat-swatch"><img src="' + img(m) + '" alt="" loading="lazy" decoding="async"></span>' +
+          '<span class="mat-swatch"><img src="' + thumb(m) + '" alt="" width="360" height="360" loading="lazy" decoding="async"></span>' +
           '<span class="mat-info"><small>' + m.cat + "</small><strong>" + m.name + "</strong><em>" + m.finish + "</em></span>" +
         "</button>" +
         '<span class="mat-price" title="' + TIERS[m.price] + '">' + rupees(m.price) + "</span>" +
@@ -134,7 +135,7 @@
     document.body.classList.toggle("has-moodboard", saved.length > 0);
     if (!saved.length) return;
     thumbs.innerHTML = saved.slice(-5).map(function (id) {
-      return '<img src="' + img(byId[id]) + '" alt="" title="' + byId[id].name + '">';
+      return '<img src="' + thumb(byId[id]) + '" alt="" title="' + byId[id].name + '">';
     }).join("");
     countEl.textContent = saved.length + " saved";
     var lines = ["Hi Interior Core, here's my moodboard from your material library:", ""]

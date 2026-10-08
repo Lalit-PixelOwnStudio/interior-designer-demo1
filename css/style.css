@@ -6564,6 +6564,7 @@ body.has-moodboard .site-footer { padding-bottom: 110px; }
 .intro-logo {
   width: 96px;
   height: 96px;
+  background: url("../img/brand/logo-192.webp") center / contain no-repeat;
   animation: intro-logo 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -7019,3 +7020,7 @@ body.has-moodboard .site-footer { padding-bottom: 110px; }
 }
 
 .est-live .est-to { font-size: 0.62em; }
+
+/* looping animations rest while their section is off screen (js/main.js) */
+.is-off .brand-track,
+.is-off .g-seal-ring { animation-play-state: paused; }

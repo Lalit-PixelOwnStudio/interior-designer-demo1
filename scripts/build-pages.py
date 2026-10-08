@@ -8,12 +8,28 @@ Pricing, FAQ, Contact, footer) and run this script to update
 services.html, projects.html, pricing.html and contact.html. It also
 refreshes the header, footer and asset version on index.html and
 about.html. Bump VERSION whenever CSS or JS changes so browsers reload them.
+
+Pages load two small files instead of many: js/site.min.js (every file in
+JS_FILES, in order, minified) and css/style.min.css. Edit the normal files
+in js/ and css/style.css, then run this script to rebuild both. Minifying
+uses esbuild through npx; without it the files are just joined, unminified.
 """
 import pathlib
 import re
+import shutil
+import subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008s"
+VERSION = "20261008t"
+
+# Every script on the site, in the order they run. Each one only acts when
+# its section is on the page, so one bundle serves all pages.
+JS_FILES = [
+    "transitions", "config", "data", "lightbox", "before-after", "gallery",
+    "portfolio", "reviews", "pricing", "estimator", "faq", "contact", "visit",
+    "process", "quiz", "materials", "case-study", "about", "not-found", "main",
+]
+ESBUILD = ["npx", "--yes", "esbuild@0.24.2"]
 
 NAV = [
     ("about.html", "About"),
@@ -67,7 +83,7 @@ def header(current):
         '<header id="site-nav">',
         '  <div class="nav-inner">',
         '    <a href="%s" class="nav-logo">' % logo,
-        '      <img src="img/brand/logo-72.png" alt="" width="36" height="36">',
+        '      <img src="img/brand/logo-72.webp" alt="" width="36" height="36">',
         "      <span>Interior Core</span>",
         "    </a>",
         '    <nav class="nav-links">',
@@ -136,7 +152,7 @@ HEAD_SCRIPT = (
 
 INTRO = (
     '<div class="intro" id="intro" aria-hidden="true"><div class="intro-inner">'
-    '<img class="intro-logo" src="img/brand/logo-192.png" alt="" width="96" height="96">'
+    '<span class="intro-logo"></span>'
     '<span class="intro-word">' + "".join(
         '<i style="--i:%d">%s</i>' % (i, "&nbsp;" if c == " " else c) for i, c in enumerate("INTERIOR CORE")
     ) + "</span>"
@@ -144,6 +160,36 @@ INTRO = (
     "<small>Interiors that reflect your style</small>"
     "</div></div>"
 )
+
+SCRIPT_TAG = '<script src="js/site.min.js?v=%s"></script>' % VERSION
+
+
+def esbuild(args):
+    """Run esbuild; returns False if it isn't available."""
+    if not shutil.which("npx"):
+        return False
+    try:
+        subprocess.run(ESBUILD + args, cwd=ROOT, check=True, capture_output=True, timeout=180)
+        return True
+    except (subprocess.SubprocessError, OSError) as err:
+        print("esbuild failed, writing unminified file:", err)
+        return False
+
+
+def build_assets():
+    joined = ROOT / "js" / "_site.tmp.js"
+    joined.write_text("\n;\n".join(read("js/%s.js" % name) for name in JS_FILES), encoding="utf-8")
+    if not esbuild(["js/_site.tmp.js", "--minify", "--target=es2017", "--log-level=error", "--outfile=js/site.min.js"]):
+        shutil.copy(joined, ROOT / "js" / "site.min.js")
+    joined.unlink()
+    if not esbuild(["css/style.css", "--minify", "--log-level=error", "--outfile=css/style.min.css"]):
+        shutil.copy(ROOT / "css" / "style.css", ROOT / "css" / "style.min.css")
+    for f in ("js/site.min.js", "css/style.min.css"):
+        print("wrote", f, (ROOT / f).stat().st_size // 1024, "KB")
+
+
+build_assets()
+
 
 HEAD = """<!doctype html>
 <html lang="en">
@@ -160,7 +206,7 @@ HEAD = """<!doctype html>
 <meta name="theme-color" content="#faf5ec">
 <link rel="icon" href="img/brand/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/brand/apple-touch-icon.png">{extra_head}
-<link rel="stylesheet" href="css/style.css?v={version}">
+<link rel="stylesheet" href="css/style.min.css?v={version}">
 {head_script}
 </head>
 <body{body_attrs} data-contact-href="contact.html">
@@ -168,7 +214,7 @@ HEAD = """<!doctype html>
 """
 
 
-def page(name, title, description, body, scripts, extra_head="", nav=None, solid_nav=True, head_first=""):
+def page(name, title, description, body, extra_head="", nav=None, solid_nav=True, head_first=""):
     parts = [
         HEAD.format(title=title, description=description, extra_head=extra_head, version=VERSION,
                     body_attrs=" data-solid-nav" if solid_nav else "", head_script=HEAD_SCRIPT, intro=INTRO,
@@ -183,7 +229,7 @@ def page(name, title, description, body, scripts, extra_head="", nav=None, solid
         wa_float(name),
         "",
     ]
-    parts += ['<script src="js/%s.js?v=%s"></script>' % (s, VERSION) for s in ["transitions"] + scripts]
+    parts.append(SCRIPT_TAG)
     write(name, "\n".join(parts) + "\n</body>\n</html>\n")
 
 
@@ -212,7 +258,6 @@ page(
         cta("Have a space in mind?", "Tell us about your home and we'll suggest the right services for it."),
         LIGHTBOX,
     ]),
-    ["config", "data", "lightbox", "portfolio", "main"],
 )
 
 # ----- projects.html: all projects first, services below -----
@@ -237,7 +282,6 @@ page(
         cta("Like what you see? Let's design yours.", "Share a few details and we'll plan a site visit."),
         LIGHTBOX,
     ]),
-    ["config", "data", "lightbox", "portfolio", "quiz", "main"],
 )
 
 # ----- pricing.html: packages, then pricing questions -----
@@ -251,7 +295,6 @@ page(
         FAQ,
         cta("Not sure which package fits?", "Tell us about your home and we'll send a quote after a quick chat.", "Get a Free Quote"),
     ]),
-    ["config", "pricing", "estimator", "faq", "main"],
 )
 
 # ----- contact.html: the contact section on its own -----
@@ -259,7 +302,6 @@ page(
     "contact.html", "Contact",
     "Call, WhatsApp or visit the Interior Core studio in Malviya Nagar, New Delhi.",
     "\n\n".join([page_top(CONTACT), partial("visit")]),
-    ["config", "contact", "visit", "main"],
     extra_head='\n<link rel="preconnect" href="https://www.google.com">\n<link rel="preconnect" href="https://maps.gstatic.com" crossorigin>',
 )
 
@@ -273,7 +315,6 @@ page(
         cta("Want to touch these in person?", "Our studio has the real samples. Book a visit and bring your moodboard along.",
             "Book a Studio Visit", "contact.html#visit", ("pricing.html#estimator", "Estimate My Cost")),
     ]),
-    ["config", "data", "materials", "main"],
     nav="services.html",
 )
 
@@ -289,7 +330,6 @@ page(
     "404.html", "Page Not Found",
     "This page doesn't exist. Head back to the Interior Core home page.",
     partial("404"),
-    ["config", "not-found", "main"],
     head_first=NOT_FOUND_BASE,
     nav="",
 )
@@ -306,7 +346,6 @@ page(
         "</main>",
         LIGHTBOX,
     ]),
-    ["config", "data", "lightbox", "case-study", "main"],
     nav="projects.html",
     solid_nav=False,
 )
@@ -319,13 +358,17 @@ def refresh(name):
     html = re.sub(r'<footer class="site-footer.*?</footer>', lambda m: footer(name), html, count=1, flags=re.S)
     html = re.sub(r'\n<!-- Quick actions.*?-->\n<div class="quick-bar".*?\n</div>', "\n<!-- Floating WhatsApp button (all screen sizes) -->", html, flags=re.S)
     html = re.sub(r'\?v=\w+', "?v=" + VERSION, html)
+    html = html.replace('href="css/style.css?', 'href="css/style.min.css?')
+    tags = re.findall(r'<script src="js/[\w.-]+\.js\?v=\w+"></script>\n', html)
+    if tags:
+        html = html.replace(tags[0], SCRIPT_TAG + "\n", 1)
+        for tag in tags[1:]:
+            html = html.replace(tag, "", 1)
     if HEAD_SCRIPT not in html:
         html = re.sub(r'<script>\(function\(d\)\{try\{if\(!\("onpagereveal".*?</script>\n', "", html)
         html = html.replace("</head>", HEAD_SCRIPT + "\n</head>", 1)
     if 'id="intro"' not in html:
         html = re.sub(r"(<body[^>]*>\n)", lambda m: m.group(1) + INTRO + "\n", html, count=1)
-    if "js/transitions.js" not in html:
-        html = html.replace('<script src="js/config.js', '<script src="js/transitions.js?v=%s"></script>\n<script src="js/config.js' % VERSION, 1)
     if name != "index.html":
         html = html.replace("index.html#contact", "contact.html")
         html = WA_ICON.sub(lambda m: wa_float(name), html)

@@ -68,7 +68,20 @@
     track.style.transform = "translate3d(" + (-offset) + "px, 0, 0)";
   }
 
+  // the marquee only animates while it's on screen
+  var onScreen = true;
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      onScreen = entries[0].isIntersecting;
+      if (onScreen && clones.length && !rafId) {
+        lastFrame = 0;
+        rafId = requestAnimationFrame(frame);
+      }
+    }, { rootMargin: "100px 0px" }).observe(marquee);
+  }
+
   function frame(t) {
+    if (!onScreen) { rafId = null; return; }
     var dt = lastFrame ? Math.min((t - lastFrame) / 1000, 0.05) : 0;
     lastFrame = t;
     if (!dragging) {

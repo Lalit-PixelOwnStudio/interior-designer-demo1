@@ -305,6 +305,7 @@
   ].map(function (r, i) {
     var base = "img/before-after/room-" + (i + 1);
     return Object.assign({}, r, {
+      thumb: base + "-thumb.webp",
       before: { small: base + "-before-720.webp", large: base + "-before-1280.webp" },
       after: { small: base + "-after-720.webp", large: base + "-after-1280.webp" }
     });

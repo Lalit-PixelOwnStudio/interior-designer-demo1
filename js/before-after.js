@@ -48,7 +48,7 @@
     tab.type = "button";
     tab.className = "ba-tab";
     tab.setAttribute("role", "tab");
-    tab.innerHTML = '<img src="' + room.after.small + '" alt="" loading="lazy">' + room.room;
+    tab.innerHTML = '<img src="' + (room.thumb || room.after.small) + '" alt="" width="40" height="40" loading="lazy" decoding="async">' + room.room;
     tab.addEventListener("click", function () { show(i); });
     tabsEl.appendChild(tab);
     return tab;
