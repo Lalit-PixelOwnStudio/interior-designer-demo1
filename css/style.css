@@ -1,4 +1,4 @@
-/* ===== Interior Core — Brand Tokens ===== */
+/* ===== Interior Core - Brand Tokens ===== */
 :root {
   --ic-black:      #000000;
   --ic-black-soft: #0d0d0d;
@@ -2051,7 +2051,7 @@ a.portfolio-cta {
 .lb-carousel,
 .lb-swipe-hint { display: none; }
 
-/* Phones / small tablets, project mode: one scrolling listing page —
+/* Phones / small tablets, project mode: one scrolling listing page -
    swipeable photo strip on top, details underneath, sticky quote button */
 @media (max-width: 900px) {
   .lightbox.has-details {
@@ -3969,7 +3969,7 @@ body.lightbox-open .wa-float {
   .contact-tiles { gap: 10px; }
   .contact-tile { padding: 14px; }
   .contact-tile strong { font-size: 14px; }
-  /* email is the longest — give it the full row at the end */
+  /* email is the longest - give it the full row at the end */
   .contact-tile[data-ic-mail] { grid-column: 1 / -1; order: 4; }
 
   .footer-inner { grid-template-columns: 1fr; gap: 32px; }
@@ -6837,3 +6837,16 @@ body.has-moodboard .site-footer { padding-bottom: 110px; }
 }
 
 #quiz { scroll-margin-top: 100px; }
+
+.est-to {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.42em;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  color: var(--ic-gold-light);
+}
+
+.est-live .est-to { font-size: 0.62em; }

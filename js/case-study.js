@@ -29,7 +29,7 @@
       '</span><h2 class="about-heading reveal-item" style="--d:1">' + title + "</h2></div>";
   }
 
-  document.title = project.title + " — Interior Core";
+  document.title = project.title + " | Interior Core";
   var cover = project.images[0];
   var html = [];
 
@@ -102,7 +102,7 @@
       head("Gallery", "Inside the project") +
       '<div class="cs-gallery">' + project.images.map(function (img, i) {
         return '<button type="button" class="' + photoClass(i) + '" data-i="' + i + '" aria-label="Open photo ' + (i + 1) + '">' +
-          '<img src="' + img.small + '" srcset="' + img.small + " 640w, " + img.large + ' 1280w" sizes="(max-width: 768px) 50vw, 33vw" alt="' + esc(project.title) + " — photo " + (i + 1) + '" loading="lazy" decoding="async"></button>';
+          '<img src="' + img.small + '" srcset="' + img.small + " 640w, " + img.large + ' 1280w" sizes="(max-width: 768px) 50vw, 33vw" alt="' + esc(project.title) + " photo " + (i + 1) + '" loading="lazy" decoding="async"></button>';
       }).join("") + "</div>" +
     "</section>"
   );

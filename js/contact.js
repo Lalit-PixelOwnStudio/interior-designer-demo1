@@ -80,8 +80,8 @@
       list.querySelectorAll("li").forEach(function (li) {
         var label = li.getAttribute("data-label") || li.textContent;
         var isToday = label.indexOf(DAYS[now.day]) !== -1 ||
-          (/Monday\s*[–-]\s*Saturday/.test(label) && now.day >= 1 && now.day <= 6) ||
-          (/Monday\s*[–-]\s*Friday/.test(label) && now.day >= 1 && now.day <= 5);
+          (/Monday\s*(?:-|to)\s*Saturday/.test(label) && now.day >= 1 && now.day <= 6) ||
+          (/Monday\s*(?:-|to)\s*Friday/.test(label) && now.day >= 1 && now.day <= 5);
         li.classList.toggle("today", isToday);
       });
     }

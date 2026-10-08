@@ -111,7 +111,7 @@
     });
 
     tweenTo(empty ? 0 : r.low, empty ? 0 : r.high);
-    days.textContent = empty ? "Pick at least one space to see an estimate" : "Ready in about " + r.days[0] + "–" + r.days[1] + " days";
+    days.textContent = empty ? "Pick at least one space to see an estimate" : "Ready in about " + r.days[0] + " to " + r.days[1] + " days";
 
     var max = r.items.reduce(function (m, it) { return Math.max(m, it.cost); }, 0);
     list.innerHTML = r.items.map(function (it) {
@@ -125,7 +125,7 @@
       "Home: " + r.home.label,
       "Spaces: " + r.items.map(function (it) { return it.label; }).join(", "),
       "Finish: " + r.finish.label,
-      "Estimate: ₹" + lakh(r.low) + " – " + lakh(r.high) + " Lakh",
+      "Estimate: ₹" + lakh(r.low) + " to " + lakh(r.high) + " Lakh",
       "",
       "Please share an exact quote."
     ];

@@ -1,4 +1,4 @@
-/* ===== Interior Core — contact details =====
+/* ===== Interior Core - contact details =====
    Change these values in ONE place and every Call / WhatsApp / Email link
    on the site updates (header, hero, WhatsApp button, contact, footer).
    TODO: replace the placeholder numbers below with the real ones before launch. */
@@ -10,9 +10,9 @@ window.IC_CONFIG = {
   address: "Interior Core Studio, Malviya Nagar, New Delhi 110017",
   mapQuery: "Malviya Nagar, New Delhi 110017",
 
-  // Studio hours shown in the Contact section (demo values — change as needed)
+  // Studio hours shown in the Contact section (demo values - change as needed)
   hours: [
-    { label: "Monday – Saturday", time: "10:00 AM – 7:00 PM" },
+    { label: "Monday to Saturday", time: "10:00 AM to 7:00 PM" },
     { label: "Sunday", time: "By appointment" }
   ],
   // Used for the live "Open now / Closed" badge, India time, 24-hour clock.

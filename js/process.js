@@ -1,8 +1,8 @@
 /* Process: five interactive steps.
-   Desktop — step tabs on a line that fills in gold, the active step's
+   Desktop - step tabs on a line that fills in gold, the active step's
    details (photo, checklist, what you get) shown below; it auto-advances
    every few seconds while on screen until someone clicks or hovers.
-   Phones — a vertical timeline driven by scrolling: as you scroll down,
+   Phones - a vertical timeline driven by scrolling: as you scroll down,
    each step's content slides out and the gold line moves on to it.
    Arrow keys move between steps. */
 (function () {

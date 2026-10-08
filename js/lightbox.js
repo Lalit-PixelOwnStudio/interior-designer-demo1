@@ -70,7 +70,7 @@
     current = (index + items.length) % items.length;
     var item = items[current];
     image.src = item.large;
-    image.alt = (label || "Interior Core project") + " — photo " + (current + 1);
+    image.alt = (label || "Interior Core project") + " photo " + (current + 1);
     markActive();
     if (usingCarousel()) {
       carousel.scrollTo({ left: current * carousel.clientWidth, behavior: smooth && !reduceMotion ? "smooth" : "auto" });
@@ -97,7 +97,7 @@
       img.src = item.small;
       img.srcset = item.small + " 640w, " + item.large + " 1280w";
       img.sizes = "100vw";
-      img.alt = project.title + " — photo " + (i + 1);
+      img.alt = project.title + " photo " + (i + 1);
       img.loading = i < 2 ? "eager" : "lazy";
       img.decoding = "async";
       carousel.appendChild(img);
@@ -175,7 +175,7 @@
     lightbox.classList.add("has-details");
   }
 
-  // open(photos, startIndex, project?) — project adds the details panel.
+  // open(photos, startIndex, project?) - project adds the details panel.
   function open(list, index, project) {
     items = list;
     label = (project && project.title) || "";

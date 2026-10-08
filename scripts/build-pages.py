@@ -13,7 +13,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008o"
+VERSION = "20261008p"
 
 NAV = [
     ("about.html", "About"),
@@ -150,7 +150,7 @@ HEAD = """<!doctype html>
 <head>
 <meta charset="UTF-8">{head_first}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{title} — Interior Core</title>
+<title>{title} | Interior Core</title>
 <meta name="description" content="{description}">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -243,7 +243,7 @@ page(
 # ----- pricing.html: packages, then pricing questions -----
 page(
     "pricing.html", "Pricing",
-    "Interior Core packages for 1 BHK, 2–3 BHK homes and full renovations, with clear starting prices.",
+    "Interior Core packages for 1 BHK, 2-3 BHK homes and full renovations, with clear starting prices.",
     "\n\n".join([
         link_out(page_top(PRICING)),
         GUARANTEES,
@@ -267,10 +267,10 @@ page(
 # ----- materials.html: swatch library with a moodboard -----
 page(
     "materials.html", "Material Library",
-    "Laminates, veneers, marble, fabrics and metals used by Interior Core — save the ones you like to a moodboard.",
+    "Laminates, veneers, marble, fabrics and metals used by Interior Core. Save the ones you like to a moodboard.",
     "\n\n".join([
         partial("materials"),
-        cta("Want to touch these in person?", "Our studio has the real samples — book a visit and bring your moodboard along.",
+        cta("Want to touch these in person?", "Our studio has the real samples. Book a visit and bring your moodboard along.",
             "Book a Studio Visit", "contact.html#visit", ("pricing.html#estimator", "Estimate My Cost")),
     ]),
     ["config", "data", "materials", "main"],
@@ -287,7 +287,7 @@ NOT_FOUND_BASE = (
 )
 page(
     "404.html", "Page Not Found",
-    "This page doesn't exist — head back to the Interior Core home page.",
+    "This page doesn't exist. Head back to the Interior Core home page.",
     partial("404"),
     ["config", "not-found", "main"],
     head_first=NOT_FOUND_BASE,

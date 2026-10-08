@@ -56,19 +56,19 @@
   var STYLES = {
     modern: {
       name: "Modern Bold",
-      desc: "You love clean lines with a bit of drama — deep tones, statement lighting and surfaces with a sheen. Homes that feel sharp and confident.",
+      desc: "You love clean lines with a bit of drama: deep tones, statement lighting and surfaces with a sheen. Homes that feel sharp and confident.",
       palette: ["#2b2b2b", "#6d6d6d", "#c9a24a", "#efebe4"],
       projects: ["project-6", "project-1", "project-3"]
     },
     classic: {
       name: "Classic Luxe",
-      desc: "You're drawn to warmth and grandeur — rich woods, marble, gold accents and crystal light. Homes that feel timeless and welcoming.",
+      desc: "You're drawn to warmth and grandeur: rich woods, marble, gold accents and crystal light. Homes that feel timeless and welcoming.",
       palette: ["#f3ead8", "#c9a24a", "#7a4b2a", "#2f4a3a"],
       projects: ["project-5", "project-2", "project-1"]
     },
     minimal: {
       name: "Calm Minimal",
-      desc: "You value calm and space — light woods, soft neutrals and nothing that doesn't need to be there. Homes that feel light and easy to live in.",
+      desc: "You value calm and space: light woods, soft neutrals and nothing that doesn't need to be there. Homes that feel light and easy to live in.",
       palette: ["#faf7f1", "#e6dccb", "#c7a77e", "#9aa58f"],
       projects: ["project-7", "project-4", "project-3"]
     }

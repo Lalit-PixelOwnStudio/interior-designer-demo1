@@ -65,7 +65,7 @@
     el.style.setProperty("--d", String(index % 6));
     el.tabIndex = 0;
     el.setAttribute("role", "button");
-    el.setAttribute("aria-label", project.title + " — view photos and details");
+    el.setAttribute("aria-label", "View photos and details of " + project.title);
 
     var cover = project.images[0];
     var tagsMarkup = project.tags.map(function (tag) {

@@ -1,4 +1,4 @@
-/* ===== Interior Core — site content data =====
+/* ===== Interior Core - site content data =====
    Projects and before/after rooms live here so the portfolio, gallery and
    project viewer all read from one list. Images are generated into img/ by
    scripts/optimize-images.py (each photo has a -640 and a -1280 version). */
@@ -25,7 +25,7 @@
       featured: 1,
       price: "₹25 Lakh",
       location: "New Delhi",
-      description: "A complete turnkey makeover — space planning and 3D design through modular furniture, false ceiling, electrical, plumbing and civil work — delivered end-to-end under one roof.",
+      description: "A complete turnkey makeover covering space planning, 3D design, modular furniture, false ceiling, electrical, plumbing and civil work, delivered end-to-end under one roof.",
       tags: ["Space Planning", "2D & 3D Design", "Modular Furniture", "False Ceiling & Lighting"],
       images: photos(1, 10)
     },
@@ -36,7 +36,7 @@
       featured: 3,
       price: "₹20 Lakh",
       location: "New Delhi",
-      description: "A bedroom-and-living renovation built around one clear theme — colour palette, materials and furniture chosen to reflect the homeowner's personality.",
+      description: "A bedroom-and-living renovation built around one clear theme: colour palette, materials and furniture chosen to reflect the homeowner's personality.",
       tags: ["Theme-Based Design", "Colour & Materials", "Custom Furniture", "Renovation"],
       images: photos(2, 10)
     },
@@ -45,7 +45,7 @@
       category: "Living Room",
       title: "Faridabad Living Room",
       location: "Faridabad",
-      description: "A complete living room transformation — textured feature wall, custom seating and warm accent lighting — designed and executed end-to-end.",
+      description: "A complete living room transformation with a textured feature wall, custom seating and warm accent lighting, designed and executed end-to-end.",
       tags: ["Turnkey Design", "Feature Wall", "Custom Seating", "Accent Lighting"],
       images: photos(3, 9)
     },
@@ -54,7 +54,7 @@
       category: "Bedroom & Living",
       title: "Vasant Kunj Bedroom",
       location: "Vasant Kunj",
-      description: "A warm, textured bedroom — from design to on-site installation, delivered end-to-end by Interior Core.",
+      description: "A warm, textured bedroom, from design to on-site installation, delivered end-to-end by Interior Core.",
       tags: ["Bedroom Design", "Ambient Lighting", "End-to-End Execution"],
       images: photos(4, 10)
     },
@@ -85,7 +85,7 @@
       title: "Naraina 1 BHK",
       price: "₹8 Lakh",
       location: "Naraina",
-      description: "A complete 1 BHK interior — thoughtfully planned layouts, material and colour selection, and furniture execution.",
+      description: "A complete 1 BHK interior with thoughtfully planned layouts, material and colour selection, and furniture execution.",
       tags: ["1 BHK Interior", "Space Planning", "Renovation"],
       images: photos(7, 3)
     },
@@ -98,13 +98,13 @@
   ];
 
   /* Case-study pages (project.html?id=…). DEMO CONTENT: clients, reviews,
-     areas and timelines are samples for the showcase — replace them with
+     areas and timelines are samples for the showcase - replace them with
      the real project details. ba picks a before/after room from BA_ROOMS. */
   var MARBLE = "linear-gradient(135deg, #f6f3ee 0%, #e2dbd0 38%, #f8f6f2 52%, #d6cec1 78%, #f1ede6 100%)";
   var CASE_STUDIES = {
     "project-1": {
       home: "3 BHK apartment", area: "1,450 sq ft", duration: "75 days", year: "2025", ba: 1,
-      brief: "A 15-year-old apartment with dark rooms, cramped storage and tired wiring. The family wanted a bright, modern home with space for visiting parents — and they needed to keep living in it while the work happened.",
+      brief: "A 15-year-old apartment with dark rooms, cramped storage and tired wiring. The family wanted a bright, modern home with space for visiting parents, and they needed to keep living in it while the work happened.",
       approach: [
         "Re-planned the layout to open the kitchen towards the dining area",
         "Rewired the flat and added layered ceiling lighting in every room",
@@ -176,7 +176,7 @@
     },
     "project-4": {
       home: "Master bedroom", area: "220 sq ft", duration: "25 days", year: "2024",
-      brief: "A master bedroom that had turned into a store room — clothes everywhere, harsh tube lights and nowhere to sit. The couple wanted calm, hotel-like comfort.",
+      brief: "A master bedroom that had turned into a store room: clothes everywhere, harsh tube lights and nowhere to sit. The couple wanted calm, hotel-like comfort.",
       approach: [
         "Wall-to-wall wardrobe with a dresser built into one end",
         "Padded headboard wall with warm reading lights",
@@ -200,7 +200,7 @@
     },
     "project-5": {
       home: "4 BHK independent floor", area: "2,100 sq ft", duration: "95 days", year: "2025", ba: 3,
-      brief: "A new independent floor that needed everything — furniture, kitchen, lighting and the pooja room the family had imagined for years, with marble and backlit niches.",
+      brief: "A new independent floor that needed everything: furniture, kitchen, lighting and the pooja room the family had imagined for years, with marble and backlit niches.",
       approach: [
         "A backlit pooja unit with marble detailing as the home's centrepiece",
         "Furniture for all four bedrooms planned around each person's routine",
@@ -245,11 +245,11 @@
         { phase: "Carpentry", days: 28 },
         { phase: "Finishing", days: 11 }
       ],
-      review: { name: "Aditya & Meera Singh", role: "Homeowners, New Delhi", text: "Exactly the clean look we wanted, and nothing is precious — the dog approves too. They finished a day before the date they promised." }
+      review: { name: "Aditya & Meera Singh", role: "Homeowners, New Delhi", text: "Exactly the clean look we wanted, and nothing is precious. The dog approves too. They finished a day before the date they promised." }
     },
     "project-7": {
       home: "1 BHK apartment", area: "540 sq ft", duration: "40 days", year: "2025",
-      brief: "A compact 1 BHK that had to work as bedroom, office and guest space — on a tight budget.",
+      brief: "A compact 1 BHK that had to work as bedroom, office and guest space, all on a tight budget.",
       approach: [
         "Space-saving layouts with storage under every seat and bed",
         "A sliding wardrobe to free up floor space",

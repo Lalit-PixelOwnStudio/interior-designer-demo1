@@ -158,7 +158,7 @@
       "DTSTAMP:" + icsStamp(new Date()),
       "DTSTART:" + icsStamp(start),
       "DTEND:" + icsStamp(end),
-      "SUMMARY:Studio visit — Interior Core",
+      "SUMMARY:Studio visit at Interior Core",
       "LOCATION:" + place,
       "DESCRIPTION:Design consultation at the Interior Core studio. Call " + (cfg.phoneDisplay || "") + " if you need to reschedule.",
       "END:VEVENT", "END:VCALENDAR"

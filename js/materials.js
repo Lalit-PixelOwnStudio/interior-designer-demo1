@@ -15,19 +15,19 @@
   var MATERIALS = [
     { id: "laminate-matte-ivory", name: "Matte Ivory", cat: "Laminates", finish: "Super-matte, anti-fingerprint", best: "Wardrobes, kitchen shutters", price: 1, durability: 4, care: "Wipe with a damp cloth", desc: "A warm off-white that keeps rooms bright without the glare of gloss. The super-matte surface hides fingerprints and small scuffs." },
     { id: "laminate-charcoal-suede", name: "Charcoal Suede", cat: "Laminates", finish: "Suede-touch matte", best: "Kitchen base units, TV walls", price: 1, durability: 4, care: "Wipe with a damp cloth", desc: "Deep charcoal with a soft, velvety touch. It grounds a light kitchen and looks sharp with brass or black handles.", project: "project-6" },
-    { id: "laminate-sage-matte", name: "Sage Green", cat: "Laminates", finish: "Matte", best: "Kitchens, kids' rooms", price: 1, durability: 4, care: "Wipe with a damp cloth", desc: "A calm, earthy green that pairs beautifully with oak and brass — our most requested colour this year." },
+    { id: "laminate-sage-matte", name: "Sage Green", cat: "Laminates", finish: "Matte", best: "Kitchens, kids' rooms", price: 1, durability: 4, care: "Wipe with a damp cloth", desc: "A calm, earthy green that pairs beautifully with oak and brass. Our most requested colour this year." },
     { id: "laminate-high-gloss-white", name: "High-Gloss White", cat: "Laminates", finish: "Mirror-gloss, acrylic look", best: "Kitchens, compact rooms", price: 2, durability: 3, care: "Microfibre cloth, no abrasives", desc: "Reflects light to make small kitchens feel bigger. Seamless, easy to clean and very modern.", project: "project-1" },
     { id: "laminate-natural-oak", name: "Natural Oak Print", cat: "Laminates", finish: "Textured woodgrain", best: "Wardrobes, bed backs", price: 1, durability: 5, care: "Wipe with a damp cloth", desc: "The warmth of oak with the toughness of laminate. The grain is embossed, so it feels like real wood.", project: "project-7" },
     { id: "veneer-american-walnut", name: "American Walnut", cat: "Veneers", finish: "Natural veneer, matte PU", best: "TV walls, doors, feature panels", price: 3, durability: 3, care: "Dust regularly, avoid direct sun", desc: "Rich chocolate tones with a flowing cathedral grain. Every sheet is unique, so no two walls look the same.", project: "project-1" },
     { id: "veneer-natural-oak", name: "Natural Oak", cat: "Veneers", finish: "Open-pore matte", best: "Shelves, side tables, panelling", price: 2, durability: 3, care: "Dust regularly, wipe spills quickly", desc: "Light, honey-toned oak with a fine straight grain. Clean and Scandinavian, it works with almost any palette.", project: "project-2" },
-    { id: "veneer-burma-teak", name: "Burma Teak", cat: "Veneers", finish: "Natural veneer, satin PU", best: "Main doors, pooja units", price: 3, durability: 4, care: "Polish once a year", desc: "The classic Indian favourite — golden-brown teak that deepens beautifully with age.", project: "project-5" },
+    { id: "veneer-burma-teak", name: "Burma Teak", cat: "Veneers", finish: "Natural veneer, satin PU", best: "Main doors, pooja units", price: 3, durability: 4, care: "Polish once a year", desc: "The classic Indian favourite: golden-brown teak that deepens beautifully with age.", project: "project-5" },
     { id: "veneer-smoked-oak", name: "Smoked Oak", cat: "Veneers", finish: "Fumed veneer, matte", best: "Wardrobes, wall panelling", price: 3, durability: 3, care: "Dust regularly", desc: "Oak darkened by smoking, giving a soft grey-brown that feels quiet and luxurious." },
-    { id: "marble-statuario", name: "Statuario", cat: "Marble & Stone", finish: "Italian marble, polished", best: "Living room floors, feature walls", price: 3, durability: 4, care: "Seal every year, wipe acidic spills", desc: "Bright white with bold grey veining — the marble that instantly makes a room feel grand.", project: "project-1" },
+    { id: "marble-statuario", name: "Statuario", cat: "Marble & Stone", finish: "Italian marble, polished", best: "Living room floors, feature walls", price: 3, durability: 4, care: "Seal every year, wipe acidic spills", desc: "Bright white with bold grey veining, the marble that instantly makes a room feel grand.", project: "project-1" },
     { id: "marble-calacatta-gold", name: "Calacatta Gold", cat: "Marble & Stone", finish: "Italian marble, honed or polished", best: "Kitchen islands, backsplashes", price: 3, durability: 4, care: "Seal every year, use trivets", desc: "Creamy white with soft grey and gold veins. Our go-to for statement kitchen islands.", project: "project-5" },
-    { id: "marble-nero-marquina", name: "Nero Marquina", cat: "Marble & Stone", finish: "Spanish marble, polished", best: "Vanities, accent strips, table tops", price: 3, durability: 4, care: "Seal every year", desc: "Jet-black marble with crisp white veins — dramatic in bathrooms and as inlay strips." },
+    { id: "marble-nero-marquina", name: "Nero Marquina", cat: "Marble & Stone", finish: "Spanish marble, polished", best: "Vanities, accent strips, table tops", price: 3, durability: 4, care: "Seal every year", desc: "Jet-black marble with crisp white veins. Dramatic in bathrooms and as inlay strips." },
     { id: "marble-emperador", name: "Emperador Brown", cat: "Marble & Stone", finish: "Spanish marble, polished", best: "Bathroom walls, coffee tables", price: 2, durability: 4, care: "Seal every year", desc: "Warm coffee-brown marble with fine cream veins. Cosy and rich without feeling dark." },
     { id: "stone-terrazzo", name: "Terrazzo", cat: "Marble & Stone", finish: "Cement terrazzo, sealed", best: "Floors, bathroom counters", price: 2, durability: 5, care: "Mop with neutral cleaner", desc: "Playful chips of stone set in a pale base. Nearly indestructible and great for busy floors." },
-    { id: "fabric-natural-linen", name: "Natural Linen", cat: "Fabrics", finish: "Washed linen blend", best: "Curtains, cushion covers", price: 1, durability: 3, care: "Machine wash cold", desc: "Relaxed, breathable and softly textured — lets in a gentle glow when used for sheer curtains.", project: "project-2" },
+    { id: "fabric-natural-linen", name: "Natural Linen", cat: "Fabrics", finish: "Washed linen blend", best: "Curtains, cushion covers", price: 1, durability: 3, care: "Machine wash cold", desc: "Relaxed, breathable and softly textured. Lets in a gentle glow when used for sheer curtains.", project: "project-2" },
     { id: "fabric-emerald-velvet", name: "Emerald Velvet", cat: "Fabrics", finish: "Performance velvet", best: "Accent chairs, headboards", price: 2, durability: 3, care: "Vacuum, spot clean", desc: "Jewel-toned velvet with a deep sheen. Stain-resistant, so it's practical as well as glamorous.", project: "project-2" },
     { id: "fabric-terracotta-velvet", name: "Terracotta Velvet", cat: "Fabrics", finish: "Performance velvet", best: "Sofas, ottomans", price: 2, durability: 3, care: "Vacuum, spot clean", desc: "A sun-warmed clay colour that brings instant warmth to neutral living rooms." },
     { id: "fabric-ivory-boucle", name: "Ivory Bouclé", cat: "Fabrics", finish: "Looped bouclé", best: "Lounge chairs, sofas", price: 2, durability: 3, care: "Professional clean", desc: "Soft, nubby loops you want to sink into. Adds texture to minimal spaces.", project: "project-3" },
@@ -93,7 +93,7 @@
       card.style.setProperty("--i", String(i));
       var isSaved = saved.indexOf(m.id) !== -1;
       card.innerHTML =
-        '<button type="button" class="mat-open" aria-label="' + m.name + ' — details">' +
+        '<button type="button" class="mat-open" aria-label="' + m.name + ': details">' +
           '<span class="mat-swatch"><img src="' + img(m) + '" alt="" loading="lazy" decoding="async"></span>' +
           '<span class="mat-info"><small>' + m.cat + "</small><strong>" + m.name + "</strong><em>" + m.finish + "</em></span>" +
         "</button>" +
@@ -138,7 +138,7 @@
     }).join("");
     countEl.textContent = saved.length + " saved";
     var lines = ["Hi Interior Core, here's my moodboard from your material library:", ""]
-      .concat(saved.map(function (id) { var m = byId[id]; return "• " + m.name + " — " + m.finish + " (" + m.cat + ")"; }))
+      .concat(saved.map(function (id) { var m = byId[id]; return "• " + m.name + ": " + m.finish + " (" + m.cat + ")"; }))
       .concat(["", "I'd like to see these samples at the studio."]);
     send.href = "https://wa.me/" + (cfg.whatsapp || "") + "?text=" + encodeURIComponent(lines.join("\n"));
     send.target = "_blank";
