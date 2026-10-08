@@ -13,7 +13,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008m"
+VERSION = "20261008n"
 
 NAV = [
     ("about.html", "About"),
@@ -232,11 +232,12 @@ page(
     "Homes, bedrooms, living rooms and 1 BHK interiors designed and built by Interior Core across Delhi NCR.",
     "\n\n".join([
         projects,
+        partial("quiz"),
         SERVICES,
         cta("Like what you see? Let's design yours.", "Share a few details and we'll plan a site visit."),
         LIGHTBOX,
     ]),
-    ["config", "data", "lightbox", "portfolio", "main"],
+    ["config", "data", "lightbox", "portfolio", "quiz", "main"],
 )
 
 # ----- pricing.html: packages, then pricing questions -----
