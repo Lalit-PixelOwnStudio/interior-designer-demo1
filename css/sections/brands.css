@@ -1,0 +1,105 @@
+/* ===== Brands we use (two scrolling rows) ===== */
+.brands {
+  --wave-color: var(--ic-bg-soft);
+  --wave-x: 30px;
+  overflow: hidden;
+  background: var(--ic-bg-soft);
+  padding: clamp(32px, 5vw, 60px) 0 clamp(80px, 10vw, 130px);
+}
+
+.brands .section-header { padding: 0 clamp(20px, 5vw, 64px); }
+
+/* rows fade out at both screen edges */
+.brand-rows {
+  overflow: hidden;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+.brand-marquee {
+  display: flex;
+  width: max-content;
+  padding: 4px 0 8px;
+}
+
+.brand-marquee + .brand-marquee { margin-top: 6px; }
+
+.brand-track {
+  display: flex;
+  flex: none;
+  align-items: center;
+  list-style: none;
+  animation: brand-scroll 42s linear infinite;
+}
+
+.brand-marquee-reverse .brand-track {
+  animation-direction: reverse;
+  animation-duration: 48s;
+}
+
+.brand-marquee:hover .brand-track { animation-play-state: paused; }
+
+@keyframes brand-scroll { to { transform: translateX(-100%); } }
+
+.brand-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  padding: 0 clamp(24px, 3vw, 40px);
+  transition: transform 0.3s ease;
+}
+
+.brand-tile:hover { transform: scale(1.06); }
+
+.brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.brand-mark img { display: block; width: auto; height: 32px; max-width: 170px; object-fit: contain; }
+.brand-mark-icon img { height: 36px; }
+
+.brand-mark b {
+  font-family: Arial, "Helvetica Neue", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* wordmarks next to icon-only logos, in each brand's own colour */
+.brand-bosch { color: #ea0016; }
+.brand-havells { color: #ed1c24; }
+.brand-schneider { color: #3dcd58; }
+.brand-mark-icon .brand-schneider { font-size: 17px; letter-spacing: 0; }
+
+.brand-name {
+  font-family: Arial, "Helvetica Neue", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: rgba(43, 35, 24, 0.82);
+}
+
+@media (max-width: 768px) {
+  .brand-tile { height: 56px; padding: 0 20px; }
+  .brand-mark img { height: 24px; max-width: 128px; }
+  .brand-mark-icon img { height: 28px; }
+  .brand-mark b { font-size: 17px; }
+  .brand-name { font-size: 20px; }
+  .brand-track { animation-duration: 34s; }
+  .brand-marquee-reverse .brand-track { animation-duration: 38s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-track { animation: none; }
+  .brand-marquee { width: auto; overflow-x: auto; }
+}
+
+/* looping animations rest while their section is off screen (js/core/main.js) */
+.is-off .brand-track,
+.is-off .g-seal-ring { animation-play-state: paused; }

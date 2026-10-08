@@ -1,0 +1,415 @@
+/* ===== About ===== */
+.about {
+  background: var(--ic-bg);
+  padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 64px);
+}
+
+.reveal-item {
+  opacity: 0;
+  transform: translateY(24px) scale(0.96);
+}
+
+.reveal-group.in-view .reveal-item {
+  animation: heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(var(--d, 0) * 0.15s);
+}
+
+.about-story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(48px, 7vw, 110px);
+  max-width: 1200px;
+  margin: 0 auto clamp(96px, 12vw, 160px);
+}
+
+/* Photo collage: tall main image, smaller overlapping one, experience badge */
+.about-collage {
+  position: relative;
+  padding: 0 0 56px 0;
+}
+
+.about-main-frame {
+  width: 80%;
+  margin-left: auto;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 30px 60px rgba(43, 35, 24, 0.18);
+  translate: 0 calc(var(--py, 0) * 18px);
+}
+
+.about-img-main {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: aboutZoom 16s ease-in-out infinite alternate;
+}
+
+/* Gentle motion: slow zoom on the main photo, floating second photo and
+   badge, and a little scroll parallax (--py is set in js/core/main.js). */
+@keyframes aboutZoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.1); }
+}
+
+@keyframes aboutFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+@keyframes aboutFrameDrift {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(8px, -8px); }
+}
+
+.about-collage::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  width: 55%;
+  height: 60%;
+  border: 1.5px solid rgba(212, 175, 55, 0.55);
+  border-radius: 22px;
+  z-index: -1;
+  animation: aboutFrameDrift 9s ease-in-out infinite;
+}
+
+.about-img-second {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 8px solid var(--ic-bg);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(43, 35, 24, 0.2);
+  translate: 0 calc(var(--py, 0) * -40px);
+  animation: aboutFloat 6s ease-in-out infinite;
+}
+
+.about-badge {
+  position: absolute;
+  top: 36px;
+  left: 4%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--ic-black-soft);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+  translate: 0 calc(var(--py, 0) * -28px);
+  animation: aboutFloat 7s ease-in-out -2.5s infinite;
+}
+
+.about-badge-num {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.about-badge-text {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.45;
+  text-transform: uppercase;
+  color: var(--ic-cream);
+}
+
+.about-heading em {
+  font-style: italic;
+  color: var(--ic-gold-deep);
+}
+
+.about-points {
+  list-style: none;
+  display: grid;
+  gap: 18px;
+  margin: 28px 0 36px;
+}
+
+.about-points li {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(43, 35, 24, 0.75);
+}
+
+.about-points strong {
+  display: block;
+  font-weight: 600;
+  color: var(--ic-ink);
+  margin-bottom: 2px;
+}
+
+.about-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-top: -2px;
+  border-radius: 14px;
+  color: var(--ic-gold-deep);
+  background: linear-gradient(145deg, #fffdf8, #f6ecd4);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 8px 18px rgba(139, 105, 20, 0.12);
+  transition: transform 0.35s ease, color 0.35s ease, background 0.35s ease;
+}
+
+.about-points li:hover .about-icon {
+  transform: translateY(-2px) rotate(-4deg);
+  color: var(--ic-ink);
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+}
+
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+}
+
+.about-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 34px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ic-cream);
+  background: var(--ic-black-soft);
+  border-radius: 999px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.about-btn:hover {
+  color: var(--ic-ink);
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ic-gold-text);
+  transition: gap 0.3s ease;
+}
+
+.about-link:hover { gap: 12px; }
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ic-gold-text);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.about-heading {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--ic-ink);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.about-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--ic-ink);
+  opacity: 0.85;
+  max-width: 640px;
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+}
+
+/* ===== Founders ===== */
+.founders {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.founders-inner {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: clamp(48px, 7vw, 100px);
+}
+
+.founders-heading {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--ic-ink);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+
+.founders-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--ic-gold);
+  margin: 20px 0 22px;
+}
+
+.founders-desc {
+  color: var(--ic-ink);
+  opacity: 0.75;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  max-width: 380px;
+  margin-bottom: 28px;
+}
+
+.founders-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 32px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ic-gold-text);
+  border: 1.5px solid rgba(212, 175, 55, 0.6);
+  border-radius: 999px;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.founders-cta:hover {
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  color: var(--ic-ink);
+  border-color: transparent;
+}
+
+.founders-profiles {
+  display: flex;
+}
+
+.founder-profile {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 clamp(16px, 3vw, 32px);
+}
+
+.founder-profile + .founder-profile {
+  border-left: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+/* Gold ring with the photo inside; initials show only if the photo fails */
+.founder-photo-ring {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  padding: 4px;
+  background: conic-gradient(var(--ic-gold-light), var(--ic-gold), var(--ic-gold-deep), var(--ic-gold-light));
+  margin-bottom: 20px;
+  flex-shrink: 0;
+  transition: filter 0.4s ease, box-shadow 0.4s ease;
+}
+
+.founder-photo-ring img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid var(--ic-bg);
+  object-fit: cover;
+  object-position: center 20%;
+  background: var(--ic-bg-soft);
+  transition: transform 0.4s ease;
+}
+
+.founder-photo-ring.no-photo::after {
+  content: attr(data-initials);
+  position: absolute;
+  inset: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--ic-ink);
+}
+
+@media (hover: hover) {
+  .founder-profile:hover .founder-photo-ring {
+    filter: brightness(1.08);
+    box-shadow: 0 0 34px rgba(212, 175, 55, 0.3);
+  }
+  .founder-profile:hover .founder-photo-ring img { transform: scale(1.03); }
+}
+
+.founder-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--ic-ink);
+  font-size: 1.15rem;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.founder-role {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ic-gold-text);
+  margin-bottom: 16px;
+}
+
+.founder-social {
+  display: flex;
+  gap: 12px;
+}
+
+.founder-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(43, 35, 24, 0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+/* Brand colours: phone green, LinkedIn blue */
+.founder-social .founder-call { background: #25a244; }
+.founder-social .founder-linkedin { background: #0a66c2; }
+
+.founder-social a:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 10px 22px rgba(43, 35, 24, 0.22);
+}

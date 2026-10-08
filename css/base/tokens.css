@@ -1,0 +1,50 @@
+/* ===== Interior Core - Brand Tokens ===== */
+:root {
+  --ic-black:      #000000;
+  --ic-black-soft: #0d0d0d;
+  --ic-gold-light: #f4d98b;
+  --ic-gold:       #d4af37;
+  --ic-gold-deep:  #8b6914;
+  --ic-cream:      #f5efe0;
+
+  /* Light/creamy theme surface + text tokens.
+     --ic-black / --ic-black-soft / --ic-cream above are kept (unchanged
+     values) because they're still needed as literal dark-overlay /
+     dark-text-on-gold colors in a few spots (hero video overlay, lightbox
+     backdrop, nav bar, text on filled-gold buttons, gallery card mounts). */
+  --ic-bg:      #faf5ec;
+  --ic-bg-soft: #efe2c5;
+  --ic-ink:     #2b2318;
+  /* Darker gold for small text on the cream background (readable contrast) */
+  --ic-gold-text: #8a6a12;
+
+  --font-display: "Fraunces", "Playfair Display", serif;
+  --font-body:    "Inter", "Manrope", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ic-bg);
+  color: var(--ic-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1, h2, h3, h4 {
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: inherit; text-decoration: none; }

@@ -1,7 +1,7 @@
 /* Project cards. On the home page (#portfolioGrid[data-featured]) only the
    3 featured projects show; on projects.html every project shows with
    category filters. Clicking anywhere on a card opens its photos and
-   details in the viewer (js/lightbox.js). */
+   details in the viewer (js/components/lightbox.js). */
 (function () {
   "use strict";
 

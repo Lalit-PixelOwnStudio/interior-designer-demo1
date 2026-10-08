@@ -140,18 +140,4 @@ Target: phone par pehli screen 2-3 second mein, Lighthouse mobile score 90+.
 
 ## 7. Files ka structure
 
-```
-index.html
-css/style.css
-js/
-  config.js        phone, WhatsApp, email, address, social links
-  data.js          projects + before/after rooms
-  lightbox.js      photo viewer (gallery + "View Project"), swipe
-  before-after.js
-  gallery.js
-  portfolio.js
-  main.js          nav, menu, reveals, stats, hero video, contact form
-img/               web-ready images (generated — don't edit by hand)
-Assets/            original photos (source, not deployed)
-scripts/optimize-images.py
-```
+Poora folder structure ab README.md mein hai (css/, js/, partials/, scripts/ aur build steps).

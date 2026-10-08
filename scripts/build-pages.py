@@ -10,9 +10,10 @@ refreshes the header, footer and asset version on index.html and
 about.html. Bump VERSION whenever CSS or JS changes so browsers reload them.
 
 Pages load two small files instead of many: js/site.min.js (every file in
-JS_FILES, in order, minified) and css/style.min.css. Edit the normal files
-in js/ and css/style.css, then run this script to rebuild both. Minifying
-uses esbuild through npx; without it the files are just joined, unminified.
+JS_FILES, in order, minified) and css/style.min.css (every file in
+CSS_FILES). Edit the normal files in js/ and css/, then run this script to
+rebuild both. Minifying uses esbuild through npx; without it the files are
+just joined, unminified. See README.md for the folder layout.
 """
 import pathlib
 import re
@@ -20,15 +21,34 @@ import shutil
 import subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008t"
+VERSION = "20261008u"
 
-# Every script on the site, in the order they run. Each one only acts when
-# its section is on the page, so one bundle serves all pages.
+# Every script on the site, in the order they run (paths inside js/). Each
+# one only acts when its section is on the page, so one bundle serves all
+# pages. js/core/head.js is separate: it loads in <head>, before paint.
 JS_FILES = [
-    "transitions", "config", "data", "lightbox", "before-after", "gallery",
-    "portfolio", "reviews", "pricing", "estimator", "faq", "contact", "visit",
-    "process", "quiz", "materials", "case-study", "about", "not-found", "main",
+    "core/transitions", "config", "data", "core/image-fallback", "components/lightbox",
+    "sections/before-after", "sections/gallery", "sections/portfolio", "sections/reviews",
+    "sections/pricing", "pages/estimator", "sections/faq", "sections/contact", "pages/visit",
+    "sections/process", "pages/quiz", "pages/materials", "pages/case-study", "pages/about",
+    "pages/not-found", "core/main",
 ]
+
+# Stylesheets in cascade order (paths inside css/), joined into style.min.css.
+CSS_FILES = [
+    "base/tokens", "base/utilities", "base/nav", "sections/hero", "sections/about",
+    "sections/gallery", "components/lightbox", "sections/portfolio", "sections/before-after",
+    "base/sections", "sections/services", "sections/portfolio-extras",
+    "components/project-viewer", "sections/process", "sections/reviews", "sections/pricing",
+    "sections/faq", "sections/contact", "base/footer", "base/responsive", "pages/inner-pages",
+    "pages/about", "pages/estimator", "pages/case-study", "pages/visit", "sections/guarantees",
+    "sections/brands", "pages/materials", "base/intro", "base/transitions", "pages/404",
+    "pages/quiz",
+]
+
+# Where the site lives on GitHub Pages. 404.html can be served at any depth,
+# so its <base> points here; change it to "/" if the site moves to a domain root.
+SITE_BASE = "/interior-designer-demo1/"
 ESBUILD = ["npx", "--yes", "esbuild@0.24.2"]
 
 NAV = [
@@ -144,17 +164,14 @@ def cta(heading, text, button="Book a Consultation", href="contact.html",
 
 # Runs before the page paints: shows the logo intro once per visit, and
 # marks browsers without cross-page view transitions for the JS fallback.
-HEAD_SCRIPT = (
-    '<script>(function(d){try{if(!("onpagereveal" in window))d.classList.add("no-vt");'
-    'if(!sessionStorage.getItem("icIntro")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)'
-    '{d.classList.add("ic-intro");sessionStorage.setItem("icIntro","1")}}catch(e){}})(document.documentElement)</script>'
-)
+# Runs before the page paints (logo intro once per visit, transition mode).
+HEAD_SCRIPT = '<script src="js/core/head.js?v=%s"></script>' % VERSION
 
 INTRO = (
     '<div class="intro" id="intro" aria-hidden="true"><div class="intro-inner">'
     '<span class="intro-logo"></span>'
     '<span class="intro-word">' + "".join(
-        '<i style="--i:%d">%s</i>' % (i, "&nbsp;" if c == " " else c) for i, c in enumerate("INTERIOR CORE")
+        '<i class="i-%d">%s</i>' % (i, "&nbsp;" if c == " " else c) for i, c in enumerate("INTERIOR CORE")
     ) + "</span>"
     '<span class="intro-line"></span>'
     "<small>Interiors that reflect your style</small>"
@@ -182,8 +199,11 @@ def build_assets():
     if not esbuild(["js/_site.tmp.js", "--minify", "--target=es2017", "--log-level=error", "--outfile=js/site.min.js"]):
         shutil.copy(joined, ROOT / "js" / "site.min.js")
     joined.unlink()
-    if not esbuild(["css/style.css", "--minify", "--log-level=error", "--outfile=css/style.min.css"]):
-        shutil.copy(ROOT / "css" / "style.css", ROOT / "css" / "style.min.css")
+    css = ROOT / "css" / "_style.tmp.css"
+    css.write_text("\n".join(read("css/%s.css" % name) for name in CSS_FILES), encoding="utf-8")
+    if not esbuild(["css/_style.tmp.css", "--minify", "--log-level=error", "--outfile=css/style.min.css"]):
+        shutil.copy(css, ROOT / "css" / "style.min.css")
+    css.unlink()
     for f in ("js/site.min.js", "css/style.min.css"):
         print("wrote", f, (ROOT / f).stat().st_size // 1024, "KB")
 
@@ -264,9 +284,9 @@ page(
 projects = "\n".join([
     '<section id="projects" class="portfolio projects-list page-top">',
     '  <div class="portfolio-header reveal-group">',
-    '    <span class="eyebrow reveal-item" style="--d:0">Portfolio</span>',
-    '    <h1 class="about-heading reveal-item" style="--d:1">All Our Projects</h1>',
-    '    <p class="section-subline reveal-item" style="--d:2">Full homes, bedrooms, living rooms and 1 BHKs across Delhi NCR. Tap any project to see every photo and the details.</p>',
+    '    <span class="eyebrow reveal-item d-0">Portfolio</span>',
+    '    <h1 class="about-heading reveal-item d-1">All Our Projects</h1>',
+    '    <p class="section-subline reveal-item d-2">Full homes, bedrooms, living rooms and 1 BHKs across Delhi NCR. Tap any project to see every photo and the details.</p>',
     "  </div>",
     '  <div class="portfolio-filters" id="portfolioFilters" aria-label="Filter projects"></div>',
     '  <div class="portfolio-grid" id="portfolioGrid"></div>',
@@ -322,10 +342,7 @@ page(
 # ----- 404.html: GitHub Pages / Vercel serve it for any missing address -----
 # It can be served from any depth (/site/a/b/c), so a <base> pointing at the
 # site root keeps the relative css/js/img paths working.
-NOT_FOUND_BASE = (
-    '\n<script>(function(){var p=location.pathname,m=p.match(/^\\/interior-designer-demo1\\//);'
-    'var b=document.createElement("base");b.href=m?m[0]:"/";document.head.appendChild(b)})()</script>'
-)
+NOT_FOUND_BASE = '\n<base href="%s">' % SITE_BASE
 page(
     "404.html", "Page Not Found",
     "This page doesn't exist. Head back to the Interior Core home page.",
@@ -335,7 +352,7 @@ page(
 )
 
 
-# ----- project.html: one case-study page, filled in by js/case-study.js -----
+# ----- project.html: one case-study page, filled in by js/pages/case-study.js -----
 page(
     "project.html", "Project",
     "A project by Interior Core: the brief, our approach, photos, materials, timeline and the client's review.",
@@ -364,9 +381,10 @@ def refresh(name):
         html = html.replace(tags[0], SCRIPT_TAG + "\n", 1)
         for tag in tags[1:]:
             html = html.replace(tag, "", 1)
-    if HEAD_SCRIPT not in html:
-        html = re.sub(r'<script>\(function\(d\)\{try\{if\(!\("onpagereveal".*?</script>\n', "", html)
-        html = html.replace("</head>", HEAD_SCRIPT + "\n</head>", 1)
+    html = re.sub(r'<script>\(function\(d\)\{try\{if\(!\("onpagereveal".*?</script>\n', "", html)
+    html = re.sub(r'<script src="js/core/head\.js\?v=\w+"></script>\n', "", html)
+    html = html.replace("</head>", HEAD_SCRIPT + "\n</head>", 1)
+    html = re.sub(r'<div class="intro" id="intro".*?</div></div>\n', "", html, flags=re.S)
     if 'id="intro"' not in html:
         html = re.sub(r"(<body[^>]*>\n)", lambda m: m.group(1) + INTRO + "\n", html, count=1)
     if name != "index.html":

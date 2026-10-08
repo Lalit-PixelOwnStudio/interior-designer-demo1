@@ -1,0 +1,98 @@
+/* ===== Gallery "show more" (phones) ===== */
+.gallery-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.gallery-more-wrap[hidden] { display: none; }
+
+/* ===== Portfolio additions ===== */
+.portfolio-card {
+  cursor: pointer;
+  border-radius: 14px;
+  outline: none;
+  transition: transform 0.35s ease;
+}
+
+.portfolio-card:focus-visible { box-shadow: 0 0 0 3px var(--ic-gold); }
+
+@media (hover: hover) {
+  .portfolio-card:hover { transform: translateY(-4px); }
+}
+
+.portfolio-card-image { background: var(--ic-bg-soft); }
+
+.portfolio-card-meta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 2px 0 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+/* Bold, gold project value */
+.portfolio-card-price,
+.lb-price {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.65rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--ic-gold-deep), var(--ic-gold) 45%, var(--ic-gold-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.portfolio-card-price small,
+.lb-price small {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(43, 35, 24, 0.55);
+  -webkit-text-fill-color: rgba(43, 35, 24, 0.55);
+  margin-bottom: 6px;
+}
+
+.portfolio-card-price-na,
+.lb-price-na { font-size: 1.15rem; font-style: italic; font-weight: 500; }
+
+.portfolio-card-location,
+.lb-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(43, 35, 24, 0.7);
+  white-space: nowrap;
+}
+
+.portfolio-card-btn { color: var(--ic-gold-text); }
+
+.portfolio-reveal-wrap { display: flex; }
+
+a.portfolio-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.portfolio-card {
+  animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(var(--d, 0) * 0.06s);
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.lightbox-arrow[hidden] { display: none; }

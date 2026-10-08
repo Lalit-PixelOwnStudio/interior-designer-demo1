@@ -1,0 +1,29 @@
+/* ===== Inner pages (services, projects, pricing, contact) ===== */
+/* First section sits under the fixed nav: extra top space, no wave */
+.page-top { padding-top: clamp(124px, 14vw, 176px); }
+
+#contactForm { scroll-margin-top: 96px; }
+
+.projects-list .portfolio-filters { margin-bottom: clamp(32px, 5vw, 48px); }
+
+.projects-cta {
+  --wave-color: var(--ic-black-soft);
+  --wave-x: 250px;
+  text-align: center;
+  background: var(--ic-black-soft);
+  color: var(--ic-cream);
+  padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 64px);
+}
+
+.projects-cta .about-heading { color: var(--ic-cream); margin-bottom: 14px; }
+
+.projects-cta .section-subline {
+  max-width: 520px;
+  margin: 0 auto 28px;
+  color: rgba(245, 239, 224, 0.72);
+}
+
+.projects-cta .lb-cta {
+  display: inline-flex;
+  padding: 0 36px;
+}

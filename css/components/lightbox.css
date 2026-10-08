@@ -1,0 +1,107 @@
+/* ===== Lightbox ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Photo area; with a project open it shares the screen with the details panel */
+.lightbox-media {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-stage {
+  max-width: 85vw;
+  max-height: 85vh;
+  display: flex;
+}
+
+.lightbox-stage img {
+  max-width: 85vw;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 4px;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.lightbox-stage img.switching {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.lightbox-close {
+  position: absolute;
+  z-index: 5;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ic-gold);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.lightbox-close:hover { color: var(--ic-gold-light); }
+
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ic-gold);
+  background: none;
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.lightbox-arrow:hover {
+  color: var(--ic-ink);
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  border-color: transparent;
+}
+
+.lightbox-prev { left: clamp(12px, 4vw, 48px); }
+.lightbox-next { right: clamp(12px, 4vw, 48px); }
+
+.lightbox-counter {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ic-cream);
+  opacity: 0.8;
+}

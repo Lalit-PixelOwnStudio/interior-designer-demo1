@@ -1,0 +1,14 @@
+/* ===== Utilities ===== */
+/* Stagger steps for reveal animations (--d), price list rows (--k) and the
+   intro letters (--i); markup uses these classes instead of inline styles. */
+.d-0 { --d: 0; } .d-1 { --d: 1; } .d-2 { --d: 2; } .d-3 { --d: 3; } .d-4 { --d: 4; }
+.d-5 { --d: 5; } .d-6 { --d: 6; } .d-7 { --d: 7; } .d-8 { --d: 8; } .d-9 { --d: 9; }
+
+.k-0 { --k: 0; } .k-1 { --k: 1; } .k-2 { --k: 2; } .k-3 { --k: 3; } .k-4 { --k: 4; } .k-5 { --k: 5; }
+
+.i-0 { --i: 0; } .i-1 { --i: 1; } .i-2 { --i: 2; } .i-3 { --i: 3; } .i-4 { --i: 4; }
+.i-5 { --i: 5; } .i-6 { --i: 6; } .i-7 { --i: 7; } .i-8 { --i: 8; } .i-9 { --i: 9; }
+.i-10 { --i: 10; } .i-11 { --i: 11; } .i-12 { --i: 12; }
+
+/* hidden SVG that only holds shared <defs> */
+.svg-defs { position: absolute; }

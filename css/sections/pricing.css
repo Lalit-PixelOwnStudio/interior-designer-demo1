@@ -1,0 +1,246 @@
+/* ===== Pricing ===== */
+.pricing {
+  background: var(--ic-bg);
+  padding: clamp(72px, 10vw, 140px) clamp(20px, 5vw, 64px);
+}
+
+.pricing-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+.price-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 30px 30px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(43, 35, 24, 0.1);
+  box-shadow: 0 12px 28px rgba(43, 35, 24, 0.06);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.25s ease, box-shadow 0.35s ease, opacity 0.35s ease, filter 0.35s ease;
+}
+
+/* Soft gold light that follows the cursor (desktop) */
+.price-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(244, 217, 139, 0.45), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .price-card:hover { box-shadow: 0 26px 50px rgba(43, 35, 24, 0.16); }
+  .price-card:hover .price-glow { opacity: 1; }
+}
+
+/* Package picked with "I have a…" */
+.price-card.picked {
+  border-color: var(--ic-gold);
+  box-shadow: 0 0 0 2px var(--ic-gold), 0 26px 50px rgba(212, 175, 55, 0.25);
+}
+
+.price-card.dimmed { opacity: 0.72; }
+.price-card.dimmed:hover { opacity: 1; filter: none; }
+
+/* Featured card: slowly moving gold edge */
+.price-card-featured::after {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  z-index: -2;
+  border-radius: 19.5px;
+  padding: 1.5px;
+  background: linear-gradient(120deg, transparent 20%, var(--ic-gold-light), var(--ic-gold), transparent 80%) 0 0 / 300% 100%;
+  /* show the gradient only as a thin ring around the card */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: priceShine 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes priceShine {
+  to { background-position: 300% 0; }
+}
+
+/* Checklist items slide in when the section first shows */
+.price-card li {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  transition-delay: calc(var(--d, 0) * 0.12s + var(--k, 0) * 0.08s + 0.2s);
+}
+
+.pricing.in-view .price-card li { opacity: 1; transform: none; }
+
+/* "I have a…" picker */
+.price-picker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: -12px auto 40px;
+}
+
+.price-picker-label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--ic-gold-deep);
+  margin-right: 4px;
+}
+
+.price-picker button {
+  min-height: 44px;
+  padding: 0 20px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ic-ink);
+  background: #fffdf8;
+  border: 1px solid rgba(43, 35, 24, 0.12);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.price-picker button:hover { border-color: var(--ic-gold); }
+
+.price-picker button[aria-checked="true"] {
+  color: var(--ic-ink);
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
+}
+
+.price-num { font-weight: inherit; font-variant-numeric: tabular-nums; }
+
+.price-dots { display: none; }
+
+.price-estimate-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  margin: clamp(28px, 4vw, 40px) auto 0;
+  padding: 10px 4px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ic-gold-text);
+  border-bottom: 1px solid rgba(138, 106, 18, 0.35);
+  transition: color 0.25s ease, border-color 0.25s ease, gap 0.25s ease;
+}
+
+.price-estimate-link:hover { gap: 12px; color: var(--ic-ink); border-color: var(--ic-gold); }
+
+@media (max-width: 768px) {
+  .price-estimate-link { margin-top: 22px; font-size: 14px; text-align: center; }
+}
+
+.price-card-featured {
+  background: var(--ic-black-soft);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 24px 50px rgba(43, 35, 24, 0.25);
+}
+
+.price-card-featured h3,
+.price-card-featured .price-amount,
+.price-card-featured ul li { color: var(--ic-cream); }
+
+.price-badge {
+  position: absolute;
+  top: -13px;
+  left: 30px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ic-ink);
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  border-radius: 999px;
+}
+
+.price-amount {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ic-ink);
+  margin: 6px 0 24px;
+}
+
+.price-amount span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ic-gold-text);
+  margin-bottom: 4px;
+}
+
+.price-card-featured .price-amount span { color: var(--ic-gold); }
+
+.price-card ul {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex: 1;
+}
+
+.price-card li {
+  position: relative;
+  padding-left: 28px;
+  font-size: 0.95rem;
+  color: var(--ic-ink);
+}
+
+.price-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a6a12' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 10px no-repeat;
+}
+
+.price-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ic-ink);
+  border: 1.5px solid rgba(212, 175, 55, 0.6);
+  border-radius: 999px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.price-btn:hover,
+.price-card-featured .price-btn {
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  border-color: transparent;
+}
+
+.services .price-estimate-link { margin-top: clamp(28px, 4vw, 44px); }

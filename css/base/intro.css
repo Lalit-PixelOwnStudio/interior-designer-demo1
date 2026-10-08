@@ -1,0 +1,75 @@
+/* ===== Logo intro (once per visit) ===== */
+.intro { display: none; }
+
+.ic-intro .intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 45%, #fffaf0 0%, var(--ic-bg) 45%, var(--ic-bg-soft) 100%);
+  animation: intro-out 0.8s cubic-bezier(0.76, 0, 0.24, 1) 2.1s forwards;
+  cursor: pointer;
+}
+
+.ic-intro .intro.skip { animation-delay: 0s; animation-duration: 0.5s; }
+
+@keyframes intro-out {
+  to { clip-path: inset(0 0 100% 0); visibility: hidden; }
+}
+
+.intro-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.intro-logo {
+  width: 96px;
+  height: 96px;
+  background: url("../img/brand/logo-192.webp") center / contain no-repeat;
+  animation: intro-logo 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes intro-logo {
+  from { opacity: 0; transform: rotate(-200deg) scale(0.4); filter: blur(6px); }
+  70% { filter: blur(0); }
+  to { opacity: 1; transform: none; }
+}
+
+.intro-word {
+  display: flex;
+  margin-top: 22px;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4.5vw, 2rem);
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  color: var(--ic-ink);
+}
+
+.intro-word i {
+  font-style: normal;
+  animation: intro-letter 0.7s cubic-bezier(0.22, 1, 0.36, 1) calc(0.45s + var(--i) * 0.045s) both;
+}
+
+@keyframes intro-letter { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } }
+
+.intro-line {
+  width: 140px;
+  height: 1.5px;
+  margin: 18px 0 14px;
+  background: linear-gradient(90deg, transparent, var(--ic-gold), transparent);
+  transform: scaleX(0);
+  animation: intro-line 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1s forwards;
+}
+
+@keyframes intro-line { to { transform: scaleX(1); } }
+
+.intro-inner small {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ic-gold-text);
+  animation: intro-letter 0.8s ease 1.25s both;
+}

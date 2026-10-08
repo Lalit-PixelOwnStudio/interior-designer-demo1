@@ -25,8 +25,8 @@
   }
 
   function head(eyebrow, title) {
-    return '<div class="cs-head reveal-group"><span class="eyebrow reveal-item" style="--d:0">' + eyebrow +
-      '</span><h2 class="about-heading reveal-item" style="--d:1">' + title + "</h2></div>";
+    return '<div class="cs-head reveal-group"><span class="eyebrow reveal-item d-0">' + eyebrow +
+      '</span><h2 class="about-heading reveal-item d-1">' + title + "</h2></div>";
   }
 
   document.title = project.title + " | Interior Core";
@@ -66,18 +66,18 @@
     html.push(
       '<section class="cs-section cs-story">' +
         '<div class="cs-brief reveal-group">' +
-          '<span class="eyebrow reveal-item" style="--d:0">The Brief</span>' +
-          '<h2 class="about-heading reveal-item" style="--d:1">What the client needed</h2>' +
-          '<p class="reveal-item" style="--d:2">' + esc(cs.brief || project.description) + "</p>" +
-          (project.tags ? '<div class="cs-tags reveal-item" style="--d:3">' + project.tags.map(function (t) {
+          '<span class="eyebrow reveal-item d-0">The Brief</span>' +
+          '<h2 class="about-heading reveal-item d-1">What the client needed</h2>' +
+          '<p class="reveal-item d-2">' + esc(cs.brief || project.description) + "</p>" +
+          (project.tags ? '<div class="cs-tags reveal-item d-3">' + project.tags.map(function (t) {
             return '<span class="portfolio-tag">' + esc(t) + "</span>";
           }).join("") + "</div>" : "") +
         "</div>" +
         (cs.approach ? '<div class="cs-approach reveal-group">' +
-          '<span class="eyebrow reveal-item" style="--d:0">Our Approach</span>' +
-          '<h2 class="about-heading reveal-item" style="--d:1">How we solved it</h2>' +
+          '<span class="eyebrow reveal-item d-0">Our Approach</span>' +
+          '<h2 class="about-heading reveal-item d-1">How we solved it</h2>' +
           '<ol class="cs-steps">' + cs.approach.map(function (a, i) {
-            return '<li class="reveal-item" style="--d:' + (i + 2) + '">' + esc(a) + "</li>";
+            return '<li class="reveal-item d-' + (i + 2) + '">' + esc(a) + "</li>";
           }).join("") + "</ol>" +
         "</div>" : "") +
       "</section>"
@@ -134,7 +134,7 @@
       '<section class="cs-band wave-top"><div class="cs-band-inner">' +
         (cs.materials ? '<div class="cs-block">' + head("Materials", "What went into it") +
           '<div class="cs-materials reveal-group">' + cs.materials.map(function (m, i) {
-            return '<div class="cs-mat reveal-item" style="--d:' + i + '"><span class="cs-swatch" style="background:' + m.swatch + '"></span>' +
+            return '<div class="cs-mat reveal-item d-' + i + '"><span class="cs-swatch" style="background:' + m.swatch + '"></span>' +
               "<span><strong>" + esc(m.name) + "</strong><small>" + esc(m.detail) + "</small></span></div>";
           }).join("") + '</div><a class="cs-lib" href="materials.html">Explore the material library ' + ARROW + "</a></div>" : "") +
         (cs.timeline ? '<div class="cs-block">' + head("Timeline", "From first sketch to handover") +
@@ -154,10 +154,10 @@
   if (cs.review) {
     html.push(
       '<section class="cs-review-band wave-top"><div class="cs-section cs-review reveal-group">' +
-        '<span class="cs-quote reveal-item" style="--d:0" aria-hidden="true">“</span>' +
-        '<blockquote class="reveal-item" style="--d:1"><p>' + esc(cs.review.text) + "</p></blockquote>" +
-        '<div class="cs-stars reveal-item" style="--d:2" aria-label="Rated 5 out of 5">★★★★★</div>' +
-        '<p class="cs-reviewer reveal-item" style="--d:3"><strong>' + esc(cs.review.name) + "</strong><small>" + esc(cs.review.role) + "</small></p>" +
+        '<span class="cs-quote reveal-item d-0" aria-hidden="true">“</span>' +
+        '<blockquote class="reveal-item d-1"><p>' + esc(cs.review.text) + "</p></blockquote>" +
+        '<div class="cs-stars reveal-item d-2" aria-label="Rated 5 out of 5">★★★★★</div>' +
+        '<p class="cs-reviewer reveal-item d-3"><strong>' + esc(cs.review.name) + "</strong><small>" + esc(cs.review.role) + "</small></p>" +
       "</div></section>"
     );
   }

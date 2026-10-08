@@ -1,0 +1,101 @@
+/* ===== Wavy section edges =====
+   A section with .wave-top draws a smooth wave in its own colour over the
+   bottom of the section above it, so every colour change is wavy. Two
+   layers: a soft offset wave behind (::after) and the solid wave (::before). */
+.wave-top { position: relative; }
+
+.wave-top::before,
+.wave-top::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  margin-bottom: -1px;
+  background: var(--wave-color, var(--ic-bg));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30C100 0 200 0 300 30S500 60 600 30V60H0Z'/%3E%3C/svg%3E") repeat-x var(--wave-x, 0px) bottom / 600px 100%;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30C100 0 200 0 300 30S500 60 600 30V60H0Z'/%3E%3C/svg%3E") repeat-x var(--wave-x, 0px) bottom / 600px 100%;
+  pointer-events: none;
+}
+
+.wave-top::before {
+  z-index: 3;
+  height: 48px;
+}
+
+.wave-top::after {
+  z-index: 2;
+  height: 64px;
+  opacity: 0.45;
+  -webkit-mask-position: calc(var(--wave-x, 0px) + 220px) bottom;
+  mask-position: calc(var(--wave-x, 0px) + 220px) bottom;
+}
+
+.about        { --wave-color: var(--ic-bg); }
+.about::before,
+.about::after { display: none; } /* flat edge under the hero video */
+.services     { --wave-color: var(--ic-bg-soft);    --wave-x: 150px; }
+.before-after { --wave-color: var(--ic-bg);         --wave-x: 300px; }
+.gallery      { --wave-color: var(--ic-bg-soft);    --wave-x: 450px; }
+.portfolio    { --wave-color: var(--ic-bg);         --wave-x: 100px; }
+.testimonials { --wave-color: var(--ic-black-soft); --wave-x: 250px; }
+.pricing      { --wave-color: var(--ic-bg);         --wave-x: 400px; }
+.faq          { --wave-color: var(--ic-bg-soft);    --wave-x: 50px; }
+.contact      { --wave-color: var(--ic-bg);         --wave-x: 350px; }
+.site-footer  { --wave-color: var(--ic-black-soft); --wave-x: 200px; }
+
+@media (max-width: 768px) {
+  .wave-top::before { height: 30px; }
+  .wave-top::after { height: 40px; }
+  .wave-top::before,
+  .wave-top::after {
+    -webkit-mask-size: 360px 100%;
+    mask-size: 360px 100%;
+  }
+}
+
+/* ===== Shared section pieces ===== */
+body.menu-open,
+body.lightbox-open { overflow: hidden; }
+
+section[id] { scroll-margin-top: 72px; }
+
+.section-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(36px, 6vw, 56px);
+}
+
+.section-header .section-subline { margin-top: 0; }
+
+/* ===== Hero actions ===== */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px 16px;
+}
+
+.hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 30px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ic-cream);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(245, 239, 224, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.hero-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(245, 239, 224, 0.6);
+}

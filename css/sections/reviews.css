@@ -1,0 +1,251 @@
+/* ===== Testimonials: Google-style review cards on a dark band ===== */
+.testimonials {
+  background: var(--ic-black-soft);
+  color: var(--ic-cream);
+  padding: clamp(72px, 10vw, 140px) 0;
+  overflow: hidden;
+}
+
+.testimonials .section-header { max-width: 820px; padding: 0 clamp(20px, 5vw, 64px); }
+.testimonials .about-heading { color: var(--ic-cream); }
+.eyebrow-light { color: var(--ic-gold); }
+
+.g-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  padding: 8px 16px 8px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #202124;
+  background: #fff;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.g-badge-logo { width: 22px; height: 22px; }
+.g-badge-stars { display: inline-flex; }
+.g-badge-stars svg { width: 15px; height: 15px; }
+
+/* Row of cards: glides endlessly on desktop, swipes on phones */
+.reviews-marquee {
+  position: relative;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.reviews-track {
+  display: flex;
+  align-items: stretch;
+  gap: 22px;
+  width: max-content;
+  padding: 10px 22px 30px;
+}
+
+/* Desktop: moved by js/sections/reviews.js (auto-glide + drag + arrows) */
+.reviews-marquee.looping {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.reviews-marquee.looping .reviews-track { will-change: transform; }
+.reviews-marquee.dragging { cursor: grabbing; }
+.reviews-marquee.dragging .g-review { pointer-events: none; }
+
+.reviews-arrows {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.reviews-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  color: var(--ic-gold);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.reviews-arrow:hover {
+  color: var(--ic-ink);
+  background: linear-gradient(135deg, var(--ic-gold-light), var(--ic-gold) 50%, var(--ic-gold-deep));
+  border-color: transparent;
+}
+
+.reviews-arrow:active { transform: scale(0.94); }
+
+.reviews-hint {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(245, 239, 224, 0.55);
+}
+
+@media (min-width: 769px) {
+  .reviews-arrows { display: flex; }
+}
+
+/* Card styled after a Google review */
+.g-review {
+  flex: 0 0 360px;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 22px 20px;
+  color: #3c4043;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18), 0 10px 30px rgba(0, 0, 0, 0.28);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (hover: hover) {
+  .g-review:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18), 0 18px 40px rgba(0, 0, 0, 0.35);
+  }
+}
+
+.g-review-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.g-avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--av, #5c6bc0);
+}
+
+/* avatar letter backgrounds (shown if the photo doesn't load) */
+.av-1 { --av: #5c6bc0; }
+.av-2 { --av: #26a69a; }
+.av-3 { --av: #ef6c00; }
+.av-4 { --av: #8e24aa; }
+
+/* Profile photo sits over the initial; if it fails the initial shows */
+.g-avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.g-who {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.g-who strong {
+  font-size: 15px;
+  font-weight: 600;
+  color: #202124;
+}
+
+.g-who span {
+  font-size: 13px;
+  color: #70757a;
+}
+
+.g-logo {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  align-self: flex-start;
+}
+
+.g-stars { display: flex; gap: 1px; }
+
+.g-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #3c4043;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.g-text { flex: 0 1 auto; min-height: 0; }
+
+/* Read more keeps the card the same size: the text scrolls inside it */
+.g-review.expanded .g-text {
+  -webkit-line-clamp: unset;
+  display: block;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+}
+
+.g-more {
+  align-self: flex-start;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a73e8;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.g-more[hidden] { display: none; }
+
+/* Photos attached to a review, like on Google */
+.g-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.g-more:not([hidden]) + .g-photos { margin-top: 2px; }
+.g-more[hidden] + .g-photos { margin-top: auto; }
+
+.g-photo {
+  padding: 0;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: zoom-in;
+  background: #f1f3f4;
+}
+
+.g-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+@media (hover: hover) {
+  .g-photo:hover img { transform: scale(1.08); }
+}

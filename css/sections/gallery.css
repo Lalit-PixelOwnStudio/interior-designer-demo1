@@ -1,0 +1,106 @@
+/* ===== Gallery ===== */
+.gallery {
+  position: relative;
+  background: var(--ic-bg-soft);
+  padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 64px) clamp(60px, 8vw, 100px);
+}
+
+.gallery-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(40px, 6vw, 56px);
+}
+
+.section-subline {
+  font-family: var(--font-body);
+  color: var(--ic-ink);
+  opacity: 0.75;
+  font-size: 0.95rem;
+  margin-top: 10px;
+}
+
+/* Scattered "card pile": overlapping, tilted photos in a dense grid (same
+   look on every screen). The clip box adds room around the pile so tilted
+   edges aren't cut flat, and fades out the ragged bottom. */
+.gallery-clip {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 26px 30px 0;
+  max-height: 780px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 120px), transparent);
+  mask-image: linear-gradient(180deg, #000 calc(100% - 120px), transparent);
+}
+
+.gallery-clip.expanded {
+  max-height: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-auto-rows: 110px;
+  grid-auto-flow: dense;
+  gap: 4px;
+}
+
+.gallery-tile {
+  position: relative;
+  display: block;
+  margin: -13px;
+  padding: 0;
+  font: inherit;
+  overflow: hidden;
+  cursor: pointer;
+  background: #fffdf8;
+  border: 5px solid #fffdf8;
+  border-radius: 6px;
+  box-shadow: 0 8px 22px rgba(43, 35, 24, 0.22);
+  transform: rotate(var(--r, 0deg));
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.gallery-tile.tile-tall { grid-row: span 2; }
+.gallery-tile.tile-wide { grid-column: span 2; }
+
+.gallery-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+@media (hover: hover) {
+  .gallery-tile:hover {
+    transform: rotate(0deg) scale(1.08);
+    box-shadow: 0 16px 36px rgba(43, 35, 24, 0.3);
+    z-index: 999 !important;
+  }
+}
+
+.gallery-tile-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.32), rgba(0, 0, 0, 0.35));
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-tile-overlay svg {
+  color: var(--ic-gold-light);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .gallery-tile:hover img { transform: scale(1.03); }
+  .gallery-tile:hover .gallery-tile-overlay { opacity: 1; }
+  .gallery-tile:hover .gallery-tile-overlay svg { opacity: 1; transform: scale(1); }
+}

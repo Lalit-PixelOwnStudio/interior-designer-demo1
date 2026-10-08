@@ -1,0 +1,57 @@
+/* ===== 404 page ===== */
+.nf {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding-left: clamp(20px, 5vw, 64px);
+  padding-right: clamp(20px, 5vw, 64px);
+  padding-bottom: clamp(80px, 10vw, 120px);
+  text-align: center;
+  background: radial-gradient(circle at 50% 30%, #fffaf0 0%, var(--ic-bg) 50%, var(--ic-bg-soft) 100%);
+}
+
+.nf-inner { max-width: 640px; }
+
+.nf-code {
+  margin-bottom: 10px;
+  font-family: var(--font-display);
+  font-size: clamp(7rem, 26vw, 15rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--ic-gold);
+  background-color: var(--ic-gold);
+  background-size: 160%;
+  background-position: var(--px, 50%) var(--py, 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: background-position 0.4s ease-out, transform 0.4s ease-out;
+  filter: drop-shadow(0 18px 30px rgba(139, 105, 20, 0.25));
+  animation: nf-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes nf-in { from { opacity: 0; transform: translateY(30px) scale(0.94); } }
+
+.nf .section-subline { margin: 0 auto 30px; }
+.nf-btns { justify-content: center; }
+.nf-btns .lb-cta { display: inline-flex; padding: 0 32px; }
+
+.nf-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 22px;
+  margin-top: 34px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(43, 35, 24, 0.1);
+  font-size: 14px;
+}
+
+.nf-links a { color: var(--ic-gold-text); font-weight: 500; }
+.nf-links a:hover { color: var(--ic-ink); }
+
+@media (max-width: 768px) {
+  .nf-btns > * { flex: 1 1 100%; justify-content: center; }
+}
