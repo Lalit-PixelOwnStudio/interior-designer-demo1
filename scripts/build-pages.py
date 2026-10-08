@@ -13,7 +13,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008k"
+VERSION = "20261008l"
 
 NAV = [
     ("about.html", "About"),
@@ -126,6 +126,25 @@ def cta(heading, text, button="Book a Consultation", href="contact.html",
     ])
 
 
+# Runs before the page paints: shows the logo intro once per visit, and
+# marks browsers without cross-page view transitions for the JS fallback.
+HEAD_SCRIPT = (
+    '<script>(function(d){try{if(!("onpagereveal" in window))d.classList.add("no-vt");'
+    'if(!sessionStorage.getItem("icIntro")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)'
+    '{d.classList.add("ic-intro");sessionStorage.setItem("icIntro","1")}}catch(e){}})(document.documentElement)</script>'
+)
+
+INTRO = (
+    '<div class="intro" id="intro" aria-hidden="true"><div class="intro-inner">'
+    '<img class="intro-logo" src="img/brand/logo-192.png" alt="" width="96" height="96">'
+    '<span class="intro-word">' + "".join(
+        '<i style="--i:%d">%s</i>' % (i, "&nbsp;" if c == " " else c) for i, c in enumerate("INTERIOR CORE")
+    ) + "</span>"
+    '<span class="intro-line"></span>'
+    "<small>Interiors that reflect your style</small>"
+    "</div></div>"
+)
+
 HEAD = """<!doctype html>
 <html lang="en">
 <head>
@@ -142,15 +161,17 @@ HEAD = """<!doctype html>
 <link rel="icon" href="img/brand/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/brand/apple-touch-icon.png">{extra_head}
 <link rel="stylesheet" href="css/style.css?v={version}">
+{head_script}
 </head>
 <body{body_attrs} data-contact-href="contact.html">
+{intro}
 """
 
 
 def page(name, title, description, body, scripts, extra_head="", nav=None, solid_nav=True):
     parts = [
         HEAD.format(title=title, description=description, extra_head=extra_head, version=VERSION,
-                    body_attrs=" data-solid-nav" if solid_nav else ""),
+                    body_attrs=" data-solid-nav" if solid_nav else "", head_script=HEAD_SCRIPT, intro=INTRO),
         header(nav or name),
         "",
         body,
@@ -161,7 +182,7 @@ def page(name, title, description, body, scripts, extra_head="", nav=None, solid
         wa_float(name),
         "",
     ]
-    parts += ['<script src="js/%s.js?v=%s"></script>' % (s, VERSION) for s in scripts]
+    parts += ['<script src="js/%s.js?v=%s"></script>' % (s, VERSION) for s in ["transitions"] + scripts]
     write(name, "\n".join(parts) + "\n</body>\n</html>\n")
 
 
@@ -279,6 +300,13 @@ def refresh(name):
     html = re.sub(r'<footer class="site-footer.*?</footer>', lambda m: footer(name), html, count=1, flags=re.S)
     html = re.sub(r'\n<!-- Quick actions.*?-->\n<div class="quick-bar".*?\n</div>', "\n<!-- Floating WhatsApp button (all screen sizes) -->", html, flags=re.S)
     html = re.sub(r'\?v=\w+', "?v=" + VERSION, html)
+    if HEAD_SCRIPT not in html:
+        html = re.sub(r'<script>\(function\(d\)\{try\{if\(!\("onpagereveal".*?</script>\n', "", html)
+        html = html.replace("</head>", HEAD_SCRIPT + "\n</head>", 1)
+    if 'id="intro"' not in html:
+        html = re.sub(r"(<body[^>]*>\n)", lambda m: m.group(1) + INTRO + "\n", html, count=1)
+    if "js/transitions.js" not in html:
+        html = html.replace('<script src="js/config.js', '<script src="js/transitions.js?v=%s"></script>\n<script src="js/config.js' % VERSION, 1)
     if name != "index.html":
         html = html.replace("index.html#contact", "contact.html")
         html = WA_ICON.sub(lambda m: wa_float(name), html)
