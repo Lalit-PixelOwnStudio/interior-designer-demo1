@@ -15,18 +15,34 @@
     </div>
 
     <form class="contact-form visit-card" id="visitForm" novalidate>
-      <div class="visit-step">
-        <h3><span class="est-num">1</span>Pick a day</h3>
+      <ol class="visit-progress" id="visitProgress" aria-label="Booking steps">
+        <li class="is-active"><button type="button" data-go="1" aria-current="step"><span>1</span><em>Day</em></button></li>
+        <li><button type="button" data-go="2" disabled><span>2</span><em>Time</em></button></li>
+        <li><button type="button" data-go="3" disabled><span>3</span><em>Details</em></button></li>
+      </ol>
+
+      <div class="visit-step is-active" data-step="1">
+        <h3 tabindex="-1">Pick a day</h3>
+        <p class="visit-hint">Open Monday to Saturday. Choose any day in the next two weeks.</p>
         <div class="visit-days" id="visitDays" role="radiogroup" aria-label="Day"></div>
+        <div class="visit-nav">
+          <button type="button" class="form-submit visit-next" data-next>Next: pick a time <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
       </div>
 
-      <div class="visit-step">
-        <h3><span class="est-num">2</span>Pick a time</h3>
+      <div class="visit-step" data-step="2">
+        <h3 tabindex="-1">Pick a time</h3>
+        <p class="visit-summary" data-summary></p>
         <div class="visit-slots" id="visitSlots" role="radiogroup" aria-label="Time"></div>
+        <div class="visit-nav">
+          <button type="button" class="visit-back" data-back><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Back</button>
+          <button type="button" class="form-submit visit-next" data-next>Next: your details <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
       </div>
 
-      <div class="visit-step">
-        <h3><span class="est-num">3</span>Your details</h3>
+      <div class="visit-step" data-step="3">
+        <h3 tabindex="-1">Your details</h3>
+        <p class="visit-summary" data-summary></p>
         <div class="field-row">
           <div class="field">
             <label for="vName">Your name</label>
@@ -48,11 +64,12 @@
             <option>A quote I already have</option>
           </select>
         </div>
+        <div class="visit-nav">
+          <button type="button" class="visit-back" data-back><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Back</button>
+          <button type="submit" class="form-submit visit-next">Confirm on WhatsApp</button>
+        </div>
       </div>
 
-      <p class="visit-summary" id="visitSummary" aria-live="polite"></p>
-
-      <button type="submit" class="form-submit">Confirm on WhatsApp</button>
       <p class="form-status" id="visitStatus" role="status"></p>
 
       <div class="form-success" aria-hidden="true">
