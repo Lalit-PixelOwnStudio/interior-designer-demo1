@@ -13,7 +13,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = "20261008h"
+VERSION = "20261008i"
 
 NAV = [
     ("about.html", "About"),
@@ -169,6 +169,7 @@ SERVICES = section("services")
 PORTFOLIO = section("portfolio")
 PRICING = section("pricing")
 FAQ = section("faq")
+GUARANTEES = block(r'<!-- DEMO TRUST BADGES.*?\n</section>')
 CONTACT = section("contact")
 
 # ----- services.html: services first, a few projects below -----
@@ -182,6 +183,7 @@ page(
     "\n\n".join([
         page_top(SERVICES),
         featured,
+        GUARANTEES,
         cta("Have a space in mind?", "Tell us about your home and we'll suggest the right services for it."),
         LIGHTBOX,
     ]),
@@ -218,6 +220,7 @@ page(
     "Interior Core packages for 1 BHK, 2–3 BHK homes and full renovations, with clear starting prices.",
     "\n\n".join([
         link_out(page_top(PRICING)),
+        GUARANTEES,
         partial("estimator"),
         FAQ,
         cta("Not sure which package fits?", "Tell us about your home and we'll send a quote after a quick chat.", "Get a Free Quote"),

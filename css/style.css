@@ -5683,3 +5683,160 @@ body.lightbox-open .wa-float {
   .projects-cta .cs-cta-btns > *,
   .about-cta .cs-cta-btns > * { flex: 1 1 100%; justify-content: center; }
 }
+
+/* ===== Guarantees + trust badges ===== */
+.guarantees {
+  --wave-color: var(--ic-bg-soft);
+  --wave-x: 470px;
+  background: var(--ic-bg-soft);
+  padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 64px);
+}
+
+.guarantee-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.4vw, 24px);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.guarantee {
+  position: relative;
+  padding: 30px 28px 28px;
+  text-align: center;
+  background: #fffdf8;
+  border: 1px solid rgba(43, 35, 24, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(43, 35, 24, 0.07);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.guarantee:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 22px 44px rgba(43, 35, 24, 0.12);
+}
+
+.guarantee h3 { margin: 18px 0 8px; font-size: 1.25rem; }
+
+.guarantee p {
+  max-width: 300px;
+  margin: 0 auto;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(43, 35, 24, 0.7);
+}
+
+/* gold seal with a slowly turning text ring */
+.g-seal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.g-seal::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 1px dashed rgba(139, 105, 20, 0.45);
+}
+
+.g-seal-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-body);
+  font-size: 8.6px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  fill: var(--ic-gold-deep);
+  animation: g-spin 26s linear infinite;
+}
+
+.guarantee:hover .g-seal-ring { animation-duration: 8s; }
+
+@keyframes g-spin { to { transform: rotate(360deg); } }
+
+.g-seal-core {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  color: var(--ic-ink);
+  background: radial-gradient(circle at 30% 25%, #fff4c9 0%, var(--ic-gold-light) 22%, var(--ic-gold) 58%, var(--ic-gold-deep) 100%);
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.35), inset 0 -6px 12px rgba(139, 105, 20, 0.35), 0 8px 18px rgba(139, 105, 20, 0.3);
+}
+
+.g-seal-core strong {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.g-seal-core small {
+  margin-top: 3px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* rating badges with the platforms' own logos */
+.trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  max-width: 1180px;
+  margin: clamp(36px, 5vw, 56px) auto 0;
+}
+
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 22px 14px 16px;
+  color: var(--ic-ink);
+  background: #fff;
+  border: 1px solid rgba(43, 35, 24, 0.08);
+  border-radius: 999px;
+  box-shadow: 0 10px 26px rgba(43, 35, 24, 0.07);
+}
+
+.trust-badge > img { flex: none; width: 34px; height: 34px; object-fit: contain; }
+.trust-badge strong { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; line-height: 1.2; }
+.trust-badge small { display: flex; align-items: center; gap: 5px; font-size: 12.5px; color: rgba(43, 35, 24, 0.65); }
+.trust-stars { font-style: normal; font-size: 13px; letter-spacing: 1px; color: #fbbc04; }
+.trust-word { width: 46px; height: auto; transform: translateY(1px); }
+a.trust-badge:hover { border-color: rgba(212, 175, 55, 0.6); }
+
+@media (max-width: 1023px) {
+  .guarantee-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .guarantee-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .guarantee { padding: 20px 14px 18px; border-radius: 16px; }
+  .g-seal { width: 96px; height: 96px; }
+  .g-seal-core { width: 60px; height: 60px; }
+  .g-seal-core strong { font-size: 1.25rem; }
+  .g-seal-core small { font-size: 8px; }
+  .g-seal-ring { font-size: 8.8px; }
+  .guarantee h3 { margin-top: 12px; font-size: 1.02rem; line-height: 1.25; }
+  .guarantee p { font-size: 13px; line-height: 1.5; }
+  .trust-badge { width: 100%; border-radius: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .g-seal-ring { animation: none; }
+}
